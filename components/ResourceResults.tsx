@@ -1,7 +1,14 @@
 import { useState, useEffect, ReactElement } from "react";
 import { Link, useRouter } from "expo-router";
-import { View, Text, StyleSheet, Pressable, Image } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { data } from "@/components/mockData/benefits_mock";
 import { Benefit } from "@/components/mockData/benefits_mock";
 
@@ -53,7 +60,9 @@ const ResourceResults = (props: Props) => {
       <View style={styles.container}>
         <View style={styles.row}>
           <Text style={styles.textBold}>{resultsMock.type}</Text>
-          <Text>V</Text>
+          <TouchableOpacity onPress={() => setCollapsed(!isCollapsed)}>
+            <AntDesign name={isCollapsed ? "down" : "up"} size={24} />
+          </TouchableOpacity>
         </View>
         {isCollapsed ? <></> : benefits()}
       </View>
