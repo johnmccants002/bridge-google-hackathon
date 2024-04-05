@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import SplashScreen from "@/components/SplashScreen";
 import About from "@/components/About";
 import LogoContainer from "@/components/LogoContainer";
+import ResourceResults from "@/components/ResourceResults";
 
 interface Props {}
 
@@ -16,7 +17,7 @@ const Component = (props: Props) => {
     <View style={styles.container}>
       <LogoContainer />
 
-      <About />
+      <ResourceResults />
     </View>
   );
 };
