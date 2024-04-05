@@ -19,7 +19,7 @@ const BenefitCell = (props: BenefitCellProps) => {
       const win = window.open(link, "_blank");
       // win.focus();
     } else {
-      WebBrowser.openBrowserAsync("https://expo.dev");
+      WebBrowser.openBrowserAsync(link);
     }
   };
 
