@@ -2,19 +2,25 @@ import { useState, useEffect, ReactElement } from "react";
 import { Link, useRouter } from "expo-router";
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { data } from "@/components/mockData/benefits_mock"
+import { data } from "@/components/mockData/benefits_mock";
+import { Benefit } from "@/components/mockData/benefits_mock";
 
-interface Props { }
+interface Props {}
 
 const ResourceResults = (props: Props) => {
   const router = useRouter();
 
   const CollapsableItem = () => {
-    const [isCollapsed, setCollapsed] = useState<boolean>(false)
+    const [isCollapsed, setCollapsed] = useState<boolean>(false);
 
-    const resultsMock = data.data[0]
+    const resultsMock = data.data[0];
 
-    const benefitCell = (name: string, description: string, category: string, link: string) => {
+    const benefitCell = (
+      name: string,
+      description: string,
+      category: string,
+      link: string
+    ) => {
       return (
         <View style={styles.descriptionItems}>
           <View style={styles.row}>
@@ -24,21 +30,24 @@ const ResourceResults = (props: Props) => {
           <Text style={styles.textSmall}>{description}</Text>
           <Text>{link}</Text>
         </View>
-      )
-    }
+      );
+    };
 
     const benefits = () => {
       return (
         <View>
           <View style={styles.line} />
-          {
-            resultsMock.benefits.map((item: any) => {
-              return (benefitCell(item.name, item.description, item.category, item.link))
-            })
-          }
+          {resultsMock.benefits.map((item: Benefit) => {
+            return benefitCell(
+              item.name,
+              item.description,
+              item.category,
+              item.link
+            );
+          })}
         </View>
-      )
-    }
+      );
+    };
 
     return (
       <View style={styles.container}>
@@ -48,10 +57,10 @@ const ResourceResults = (props: Props) => {
         </View>
         {isCollapsed ? <></> : benefits()}
       </View>
-    )
-  }
+    );
+  };
 
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
   return (
     <View style={styles.container}>
       <CollapsableItem />
@@ -65,18 +74,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: "black",
     borderWidth: 1,
-    borderStyle: "solid"
+    borderStyle: "solid",
   },
   descriptionItems: {
     flex: 1,
     flexDirection: "column",
-    padding: 8
+    padding: 8,
   },
   row: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 8
+    padding: 8,
   },
   buttonText: {
     color: "#227272",
@@ -85,7 +94,7 @@ const styles = StyleSheet.create({
   textRegular: {
     fontFamily: "KarlaRegular",
     fontSize: 16,
-    padding: 0
+    padding: 0,
   },
   textBold: {
     fontFamily: "KarlaRegular",
@@ -96,11 +105,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   line: {
-    borderBottomColor: 'black',
+    borderBottomColor: "black",
     borderBottomWidth: 1,
     left: 5,
-    right: 5
-  }
+    right: 5,
+  },
 });
 
 export default ResourceResults;
