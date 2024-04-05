@@ -7,51 +7,34 @@ import {
   Pressable,
   Image,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
-import { data } from "@/components/mockData/benefits_mock";
+import { BenefitData, Datum, data } from "@/components/mockData/benefits_mock";
 import { Benefit } from "@/components/mockData/benefits_mock";
+import * as WebBrowser from "expo-web-browser";
+import BenefitCell from "./BenefitCell";
 
-interface Props {}
+interface Props {
+  data: Datum;
+}
 
-const ResourceResults = (props: Props) => {
+const ResourceScreen = (props: Props) => {
   const router = useRouter();
+
+  const { data } = props;
 
   const CollapsableItem = () => {
     const [isCollapsed, setCollapsed] = useState<boolean>(false);
 
-    const resultsMock = data.data[0];
-
-    const benefitCell = (
-      name: string,
-      description: string,
-      category: string,
-      link: string
-    ) => {
-      return (
-        <View style={styles.descriptionItems}>
-          <View style={styles.row}>
-            <Text style={styles.textRegular}>{name}</Text>
-            <Text>{"(" + category + ")"}</Text>
-          </View>
-          <Text style={styles.textSmall}>{description}</Text>
-          <Text>{link}</Text>
-        </View>
-      );
-    };
-
-    const benefits = () => {
+    const Benefits = () => {
       return (
         <View>
           <View style={styles.line} />
-          {resultsMock.benefits.map((item: Benefit) => {
-            return benefitCell(
-              item.name,
-              item.description,
-              item.category,
-              item.link
-            );
-          })}
+
+          {data.benefits.map((item: Benefit, idx: number) => (
+            <BenefitCell key={idx} benefit={item} />
+          ))}
         </View>
       );
     };
@@ -59,22 +42,18 @@ const ResourceResults = (props: Props) => {
     return (
       <View style={styles.container}>
         <View style={styles.row}>
-          <Text style={styles.textBold}>{resultsMock.type}</Text>
+          <Text style={styles.textBold}>{data.type}</Text>
           <TouchableOpacity onPress={() => setCollapsed(!isCollapsed)}>
             <AntDesign name={isCollapsed ? "down" : "up"} size={24} />
           </TouchableOpacity>
         </View>
-        {isCollapsed ? <></> : benefits()}
+        {isCollapsed ? <></> : <Benefits />}
       </View>
     );
   };
 
   useEffect(() => {}, []);
-  return (
-    <View style={styles.container}>
-      <CollapsableItem />
-    </View>
-  );
+  return <CollapsableItem />;
 };
 
 const styles = StyleSheet.create({
@@ -121,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ResourceResults;
+export default ResourceScreen;
