@@ -41,6 +41,7 @@ const Component = (props: Props) => {
             justifyContent: "center",
             marginTop: 40,
           }}
+          onPress={() => router.push("/results")}
         >
           <Text style={styles.buttonText}>Get Started</Text>
           <MaterialCommunityIcons name="arrow-right" color={"#4BA4A4"} />

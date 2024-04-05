@@ -16,9 +16,9 @@ const Component = (props: Props) => {
   useEffect(() => {}, []);
   return (
     <View style={styles.container}>
-      <LogoContainer />
+      {/* <LogoContainer /> */}
 
-      <ResourceScreen data={response.data} />
+      <SplashScreen />
     </View>
   );
 };
