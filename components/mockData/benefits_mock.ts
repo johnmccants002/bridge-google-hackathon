@@ -1,4 +1,4 @@
-export const data: RootObject = {
+export const response: Response = {
   data: [
     {
       type: "Federal",
@@ -87,7 +87,7 @@ export const data: RootObject = {
   ],
 };
 
-export interface RootObject {
+export interface Response {
   data: Datum[];
 }
 

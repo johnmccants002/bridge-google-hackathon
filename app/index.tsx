@@ -4,7 +4,8 @@ import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import SplashScreen from "@/components/SplashScreen";
 import About from "@/components/About";
 import LogoContainer from "@/components/LogoContainer";
-import ResourceResults from "@/components/ResourceResults";
+import ResourceScreen from "@/components/ResourceScreen";
+import { response } from "@/components/mockData/benefits_mock";
 
 interface Props {}
 
@@ -17,7 +18,7 @@ const Component = (props: Props) => {
     <View style={styles.container}>
       <LogoContainer />
 
-      <ResourceResults />
+      <ResourceScreen data={response.data} />
     </View>
   );
 };
@@ -27,6 +28,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#4BA4A4",
     zIndex: 1,
+    paddingHorizontal: 40,
   },
 });
 
