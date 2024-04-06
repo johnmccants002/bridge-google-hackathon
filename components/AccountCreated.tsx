@@ -27,7 +27,7 @@ const AccountCreated = (props: Props) => {
         }}
       >
         <Image
-          source={require("@/assets/images/happy.png")}
+          source={require("@/assets/images/greenhappy.png")}
           style={{ height: 80, width: 80, marginVertical: 12 }}
         />
         <Text style={defaultStyles.textBold}>
