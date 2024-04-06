@@ -10,7 +10,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 
 import { useColorScheme } from "@/components/useColorScheme";
-import { Pressable, Text } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
 export {
@@ -31,6 +31,7 @@ export default function RootLayout() {
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     KarlaRegular: require("../assets/fonts/Karla-Regular.ttf"),
     KarlaBold: require("../assets/fonts/Karla-Bold.ttf"),
+    KarlaMedium: require("../assets/fonts/Karla-Medium.ttf"),
     ...FontAwesome.font,
   });
 
@@ -63,24 +64,41 @@ function RootLayoutNav() {
         <Stack.Screen
           name="results"
           options={{
-            headerLeft: () => (
-              <Pressable
-                style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
-                onPress={router.back}
+            // headerStyle: { backgroundColor: "#E9FBFF" },
+            header: () => (
+              <View
+                style={{
+                  backgroundColor: "#E9FBFF",
+                  justifyContent: "center",
+                  height: 100,
+                  paddingTop: 40,
+                  padding: 20,
+                }}
               >
-                <AntDesign name="arrowleft" size={24} color={"#4BA4A4"} />
-                <Text
+                <Pressable
                   style={{
-                    fontFamily: "KarlaRegular",
-                    fontWeight: "500",
-                    fontSize: 24,
-                    color: "#4BA4A4",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 4,
+                    backgroundColor: "#E9FBFF",
                   }}
+                  onPress={router.back}
                 >
-                  Back
-                </Text>
-              </Pressable>
+                  <AntDesign name="arrowleft" size={24} color={"#4BA4A4"} />
+                  <Text
+                    style={{
+                      fontFamily: "KarlaRegular",
+                      fontWeight: "500",
+                      fontSize: 24,
+                      color: "#4BA4A4",
+                    }}
+                  >
+                    Back
+                  </Text>
+                </Pressable>
+              </View>
             ),
+
             title: "",
           }}
         />
