@@ -1,0 +1,94 @@
+org: sachack
+app: bridge
+service: gap
+
+plugins:
+  - serverless-esbuild
+  - serverless-iam-roles-per-function
+  - serverless-plugin-tracing
+  - serverless-dynamodb-local
+  - serverless-offline
+
+package:
+  patterns:
+    - '../node_modules/**'
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  memorySize: 512
+  region: us-west-1
+  stage: dev
+  deploymentMethod: direct
+  tracing:
+    lambda: true
+    apiGateway: true
+  environment:
+    GEMINI_KEY: ${param:GEMINI_KEY}
+    GEMINI_URL: ${param:GEMINI_URL}
+    USER_SCHEMA: UserTable
+
+functions:
+  postHandler:
+    handler: src/post.handler
+    events:
+      - http:
+          path: /handler
+          method: post
+          cors: true
+          request:
+            schemas:
+              application/json: ${file(models/post-model.json)}
+    iamRoleStatementsName: userTablePostRole
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - xray:PutTelemetryRecords
+          - xray:PutTraceSegments
+        Resource:
+          - !GetAtt UserTable.Arn
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:PutItem
+          - dynamodb:Scan
+          - dynamodb:Query
+        Resource:
+          - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.USER_SCHEMA}"
+
+  getHandler:
+    handler: src/get.handler
+    events:
+      - http:
+          path: /handler/{id}
+          method: get
+          cors: true
+    iamRoleStatementsName: userTableGetRole
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - xray:PutTelemetryRecords
+          - xray:PutTraceSegments
+        Resource:
+          - !GetAtt UserTable.Arn
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:Scan
+          - dynamodb:Query
+        Resource:
+          - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.USER_SCHEMA}"
+
+resources:
+  Resources:
+    UserTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        TableName: ${self:provider.environment.USER_SCHEMA}
+        AttributeDefinitions:
+          - AttributeName: 'id'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'id'
+            KeyType: 'HASH'
+        BillingMode: PAY_PER_REQUEST

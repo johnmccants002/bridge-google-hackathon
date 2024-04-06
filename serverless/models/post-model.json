@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "demographics": {
+      "type": "object",
+      "properties": {
+        "age": {
+          "type": "number"
+        },
+        "income": {
+          "type": "number"
+        },
+        "ethnicity": {
+          "type": "string"
+        },
+        "veteran": {
+          "type": "boolean"
+        },
+        "disability": {
+          "type": "boolean"
+        },
+        "gender": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "age",
+        "income",
+        "ethnicity",
+        "veteran",
+        "disability",
+        "gender"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "demographics"
+  ]
+}
