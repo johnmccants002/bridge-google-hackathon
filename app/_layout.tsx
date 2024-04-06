@@ -107,6 +107,7 @@ function RootLayoutNav() {
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="register" options={{ headerShown: false }} />
         <Stack.Screen name="account-created" options={{ headerShown: false }} />
+        <Stack.Screen name="search" options={{ headerShown: false }} />
       </Stack>
     </ThemeProvider>
   );
