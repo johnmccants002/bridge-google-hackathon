@@ -29,7 +29,14 @@ const BenefitCell = (props: BenefitCellProps) => {
     <View style={styles.itemContainer}>
       <View style={styles.row}>
         <Text style={[styles.textRegular, { width: 140 }]}>{name}</Text>
-        <View style={{ flexDirection: "row", gap: 4, alignItems: "center" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            gap: 4,
+            alignItems: "center",
+            maxWidth: 200,
+          }}
+        >
           <MaterialCommunityIcons
             name={categoryIcons[`${category}`].icon}
             color={"#10AB8F"}

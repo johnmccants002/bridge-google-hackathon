@@ -1,9 +1,18 @@
 import { Datum } from "@/components/mockData/benefits_mock";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
-import { ScrollView, StyleSheet, Text } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  Touchable,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import BenefitList from "./BenefitList";
 import { defaultStyles } from "./defaultStyles";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 interface Props {
   data: Datum[];
@@ -16,22 +25,82 @@ const ResourceScreen = (props: Props) => {
 
   useEffect(() => {}, []);
   return (
-    <ScrollView
-      contentContainerStyle={{ gap: 12, paddingHorizontal: 20 }}
-      style={styles.container}
-    >
-      <Text
-        style={[
-          defaultStyles.textBold,
-          { color: "#125858", paddingRight: 80, paddingTop: 12 },
-        ]}
+    <>
+      <ScrollView
+        contentContainerStyle={{
+          gap: 12,
+          paddingHorizontal: 20,
+          flexGrow: 1,
+          paddingBottom: 300,
+        }}
+        style={styles.container}
       >
-        We found 8 resources available to you.
-      </Text>
-      {data.map((item: Datum, idx: number) => (
-        <BenefitList data={item} key={idx} />
-      ))}
-    </ScrollView>
+        <Text
+          style={[
+            defaultStyles.textBold,
+            { color: "#125858", paddingRight: 80, paddingTop: 12 },
+          ]}
+        >
+          We found 8 resources available to you.
+        </Text>
+        {data.map((item: Datum, idx: number) => (
+          <BenefitList data={item} key={idx} />
+        ))}
+        <TouchableOpacity
+          style={{
+            flexDirection: "row",
+            gap: 8,
+            borderWidth: 2,
+            borderColor: "#125858",
+            borderRadius: 24,
+            height: 40,
+            alignItems: "center",
+            justifyContent: "center",
+            width: 200,
+            alignSelf: "center",
+          }}
+        >
+          <Text>Save to profile</Text>
+          <MaterialCommunityIcons name="check" color={"#125858"} size={20} />
+        </TouchableOpacity>
+        <View
+          style={{
+            backgroundColor: "#10AB8F",
+            padding: 30,
+            gap: 16,
+            position: "absolute",
+            bottom: 0,
+            right: 0,
+            left: 0,
+            height: 260,
+          }}
+        >
+          <Text
+            style={{ fontFamily: "KarlaMedium", fontSize: 18, color: "white" }}
+          >
+            Don't want to create an account? Get this list in an email instead.
+          </Text>
+
+          <View>
+            <Text style={defaultStyles.inputLabelText}>Your Email</Text>
+            <TextInput
+              style={defaultStyles.input}
+              placeholder="example@mail.com"
+            />
+            <TouchableOpacity
+              style={[defaultStyles.button, { alignSelf: "center", gap: 20 }]}
+            >
+              <Text style={[defaultStyles.buttonText]}>Send</Text>
+              <MaterialCommunityIcons
+                name="arrow-right"
+                color={"#4BA4A4"}
+                size={20}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+    </>
   );
 };
 
