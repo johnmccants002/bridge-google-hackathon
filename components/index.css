@@ -1,0 +1,12 @@
+.dropdownWeb {
+  margin-bottom: 20px;
+  z-index: 2;
+}
+
+.dropdown {
+  border-width: 1px;
+  border-color: grey;
+  border-style: solid; /* You need to specify the border style for CSS */
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
