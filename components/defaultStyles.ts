@@ -38,4 +38,9 @@ export const defaultStyles = StyleSheet.create({
     color: "#E9FBFF",
     lineHeight: 18.7,
   },
+  container: {
+    flex: 1,
+    backgroundColor: "#4BA4A4",
+    zIndex: 1,
+  },
 });

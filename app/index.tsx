@@ -6,6 +6,7 @@ import About from "@/components/About";
 import LogoContainer from "@/components/LogoContainer";
 import ResourceScreen from "@/components/ResourceScreen";
 import { response } from "@/components/mockData/benefits_mock";
+import AccountCreated from "@/components/AccountCreated";
 
 interface Props {}
 
@@ -18,7 +19,7 @@ const Component = (props: Props) => {
     <View style={styles.container}>
       {/* <LogoContainer /> */}
 
-      <SplashScreen />
+      <AccountCreated />
     </View>
   );
 };
