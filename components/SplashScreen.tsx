@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, useRouter } from "expo-router";
-import { View, Text, StyleSheet, Pressable, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Image,
+  Platform,
+} from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 interface Props {}
@@ -45,7 +52,11 @@ const Component = (props: Props) => {
             justifyContent: "center",
             marginTop: 40,
           }}
-          onPress={() => router.push("/results")}
+          onPress={() =>
+            Platform.OS === "web"
+              ? router.push("/search")
+              : router.push("/results")
+          }
         >
           <Text style={styles.buttonText}>Get Started</Text>
           <MaterialCommunityIcons name="arrow-right" color={"#4BA4A4"} />

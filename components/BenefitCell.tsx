@@ -161,4 +161,7 @@ const categoryIcons = {
     pack: "MaterialCommunityIcons",
     icon: "account-group",
   },
+  default: {
+    icon: "account",
+  },
 };
