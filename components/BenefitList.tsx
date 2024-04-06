@@ -14,46 +14,41 @@ const ResourceScreen = (props: Props) => {
 
   const { data } = props;
 
-  const CollapsableItem = () => {
-    const [isCollapsed, setCollapsed] = useState<boolean>(false);
+  const [isCollapsed, setCollapsed] = useState<boolean>(false);
 
-    const Benefits = () => {
-      return (
-        <View>
-          <View style={styles.line} />
-
-          {data.benefits.map((item: Benefit, idx: number) => (
-            <BenefitCell key={idx} benefit={item} />
-          ))}
-        </View>
-      );
-    };
-
+  const Benefits = () => {
     return (
-      <View style={styles.container}>
-        <View style={styles.row}>
-          <Text style={styles.textBold}>{data.type}</Text>
-          <TouchableOpacity
-            style={{ alignItems: "center" }}
-            onPress={() => setCollapsed(!isCollapsed)}
-          >
-            <Image
-              source={
-                isCollapsed
-                  ? require("@/assets/images/down.png")
-                  : require("@/assets/images/up.png")
-              }
-              style={{ height: 14, width: 24 }}
-            />
-          </TouchableOpacity>
-        </View>
-        {isCollapsed ? <></> : <Benefits />}
+      <View>
+        <View style={styles.line} />
+
+        {data.benefits.map((item: Benefit, idx: number) => (
+          <BenefitCell key={idx} benefit={item} />
+        ))}
       </View>
     );
   };
 
-  useEffect(() => {}, []);
-  return <CollapsableItem />;
+  return (
+    <View style={styles.container}>
+      <View style={styles.row}>
+        <Text style={styles.textBold}>{data.type}</Text>
+        <TouchableOpacity
+          style={{ alignItems: "center" }}
+          onPress={() => setCollapsed(!isCollapsed)}
+        >
+          <Image
+            source={
+              isCollapsed
+                ? require("@/assets/images/down.png")
+                : require("@/assets/images/up.png")
+            }
+            style={{ height: 14, width: 24 }}
+          />
+        </TouchableOpacity>
+      </View>
+      {isCollapsed ? <></> : <Benefits />}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
