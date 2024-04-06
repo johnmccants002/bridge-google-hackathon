@@ -30,9 +30,21 @@ const BenefitCell = (props: BenefitCellProps) => {
       <View style={styles.row}>
         <Text style={[styles.textRegular, { width: 140 }]}>{name}</Text>
         <View style={{ flexDirection: "row", gap: 4, alignItems: "center" }}>
-          <MaterialCommunityIcons name={categoryIcons[`${category}`].icon} />
+          <MaterialCommunityIcons
+            name={categoryIcons[`${category}`].icon}
+            color={"#10AB8F"}
+          />
 
-          <Text>{category}</Text>
+          <Text
+            style={{
+              fontFamily: "KarlaRegular",
+              fontSize: 14,
+              color: "#10AB8F",
+              paddingRight: 4,
+            }}
+          >
+            {category}
+          </Text>
         </View>
       </View>
       <Text style={styles.textSmall}>{description}</Text>
@@ -42,7 +54,7 @@ const BenefitCell = (props: BenefitCellProps) => {
           padding: 14,
           borderRadius: 16,
           height: 24,
-          width: 180,
+          width: 150,
           justifyContent: "center",
           alignItems: "center",
           flexDirection: "row",
@@ -65,7 +77,7 @@ const BenefitCell = (props: BenefitCellProps) => {
         </Text>
         <Image
           source={require("@/assets/images/arrow-up-right.png")}
-          style={{ height: 14, width: 14 }}
+          style={{ height: 12, width: 12 }}
         />
       </TouchableOpacity>
     </View>

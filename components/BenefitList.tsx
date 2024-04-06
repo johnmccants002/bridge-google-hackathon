@@ -2,7 +2,7 @@ import { Benefit, Datum } from "@/components/mockData/benefits_mock";
 import { AntDesign } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import BenefitCell from "./BenefitCell";
 
 interface Props {
@@ -33,8 +33,18 @@ const ResourceScreen = (props: Props) => {
       <View style={styles.container}>
         <View style={styles.row}>
           <Text style={styles.textBold}>{data.type}</Text>
-          <TouchableOpacity onPress={() => setCollapsed(!isCollapsed)}>
-            <AntDesign name={isCollapsed ? "down" : "up"} size={24} />
+          <TouchableOpacity
+            style={{ alignItems: "center" }}
+            onPress={() => setCollapsed(!isCollapsed)}
+          >
+            <Image
+              source={
+                isCollapsed
+                  ? require("@/assets/images/down.png")
+                  : require("@/assets/images/up.png")
+              }
+              style={{ height: 14, width: 24 }}
+            />
           </TouchableOpacity>
         </View>
         {isCollapsed ? <></> : <Benefits />}
@@ -48,7 +58,7 @@ const ResourceScreen = (props: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    backgroundColor: "#E9FBFF",
     borderRadius: 8,
     borderColor: "black",
     borderWidth: 1,
@@ -63,6 +73,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     padding: 8,
   },
   buttonText: {
@@ -75,7 +86,7 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   textBold: {
-    fontFamily: "KarlaRegular",
+    fontFamily: "KarlaMedium",
     fontSize: 24,
   },
   textSmall: {
@@ -85,8 +96,8 @@ const styles = StyleSheet.create({
   line: {
     borderBottomColor: "black",
     borderBottomWidth: 1,
-    left: 5,
-    right: 5,
+    width: "94%",
+    alignSelf: "center",
   },
 });
 
