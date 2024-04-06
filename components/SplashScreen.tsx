@@ -9,6 +9,10 @@ const Component = (props: Props) => {
   const router = useRouter();
   const [item, setItem] = useState("");
 
+  const navigateToLogin = () => {
+    router.replace("/login");
+  };
+
   useEffect(() => {}, []);
   return (
     <View style={styles.container}>
@@ -47,6 +51,12 @@ const Component = (props: Props) => {
           <MaterialCommunityIcons name="arrow-right" color={"#4BA4A4"} />
         </Pressable>
       </View>
+      <Pressable
+        style={{ bottom: 60, alignSelf: "center", position: "absolute" }}
+        onPress={navigateToLogin}
+      >
+        <Text style={styles.loginText}>Been here already? Login.</Text>
+      </Pressable>
     </View>
   );
 };
@@ -72,6 +82,13 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 24,
     lineHeight: 28,
+  },
+  loginText: {
+    fontFamily: "KarlaRegular",
+    fontSize: 19,
+    lineHeight: 28,
+    textDecorationLine: "underline",
+    color: "#227272",
   },
 });
 
