@@ -1,18 +1,8 @@
-import { useState, useEffect, ReactElement } from "react";
-import { Link, useRouter } from "expo-router";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  Image,
-  TouchableOpacity,
-  Platform,
-} from "react-native";
-import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
-import { BenefitData, Datum, data } from "@/components/mockData/benefits_mock";
-import { Benefit } from "@/components/mockData/benefits_mock";
-import * as WebBrowser from "expo-web-browser";
+import { Benefit, Datum } from "@/components/mockData/benefits_mock";
+import { AntDesign } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import { useEffect, useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import BenefitCell from "./BenefitCell";
 
 interface Props {
