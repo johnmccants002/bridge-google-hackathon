@@ -28,7 +28,7 @@ const ResourceScreen = (props: Props) => {
 
   useEffect(() => {}, []);
   return (
-    <ScrollView contentContainerStyle={{ gap: 12 }}>
+    <ScrollView contentContainerStyle={{ gap: 12, paddingHorizontal: 20 }}>
       {data.map((item: Datum, idx: number) => (
         <BenefitList data={item} key={idx} />
       ))}
