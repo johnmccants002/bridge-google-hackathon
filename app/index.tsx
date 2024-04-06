@@ -19,7 +19,7 @@ const Component = (props: Props) => {
     <View style={styles.container}>
       {/* <LogoContainer /> */}
 
-      <AccountCreated />
+      <SplashScreen />
     </View>
   );
 };

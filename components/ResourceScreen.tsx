@@ -1,21 +1,9 @@
-import { useState, useEffect, ReactElement } from "react";
-import { Link, useRouter } from "expo-router";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  Image,
-  TouchableOpacity,
-  Platform,
-  ScrollView,
-} from "react-native";
-import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Datum } from "@/components/mockData/benefits_mock";
-import { Benefit } from "@/components/mockData/benefits_mock";
-import * as WebBrowser from "expo-web-browser";
-import BenefitCell from "./BenefitCell";
+import { useRouter } from "expo-router";
+import { useEffect } from "react";
+import { ScrollView, StyleSheet, Text } from "react-native";
 import BenefitList from "./BenefitList";
+import { defaultStyles } from "./defaultStyles";
 
 interface Props {
   data: Datum[];
@@ -28,7 +16,18 @@ const ResourceScreen = (props: Props) => {
 
   useEffect(() => {}, []);
   return (
-    <ScrollView contentContainerStyle={{ gap: 12, paddingHorizontal: 20 }}>
+    <ScrollView
+      contentContainerStyle={{ gap: 12, paddingHorizontal: 20 }}
+      style={styles.container}
+    >
+      <Text
+        style={[
+          defaultStyles.textBold,
+          { color: "#125858", paddingRight: 80, paddingTop: 12 },
+        ]}
+      >
+        We found 8 resources available to you.
+      </Text>
       {data.map((item: Datum, idx: number) => (
         <BenefitList data={item} key={idx} />
       ))}
@@ -38,11 +37,7 @@ const ResourceScreen = (props: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
-    borderRadius: 8,
-    borderColor: "black",
-    borderWidth: 1,
-    borderStyle: "solid",
+    backgroundColor: "#E9FBFF",
   },
   descriptionItems: {
     flex: 1,

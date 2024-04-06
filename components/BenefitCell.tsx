@@ -1,11 +1,12 @@
+import * as WebBrowser from "expo-web-browser";
 import {
+  Image,
   Platform,
-  View,
+  StyleSheet,
   Text,
   TouchableOpacity,
-  StyleSheet,
+  View,
 } from "react-native";
-import * as WebBrowser from "expo-web-browser";
 import { Benefit } from "./mockData/benefits_mock";
 
 interface BenefitCellProps {
@@ -30,8 +31,37 @@ const BenefitCell = (props: BenefitCellProps) => {
         <Text>{"(" + category + ")"}</Text>
       </View>
       <Text style={styles.textSmall}>{description}</Text>
-      <TouchableOpacity onPress={handleLinkPressed}>
-        <Text>{link}</Text>
+      <TouchableOpacity
+        style={{
+          backgroundColor: "#10AB8F",
+          padding: 12,
+          borderRadius: 16,
+          height: 24,
+          width: 180,
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "row",
+          gap: 8,
+        }}
+        onPress={handleLinkPressed}
+      >
+        <Text
+          style={{
+            color: "white",
+            fontFamily: "KarlaRegular",
+            textAlign: "center",
+            fontSize: 16,
+            alignSelf: "center",
+            // width: 200,
+            height: 20,
+          }}
+        >
+          Link to Website
+        </Text>
+        <Image
+          source={require("@/assets/images/arrow-up-right.png")}
+          style={{ height: 14, width: 14 }}
+        />
       </TouchableOpacity>
     </View>
   );
