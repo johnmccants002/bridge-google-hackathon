@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Benefit } from "./mockData/benefits_mock";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { isValidUrl } from "@/constants/helpers";
 
 interface BenefitCellProps {
   benefit: Benefit;
@@ -55,38 +56,43 @@ const BenefitCell = (props: BenefitCellProps) => {
         </View>
       </View>
       <Text style={styles.textSmall}>{description}</Text>
-      <TouchableOpacity
-        style={{
-          backgroundColor: "#10AB8F",
-          padding: 14,
-          borderRadius: 16,
-          height: 24,
-          width: 150,
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "row",
-          gap: 8,
-        }}
-        onPress={handleLinkPressed}
-      >
-        <Text
+
+      {isValidUrl(link) ? (
+        <TouchableOpacity
           style={{
-            color: "white",
-            fontFamily: "KarlaRegular",
-            textAlign: "center",
-            fontSize: 16,
-            alignSelf: "center",
-            // width: 200,
-            height: 20,
+            backgroundColor: "#10AB8F",
+            padding: 14,
+            borderRadius: 16,
+            height: 24,
+            width: 150,
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "row",
+            gap: 8,
           }}
+          onPress={handleLinkPressed}
         >
-          Link to website
-        </Text>
-        <Image
-          source={require("@/assets/images/arrow-up-right.png")}
-          style={{ height: 12, width: 12 }}
-        />
-      </TouchableOpacity>
+          <Text
+            style={{
+              color: "white",
+              fontFamily: "KarlaRegular",
+              textAlign: "center",
+              fontSize: 16,
+              alignSelf: "center",
+              // width: 200,
+              height: 20,
+            }}
+          >
+            Link to website
+          </Text>
+          <Image
+            source={require("@/assets/images/arrow-up-right.png")}
+            style={{ height: 12, width: 12 }}
+          />
+        </TouchableOpacity>
+      ) : (
+        <Text style={styles.textSmall}>{link}</Text>
+      )}
     </View>
   );
 };
