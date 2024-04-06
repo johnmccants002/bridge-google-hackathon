@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import { Benefit } from "./mockData/benefits_mock";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 interface BenefitCellProps {
   benefit: Benefit;
@@ -25,16 +26,20 @@ const BenefitCell = (props: BenefitCellProps) => {
   };
 
   return (
-    <View style={styles.descriptionItems}>
+    <View style={styles.itemContainer}>
       <View style={styles.row}>
-        <Text style={styles.textRegular}>{name}</Text>
-        <Text>{"(" + category + ")"}</Text>
+        <Text style={[styles.textRegular, { width: 140 }]}>{name}</Text>
+        <View style={{ flexDirection: "row", gap: 4, alignItems: "center" }}>
+          <MaterialCommunityIcons name={categoryIcons[`${category}`].icon} />
+
+          <Text>{category}</Text>
+        </View>
       </View>
       <Text style={styles.textSmall}>{description}</Text>
       <TouchableOpacity
         style={{
           backgroundColor: "#10AB8F",
-          padding: 12,
+          padding: 14,
           borderRadius: 16,
           height: 24,
           width: 180,
@@ -56,7 +61,7 @@ const BenefitCell = (props: BenefitCellProps) => {
             height: 20,
           }}
         >
-          Link to Website
+          Link to website
         </Text>
         <Image
           source={require("@/assets/images/arrow-up-right.png")}
@@ -75,23 +80,25 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: "solid",
   },
-  descriptionItems: {
+  itemContainer: {
     flex: 1,
     flexDirection: "column",
     padding: 8,
+    gap: 12,
+    paddingTop: 12,
   },
   row: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 8,
+
+    alignItems: "flex-start",
   },
   buttonText: {
     color: "#227272",
     fontFamily: "KarlaBold",
   },
   textRegular: {
-    fontFamily: "KarlaRegular",
+    fontFamily: "KarlaMedium",
     fontSize: 16,
     padding: 0,
   },
@@ -102,6 +109,7 @@ const styles = StyleSheet.create({
   textSmall: {
     fontFamily: "KarlaRegular",
     fontSize: 14,
+    width: "90%",
   },
   line: {
     borderBottomColor: "black",
@@ -112,3 +120,26 @@ const styles = StyleSheet.create({
 });
 
 export default BenefitCell;
+
+const categoryIcons = {
+  "Financial Assistance": {
+    pack: "MaterialCommunityIcons",
+    icon: "account-cash",
+  },
+  "Food and Nutrition": {
+    pack: "MaterialCommunityIcons",
+    icon: "food-apple",
+  },
+  Healthcare: {
+    pack: "MaterialCommunityIcons",
+    icon: "hospital-box",
+  },
+  Housing: {
+    pack: "MaterialCommunityIcons",
+    icon: "home-city",
+  },
+  "Social and Community Support": {
+    pack: "MaterialCommunityIcons",
+    icon: "account-group",
+  },
+};
