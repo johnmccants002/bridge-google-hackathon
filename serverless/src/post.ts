@@ -1,3 +1,9 @@
+/** Lambda Function
+ * 
+ * Post user data to DynamoDB
+ * @param event {object} - Request object
+ */
+
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient, PutCommand } from '@aws-sdk/lib-dynamodb';

@@ -7,11 +7,7 @@ plugins:
   - serverless-iam-roles-per-function
   - serverless-plugin-tracing
   - serverless-dynamodb-local
-  - serverless-offline
-
-package:
-  patterns:
-    - '../node_modules/**'
+  - serverless-offline    
 
 provider:
   name: aws
@@ -78,6 +74,18 @@ functions:
           - dynamodb:Query
         Resource:
           - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.USER_SCHEMA}"
+
+  geminiHandler:
+    handler: src/gemini.handler
+    events:
+      - http:
+          path: /gemini
+          method: post
+          cors: true
+          request:
+            schemas:
+              application/json: ${file(models/gemini-model.json)}
+    timeout: 30
 
 resources:
   Resources:
