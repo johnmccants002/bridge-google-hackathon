@@ -76,15 +76,27 @@ functions:
           - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.USER_SCHEMA}"
 
   geminiHandler:
-    handler: src/gemini.handler
+    handler: src/geminiBenefits.handler
     events:
       - http:
-          path: /gemini
+          path: /gemini/benefits
           method: post
           cors: true
           request:
             schemas:
-              application/json: ${file(models/gemini-model.json)}
+              application/json: ${file(models/gemini-benefits-model.json)}
+    timeout: 30
+
+  geminiParseHandler:
+    handler: src/geminiUserData.handler
+    events:
+      - http:
+          path: /gemini/userdata
+          method: post
+          cors: true
+          request:
+            schemas:
+              application/json: ${file(models/gemini-user-data-model.json)}
     timeout: 30
 
 resources:
