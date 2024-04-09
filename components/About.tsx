@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import React from "react";
 import {
   View,
@@ -6,42 +7,75 @@ import {
   Pressable,
   Image,
   TextInput,
+  Alert,
+  Button,
 } from "react-native";
 // import QuestionMarkIcon from "../assets/images/question-mark-icon.png";
 
+const createThreeButtonAlert = () =>
+  Alert.alert('',
+    `Bridge uses the info you provide to pull resources from federal, state, and local databases. 
+     Factors that help us determine available resources:
+
+     • Age
+     • Citizenship status
+     • Location (state, city)
+     • Household size
+     • Household income
+     • Employment status
+     • Marriage status
+     • Disability status`
+    , [
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
+
 const About = () => {
+  const router = useRouter();
+
   return (
     <View style={styles.container}>
       <Text style={styles.textBold}>
         Tell us a little about yourself and your situation.
       </Text>
-      <Text style={styles.textBold}>How can we help?</Text>
+
       <View
         style={{
           flexDirection: "row",
           alignItems: "center",
+          justifyContent: "space-between",
           gap: 8,
         }}
       >
-        <TextInput
-          style={{
-            backgroundColor: "white",
-            width: 240,
-            color: "gray",
-            height: 35,
-            borderRadius: 16,
-            paddingHorizontal: 10,
-            marginTop: 10,
-          }}
-          placeholder="Start typing here"
-        />
-        <View>
+        <Text style={styles.textBold}>How can we help?</Text>
+        <Pressable
+          onPress={createThreeButtonAlert}
+        >
           <Image
             source={require("../assets/images/question-mark-icon.png")}
             style={{ height: 35, width: 35, marginTop: 4 }}
           />
-        </View>
+        </Pressable>
+
       </View>
+
+
+      <TextInput
+        style={styles.textInput}
+        allowFontScaling
+        editable
+        multiline
+        textAlignVertical="center"
+        placeholder="Start typing here"
+        placeholderTextColor="#125858"
+      />
+
+      <Pressable
+        style={styles.confirmButton}
+        onPress={() => router.push("/results")}
+      >
+        <Text style={styles.confirmButtonText}>Search</Text>
+      </Pressable>
+
     </View>
   );
 };
@@ -51,7 +85,35 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#4BA4A4",
     paddingTop: 140,
-    paddingLeft: 20,
+    padding: 16,
+  },
+  textInput: {
+    backgroundColor: "white",
+    // width: 240,
+    width: "100%",
+    // minHeight: 32,
+    borderRadius: 8,
+    padding: 8,
+    paddingTop: 8,
+    marginTop: 20,
+    marginBottom: 40,
+    fontSize: 16,
+    color: "#125858"
+  },
+  confirmButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 40,
+    borderRadius: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    // borderRadius: 4,
+    elevation: 3,
+    backgroundColor: 'white',
+  },
+  confirmButtonText: {
+    color: "#125858",
+    fontFamily: "KarlaBold",
   },
   textRegular: {
     color: "#E9FBFF",
