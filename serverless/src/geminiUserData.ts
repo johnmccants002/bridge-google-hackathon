@@ -21,9 +21,9 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
 
   const url = `${baseUrl}/v1beta/models/gemini-pro:generateContent?key=${key}`;
 
-  const requestBody = event.body ? JSON.parse(event.body) : { age: 68, income: '<15000', ethnicity: 'Native American', veteran: 'veteran', gender: 'non_binary', disability: 'not disabled' };
-  const { age, income, ethnicity, veteran, gender, disability } = requestBody;
-  const query = `Create a list of government benefit programs offered in the United States. Present the information in a JSON format like this: type Benefit = {name: string;description: string;c'Healthcare' | 'Housing' | 'Financial Assistance' | 'Food and Nutrition';link: string;};type BenefitCategory = {type: 'Federal' | 'State' | 'Local';benefits: Benefit[];};type BenefitsSchema = {data: BenefitCategory[];};. Focus on programs that assist a person in the following demographics (ignore programs that this person would not qualify for): ${age} years old, income ${income}, ${ethnicity}, ${veteran}, ${gender}, ${disability}`
+  const requestBody = event.body;
+  const { text } = JSON.parse(requestBody || '{}');
+  const query = 'Extract a JSON object with the following properties: income: [value: <15000},value: 15000-30000},value: 30000-50000},value: >50000},],ethnicity: [value: hispanic_latino},value: caucasian},value: african_american},value: asian},value: native_american},value: pacific_islander},value: other},],veteran_status: [value: veteran},value: active_duty},value: reserve},value: non_veteran},],gender: [value: female},value: male},value: non_binary},value: prefer_not_to_say},value: other},]. Do not include ```json. Take the informaiton from the following text: ' + text
   
   const requestToGeminiBody = {
     "contents": [{
@@ -52,6 +52,5 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
 function cleanJsonString(str: string) {
   let cleanedString = str.replace(/\\n/g, '');
   cleanedString = cleanedString.replace(/\\/g, '');
-  cleanedString = cleanedString.replace(/```json/g, '');
   return cleanedString;
 }
