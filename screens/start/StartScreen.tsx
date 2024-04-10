@@ -9,6 +9,7 @@ import {
   Platform,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import CTAButton from "@/components/buttons/CTAButton";
 
 interface Props {}
 
@@ -39,28 +40,17 @@ const Component = (props: Props) => {
           No wondering if you're missing something.
         </Text>
         <Text style={styles.textRegular}>Just help.</Text>
-        <Pressable
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            backgroundColor: "white",
-            padding: 12,
-            width: 164,
-            height: 48,
-            borderRadius: 16,
-            gap: 8,
-            justifyContent: "center",
-            marginTop: 40,
-          }}
-          onPress={() =>
-            Platform.OS === "web"
-              ? router.push("/search")
-              : router.push("/results")
-          }
-        >
-          <Text style={styles.buttonText}>Get Started</Text>
-          <MaterialCommunityIcons name="arrow-right" color={"#4BA4A4"} />
-        </Pressable>
+        <View style={{ width: 200, marginTop: 20 }}>
+          <CTAButton
+            text="Get Started"
+            type="primary"
+            onPress={() =>
+              Platform.OS === "web"
+                ? router.push("/search")
+                : router.push("/results")
+            }
+          />
+        </View>
       </View>
       <Pressable
         style={{ bottom: 60, alignSelf: "center", position: "absolute" }}
