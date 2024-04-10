@@ -1,14 +1,9 @@
 import React from "react";
 import { Pressable, Text, StyleSheet, ViewStyle } from "react-native";
-export const Colors = {
-  accentLight: "#E9FFFF",
-  accentDark: "#125858",
-  accentPrimary: "#10AB8F",
-  black: "#000000E5",
-  white: "white",
-};
 
+import { Colors } from "@/constants/Colors";
 import Fonts from "@/constants/Fonts";
+import { AntDesign } from "@expo/vector-icons";
 
 // Assuming Colors is defined in another file, import it
 
@@ -38,6 +33,8 @@ const CTAButton: React.FC<CTAButtonProps> = ({ onPress, text, type }) => {
       width: "auto",
       paddingHorizontal: 16,
       borderRadius: 24,
+      flexDirection: "row",
+      gap: 8,
     },
 
     secondary: {
@@ -48,6 +45,8 @@ const CTAButton: React.FC<CTAButtonProps> = ({ onPress, text, type }) => {
       width: "auto",
       borderRadius: 16,
       paddingHorizontal: 16,
+      flexDirection: "row",
+      gap: 8,
     },
   });
 
@@ -74,6 +73,10 @@ const CTAButton: React.FC<CTAButtonProps> = ({ onPress, text, type }) => {
     <Pressable style={buttonStyle[type]} onPress={onPress}>
       {/* Assuming you want to display the iconName or some text here */}
       <Text style={textStyle[type]}>{text}</Text>
+      <AntDesign
+        name={type === "primary" ? "arrowright" : "check"}
+        color={type === "primary" ? Colors.accentDark : Colors.accentLight}
+      />
 
       {/* If you have an Icon component, it could be used here based on iconName */}
     </Pressable>

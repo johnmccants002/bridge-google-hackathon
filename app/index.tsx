@@ -1,24 +1,16 @@
-import { useState, useEffect } from "react";
-import { Link, useRouter } from "expo-router";
-import { View, Text, StyleSheet, Pressable, Image } from "react-native";
+import { useRouter } from "expo-router";
+import { useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
 
-import CTAButton from "@/components/buttons/CTAButton";
+import StartScreen from "@/screens/start/StartScreen";
 
 interface Props {}
 
-const Component = (props: Props) => {
-  const router = useRouter();
-  const [item, setItem] = useState("");
-
+const Page = (props: Props) => {
   useEffect(() => {}, []);
   return (
     <View style={styles.container}>
-      {/* <LogoContainer /> */}
-      <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <CTAButton text="Continue" onPress={() => {}} type="secondary" />
-      </View>
-
-      {/* <SplashScreen /> */}
+      <StartScreen />
     </View>
   );
 };
@@ -34,4 +26,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Component;
+export default Page;
