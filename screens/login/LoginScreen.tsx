@@ -12,10 +12,12 @@ import {
 import LogoContainer from "../../components/LogoContainer";
 import { AntDesign } from "@expo/vector-icons";
 import { defaultStyles } from "../../components/defaultStyles";
+import { useRouter } from "expo-router";
 
 type Props = {};
 
 const LoginScreen = (props: Props) => {
+  const router = useRouter();
   const { width } = useWindowDimensions();
   return (
     <View style={styles.container}>
@@ -62,7 +64,10 @@ const LoginScreen = (props: Props) => {
           </View>
         </View>
 
-        <TouchableOpacity style={defaultStyles.button}>
+        <TouchableOpacity
+          style={defaultStyles.button}
+          onPress={() => router.push("/profile")}
+        >
           <Text style={defaultStyles.buttonText}>Login</Text>
           <AntDesign name="arrowright" color={"#1C6A6A"} />
         </TouchableOpacity>
