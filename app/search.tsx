@@ -1,8 +1,8 @@
-import About from "@/components/About";
-import ResourceScreen from "@/components/ResourceScreen";
+import About from "@/screens/queryEntry/QueryEntryScreen";
+import ResourceScreen from "@/screens/resources/ResourceScreen";
 import React from "react";
 import { View, useWindowDimensions } from "react-native";
-import { response } from "@/components/mockData/benefits_mock";
+import { response } from "@/screens/resources/mockData/benefits_mock";
 import LogoContainer from "@/components/LogoContainer";
 
 type Props = {};

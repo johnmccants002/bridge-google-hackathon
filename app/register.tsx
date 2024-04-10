@@ -1,4 +1,4 @@
-import RegisterScreen from "@/components/RegisterScreen";
+import RegisterScreen from "@/screens/registration/RegisterScreen";
 import React from "react";
 
 type Props = {};

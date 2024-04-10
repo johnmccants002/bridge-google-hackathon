@@ -9,13 +9,13 @@ import {
   TouchableOpacity,
   useWindowDimensions,
 } from "react-native";
-import LogoContainer from "./LogoContainer";
+import LogoContainer from "../../components/LogoContainer";
 import { AntDesign } from "@expo/vector-icons";
-import { defaultStyles } from "./defaultStyles";
+import { defaultStyles } from "../../components/defaultStyles";
 
 type Props = {};
 
-const LoginScreen = (props: Props) => {
+const RegisterScreen = (props: Props) => {
   const { width } = useWindowDimensions();
   return (
     <View style={styles.container}>
@@ -34,9 +34,9 @@ const LoginScreen = (props: Props) => {
           style={{ height: 80, width: 80 }}
         />
         <Text style={defaultStyles.textBold}>
-          Login to your Bridge account.
+          Creating a bridge account lets you save your results and access them
+          anytime.
         </Text>
-
         <View
           style={{
             paddingTop: 20,
@@ -46,6 +46,20 @@ const LoginScreen = (props: Props) => {
             alignItems: "center",
           }}
         >
+          <View>
+            <Text style={defaultStyles.inputLabelText}>First</Text>
+            <TextInput
+              style={[styles.input, { width: width - 40 }]}
+              placeholder="John"
+            />
+          </View>
+          <View>
+            <Text style={defaultStyles.inputLabelText}>Last</Text>
+            <TextInput
+              style={[styles.input, { width: width - 40 }]}
+              placeholder="Smith"
+            />
+          </View>
           <View>
             <Text style={defaultStyles.inputLabelText}>Email</Text>
             <TextInput
@@ -63,7 +77,7 @@ const LoginScreen = (props: Props) => {
         </View>
 
         <TouchableOpacity style={defaultStyles.button}>
-          <Text style={defaultStyles.buttonText}>Login</Text>
+          <Text style={defaultStyles.buttonText}>Create Account</Text>
           <AntDesign name="arrowright" color={"#1C6A6A"} />
         </TouchableOpacity>
       </View>
@@ -91,4 +105,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default RegisterScreen;

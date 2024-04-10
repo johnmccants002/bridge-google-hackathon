@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link, useRouter } from "expo-router";
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
-import SplashScreen from "@/components/SplashScreen";
-import About from "@/components/About";
+import SplashScreen from "@/screens/splash/SplashScreen";
+import About from "@/screens/queryEntry/QueryEntryScreen";
 import LogoContainer from "@/components/LogoContainer";
-import ResourceScreen from "@/components/ResourceScreen";
-import { response } from "@/components/mockData/benefits_mock";
-import AccountCreated from "@/components/AccountCreated";
+import ResourceScreen from "@/screens/resources/ResourceScreen";
+import { response } from "@/screens/resources/mockData/benefits_mock";
+import AccountCreated from "@/screens/accountCreated/AccountCreatedScreen";
 
 interface Props {}
 

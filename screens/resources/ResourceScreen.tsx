@@ -1,4 +1,4 @@
-import { Datum } from "@/components/mockData/benefits_mock";
+import { Datum } from "@/screens/resources/mockData/benefits_mock";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
 import {
@@ -11,14 +11,14 @@ import {
   View,
 } from "react-native";
 import BenefitList from "./BenefitList";
-import { defaultStyles } from "./defaultStyles";
+import { defaultStyles } from "../../components/defaultStyles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 interface Props {
   data: Datum[];
 }
 
-const ResourceScreen = (props: Props) => {
+const ResourcesScreen = (props: Props) => {
   const router = useRouter();
 
   const { data } = props;
@@ -144,4 +144,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ResourceScreen;
+export default ResourcesScreen;

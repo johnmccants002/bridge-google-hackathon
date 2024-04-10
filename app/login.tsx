@@ -1,4 +1,4 @@
-import LoginScreen from "@/components/LoginScreen";
+import LoginScreen from "@/screens/login/LoginScreen";
 import LogoContainer from "@/components/LogoContainer";
 import React from "react";
 import { View } from "react-native";

@@ -9,7 +9,7 @@ import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 
-import { useColorScheme } from "@/components/useColorScheme";
+import { useColorScheme } from "@/hooks/useColorScheme";
 import { Pressable, Text, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
@@ -103,7 +103,6 @@ function RootLayoutNav() {
           }}
         />
 
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="register" options={{ headerShown: false }} />
         <Stack.Screen name="account-created" options={{ headerShown: false }} />
