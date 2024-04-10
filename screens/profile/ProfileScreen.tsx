@@ -1,5 +1,5 @@
 import { AntDesign } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   Platform,
@@ -13,12 +13,29 @@ import { Dropdown } from "react-native-element-dropdown";
 import Select from "react-select";
 import { defaultStyles } from "../../components/defaultStyles";
 import "./index.css";
+import { useQuery } from "@tanstack/react-query";
+
+interface ResponseData {
+  createdAt: number;
+  demographics: Demographics;
+  id: string;
+  updatedAt: number;
+}
+
+interface Demographics {
+  income: number;
+  ethnicity: string;
+  veteran: boolean;
+  gender: string;
+  age: number;
+  disability: boolean;
+}
 
 const ageOptions = [
   { label: "68 years old", value: "68" },
   { label: "67 years old", value: "67" },
   { label: "66 years old", value: "66" },
-  { label: "65 years old", value: "65" },
+  { label: "24 years old", value: "24" },
 ];
 
 const incomeOptions = [
@@ -30,7 +47,7 @@ const incomeOptions = [
 
 const ethnicityOptions = [
   { label: "Hispanic/Latino", value: "hispanic_latino" },
-  { label: "Caucasian", value: "caucasian" },
+  { label: "Caucasian", value: "white" },
   { label: "African American", value: "african_american" },
   { label: "Asian", value: "asian" },
   { label: "Native American", value: "native_american" },
@@ -52,6 +69,77 @@ const genderOptions = [
   { label: "Prefer not to say", value: "prefer_not_to_say" },
   { label: "Other", value: "other" },
 ];
+
+const disabilityOptions = [
+  { label: "Disabled", value: "disabled" },
+  { label: "Not Disabled", value: "not_disabled" },
+];
+
+interface DropdownOption {
+  label: string;
+  value: string | number; // Adjust this type based on your actual value types
+}
+
+// Define a type for the keys used in demographicMappings
+type DemographicKey =
+  | "age"
+  | "income"
+  | "ethnicity"
+  | "veteran"
+  | "gender"
+  | "disability";
+
+// Assuming demographicMappings is an object with keys of DemographicKey type
+// and values of DropdownOption array type
+const demographicMappings: Record<DemographicKey, DropdownOption[]> = {
+  age: ageOptions,
+  income: incomeOptions,
+  ethnicity: ethnicityOptions,
+  veteran: veteranStatusOptions,
+  gender: genderOptions,
+  disability: disabilityOptions,
+  // Add other mappings as necessary
+};
+
+function determineIncomeOption(income: number): DropdownOption {
+  return (
+    incomeOptions.find((option) => {
+      const value = option.value;
+      if (value.startsWith("<")) {
+        const maxValue = parseInt(value.substring(1), 10);
+        return income < maxValue;
+      } else if (value.startsWith(">")) {
+        const minValue = parseInt(value.substring(1), 10);
+        return income > minValue;
+      } else {
+        const [minValue, maxValue] = value.split("-").map(Number);
+        return income >= minValue && income <= maxValue;
+      }
+    }) || incomeOptions[0]
+  ); // Default to the first option if no match is found
+}
+
+function findDropdownValue(
+  demographicKey: DemographicKey,
+  value: string | number | boolean
+): string {
+  const options = demographicMappings[demographicKey];
+
+  // Custom mapping logic here based on the demographicKey and value
+  if (demographicKey === "veteran" || demographicKey === "disability") {
+    return (
+      options
+        .find((option) => option.value === (value ? "veteran" : "non_veteran"))
+        ?.value.toString() || ""
+    );
+  }
+
+  return (
+    options
+      .find((option) => option.value.toString() === value.toString())
+      ?.value.toString() || ""
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -160,6 +248,40 @@ const ProfileScreen = () => {
   const [veteranStatus, setVeteranStatus] = useState("veteran");
   const [gender, setGender] = useState("female");
   const [emailToggle, setEmailToggle] = useState(true);
+  const { isPending, error, data } = useQuery({
+    queryKey: ["repoData"],
+    queryFn: async (): Promise<ResponseData> => {
+      const response = await fetch(
+        "https://dpnk8ddrr0.execute-api.us-west-1.amazonaws.com/dev/handler/test@example.com"
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    },
+  });
+
+  useEffect(() => {
+    // Only update states if data is available
+    if (data) {
+      setAge(findDropdownValue("age", data.demographics.age));
+      setIncome(findDropdownValue("income", data.demographics.income));
+      setEthnicity(findDropdownValue("ethnicity", data.demographics.ethnicity));
+      setVeteranStatus(findDropdownValue("veteran", data.demographics.veteran));
+      setGender(findDropdownValue("gender", data.demographics.gender));
+    }
+  }, [data]);
+
+  // useEffect(() => {
+  //   console.log("THIS IS THE DATA: ", data);
+  // }, [data]);
+
+  if (isPending)
+    return (
+      <View>
+        <Text>Loading data...</Text>
+      </View>
+    );
 
   return (
     <View style={styles.container}>
@@ -197,7 +319,7 @@ const ProfileScreen = () => {
 
       <DropdownComponent
         label="Income"
-        value={income}
+        value={determineIncomeOption(parseInt(income))}
         onValueChange={setIncome}
         items={incomeOptions}
       />
