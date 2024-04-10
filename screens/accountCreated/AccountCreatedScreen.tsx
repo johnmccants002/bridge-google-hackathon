@@ -6,13 +6,13 @@ import {
   Image,
   useWindowDimensions,
 } from "react-native";
-import { defaultStyles } from "./defaultStyles";
-import LogoContainer from "./LogoContainer";
+import { defaultStyles } from "../../components/defaultStyles";
+import LogoContainer from "../../components/LogoContainer";
 import { AntDesign } from "@expo/vector-icons";
 
 type Props = {};
 
-const AccountCreated = (props: Props) => {
+const AccountCreatedScreen = (props: Props) => {
   const { height } = useWindowDimensions();
   return (
     <View style={defaultStyles.container}>
@@ -42,4 +42,4 @@ const AccountCreated = (props: Props) => {
   );
 };
 
-export default AccountCreated;
+export default AccountCreatedScreen;

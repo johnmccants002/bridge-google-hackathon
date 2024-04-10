@@ -1,4 +1,4 @@
-import ProfileScreen from "@/components/ProfileScreen";
+import ProfileScreen from "@/screens/profile/ProfileScreen";
 import React from "react";
 
 type Props = {};

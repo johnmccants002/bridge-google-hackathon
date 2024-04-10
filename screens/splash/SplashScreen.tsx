@@ -24,7 +24,7 @@ const Component = (props: Props) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../assets/images/bridgelogo.png")}
+        source={require("@/assets/images/bridgelogo.png")}
         style={{ top: 40, left: 20, resizeMode: "contain", width: 100 }}
       />
       <View style={{ marginTop: 140, paddingLeft: 20 }}>

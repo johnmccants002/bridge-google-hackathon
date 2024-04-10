@@ -1,4 +1,4 @@
-import AccountCreated from "@/components/AccountCreated";
+import AccountCreated from "@/screens/accountCreated/AccountCreatedScreen";
 import React from "react";
 
 type Props = {};

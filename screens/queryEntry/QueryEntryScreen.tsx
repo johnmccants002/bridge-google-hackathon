@@ -29,7 +29,7 @@ const createThreeButtonAlert = () =>
       { text: 'OK', onPress: () => console.log('OK Pressed') },
     ]);
 
-const About = () => {
+const QueryEntryScreen = () => {
   const router = useRouter();
 
   return (
@@ -51,7 +51,7 @@ const About = () => {
           onPress={createThreeButtonAlert}
         >
           <Image
-            source={require("../assets/images/question-mark-icon.png")}
+            source={require("@/assets/images/question-mark-icon.png")}
             style={{ height: 35, width: 35, marginTop: 4 }}
           />
         </Pressable>
@@ -130,4 +130,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default About;
+export default QueryEntryScreen;

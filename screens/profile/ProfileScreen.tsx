@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import Select from "react-select";
-import { defaultStyles } from "./defaultStyles";
+import { defaultStyles } from "../../components/defaultStyles";
 import "./index.css";
 
 const ageOptions = [
