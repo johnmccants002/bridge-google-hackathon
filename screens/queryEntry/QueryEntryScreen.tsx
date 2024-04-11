@@ -10,7 +10,7 @@ import {
   Alert,
   Button,
 } from "react-native";
-// import QuestionMarkIcon from "../assets/images/question-mark-icon.png";
+import LoadingAnimation from "./LoadingAnimation";
 
 const createThreeButtonAlert = () =>
   Alert.alert('',
@@ -69,12 +69,7 @@ const QueryEntryScreen = () => {
         placeholderTextColor="#125858"
       />
 
-      <Pressable
-        style={styles.confirmButton}
-        onPress={() => router.push("/results")}
-      >
-        <Text style={styles.confirmButtonText}>Search</Text>
-      </Pressable>
+      <LoadingAnimation />
 
     </View>
   );

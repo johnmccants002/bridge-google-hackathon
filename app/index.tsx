@@ -1,12 +1,8 @@
 import { useState, useEffect } from "react";
-import { Link, useRouter } from "expo-router";
-import { View, Text, StyleSheet, Pressable, Image } from "react-native";
+import { useRouter } from "expo-router";
+import { View, StyleSheet } from "react-native";
 import SplashScreen from "@/screens/splash/SplashScreen";
-import About from "@/screens/queryEntry/QueryEntryScreen";
-import LogoContainer from "@/components/LogoContainer";
-import ResourceScreen from "@/screens/resources/ResourceScreen";
-import { response } from "@/screens/resources/mockData/benefits_mock";
-import AccountCreated from "@/screens/accountCreated/AccountCreatedScreen";
+import QueryEntryScreen from "@/screens/queryEntry/QueryEntryScreen";
 
 interface Props {}
 
@@ -17,9 +13,7 @@ const Component = (props: Props) => {
   useEffect(() => {}, []);
   return (
     <View style={styles.container}>
-      {/* <LogoContainer /> */}
-
-      <SplashScreen />
+      <QueryEntryScreen />
     </View>
   );
 };
