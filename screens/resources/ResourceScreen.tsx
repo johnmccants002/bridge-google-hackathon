@@ -1,6 +1,6 @@
 import { Datum } from "@/screens/resources/mockData/benefits_mock";
 import { useRouter } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -19,6 +19,39 @@ interface Props {
 }
 
 const ResourcesScreen = (props: Props) => {
+  const [emailState, setEmailState] = useState("")
+
+
+  const [errorMessage, setErrorMessage] = useState('');
+  const email  = emailState;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!errorMessage) {
+      console.log('Submit Form', formState);
+    }
+  };
+
+  const handleChange = (e) => {
+    if (e.target.name === 'email') {
+      const isValid = validateEmail(e.target.value);
+      if (!isValid) {
+        setErrorMessage('Your email is invalid.');
+      } else {
+        setErrorMessage('');
+      }
+    } else {
+      if (!e.target.value.length) {
+        setErrorMessage(`${e.target.name} is required.`);
+      } else {
+        setErrorMessage('');
+      }
+    }
+    if (!errorMessage) {
+      setEmailState({ ...emailState, [e.target.name]: e.target.value });
+      console.log('Handle Form', emailState);
+    }
+  };
   const router = useRouter();
 
   const { data } = props;
@@ -63,6 +96,7 @@ const ResourcesScreen = (props: Props) => {
           <Text>Save to profile</Text>
           <MaterialCommunityIcons name="check" color={"#125858"} size={20} />
         </TouchableOpacity>
+        <form action="submit" onSubmit={handleSubmit}>
         <View
           style={{
             backgroundColor: "#10AB8F",
@@ -84,6 +118,7 @@ const ResourcesScreen = (props: Props) => {
           <View>
             <Text style={defaultStyles.inputLabelText}>Your Email</Text>
             <TextInput
+              name="email" 
               style={defaultStyles.input}
               placeholder="example@mail.com"
             />
@@ -99,6 +134,7 @@ const ResourcesScreen = (props: Props) => {
             </TouchableOpacity>
           </View>
         </View>
+        </form>
       </ScrollView>
     </>
   );
