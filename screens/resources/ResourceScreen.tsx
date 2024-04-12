@@ -44,14 +44,25 @@ const ResourcesScreen = (props: Props) => {
     }
 
     emailjs
-      .send('service_iyl7re8', 'template_482g639', formRef.current,
+      .send('service_iyl7re8', 'template_482g639', 
         {
-          to: emailState,
+          to_email: [`${emailState}`],
           subject: 'Resource List from Bridge',
-          body: 'Your email body',
-          publicKey: 'y1DaFwS2V7KFYvabW',
+          message: `<!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Document</title>
+          </head>
+          <body>
+              <p>test</p>
+          </body>
+          </html>`,
+          cc_email: [`${emailState}`],
+          isHtml: true, 
         },
-
+        'y1DaFwS2V7KFYvabW'
       )
       .then(() => {
         console.log('Email sent successfully');
@@ -145,6 +156,7 @@ const ResourcesScreen = (props: Props) => {
           <View>
             <Text style={defaultStyles.inputLabelText}>Your Email</Text>
             <TextInput
+            value={emailState}
               onChangeText={((text) => {
                 setEmailState(text);
                 setErrorMessage('');
