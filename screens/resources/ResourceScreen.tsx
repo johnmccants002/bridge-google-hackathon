@@ -1,6 +1,7 @@
 import { Datum } from "@/screens/resources/mockData/benefits_mock";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
+
 import {
   ScrollView,
   StyleSheet,
@@ -13,50 +14,76 @@ import {
 import BenefitList from "./BenefitList";
 import { defaultStyles } from "../../components/defaultStyles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React, { useRef } from 'react';
+import emailjs from '@emailjs/browser';
+
+
 
 interface Props {
   data: Datum[];
 }
 
 const ResourcesScreen = (props: Props) => {
+  const formRef = useRef();
   const [emailState, setEmailState] = useState("")
-
-
   const [errorMessage, setErrorMessage] = useState('');
+
   const email  = emailState;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!errorMessage) {
-      console.log('Submit Form', formState);
-    }
+  const handleChange = () => {
+      setEmailState({ ...emailState });
+      console.log('Handle Form', emailState);
   };
 
-  const handleChange = (e) => {
-    if (e.target.name === 'email') {
-      const isValid = validateEmail(e.target.value);
-      if (!isValid) {
-        setErrorMessage('Your email is invalid.');
-      } else {
-        setErrorMessage('');
-      }
-    } else {
-      if (!e.target.value.length) {
-        setErrorMessage(`${e.target.name} is required.`);
-      } else {
-        setErrorMessage('');
-      }
+  const handleSubmit = () => {
+
+    console.log(emailState)
+    if (!emailState) {
+      setErrorMessage('Email is required');
+      return;
     }
-    if (!errorMessage) {
-      setEmailState({ ...emailState, [e.target.name]: e.target.value });
-      console.log('Handle Form', emailState);
-    }
+
+    emailjs
+      .send('service_iyl7re8', 'template_482g639', formRef.current,
+        {
+          to: emailState,
+          subject: 'Resource List from Bridge',
+          body: 'Your email body',
+          publicKey: 'y1DaFwS2V7KFYvabW',
+        },
+
+      )
+      .then(() => {
+        console.log('Email sent successfully');
+      })
+      .catch((error) => {
+        console.error('Email sending failed:', error);
+      });
   };
   const router = useRouter();
 
   const { data } = props;
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+  }, []);
+
+  const sendEmail = () => {
+
+    emailjs
+      .sendForm('service_iyl7re8', 'template_482g639', form.current, {
+        publicKey: 'y1DaFwS2V7KFYvabW',
+        
+      })
+      .then(
+        () => {
+          console.log('SUCCESS!');
+        },
+        (error) => {
+          console.log('FAILED...', error);
+        },
+      );
+    }
+  
   return (
     <>
       <ScrollView
@@ -118,12 +145,19 @@ const ResourcesScreen = (props: Props) => {
           <View>
             <Text style={defaultStyles.inputLabelText}>Your Email</Text>
             <TextInput
+              onChangeText={((text) => {
+                setEmailState(text);
+                setErrorMessage('');
+                console.log(emailState)
+              })}
               name="email" 
               style={defaultStyles.input}
-              placeholder="example@mail.com"
+              placeholder="jaydevvs16@gmail.com"
             />
             <TouchableOpacity
-              style={[defaultStyles.button, { alignSelf: "center", gap: 20 }]}
+             onPress={(()=>handleSubmit())}
+             style={[defaultStyles.button, 
+              { alignSelf: "center", gap: 20 }]}
             >
               <Text style={[defaultStyles.buttonText]}>Send</Text>
               <MaterialCommunityIcons
