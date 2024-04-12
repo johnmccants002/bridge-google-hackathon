@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 import StartScreen from "@/screens/start/StartScreen";
+import LoadingAnimation from "@/components/LoadingAnimation";
 
 interface Props {}
 
