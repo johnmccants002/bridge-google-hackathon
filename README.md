@@ -86,4 +86,5 @@ npx expo start
 - **Nicole Granville** - _Developer_ - [Github](https://github.com/ngran4/)
 - **Eduardo Oliveira** - _Developer_ - [Github](https://github.com/edumtto)
 - **William Velichko** - _Developer_ - [Github](https://github.com/williamvelichko)
+- **Jacob Carver** - _Developer_ - [Github](https://github.com/jacobcarver)
 - **John McCants** - _Developer_ - [Github](https://github.com/johnmccants002/)
