@@ -51,6 +51,12 @@ functions:
           - dynamodb:Query
         Resource:
           - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.USER_SCHEMA}"
+      - Effect: Allow
+        Action:
+          - cognito-idp:AdminCreateUser
+        Resource: 'arn:aws:cognito-idp:us-east-1:098121828254:userpool/us-east-1_d0lpWvWK2'
+    
+    
 
   getHandler:
     handler: src/get.handler
