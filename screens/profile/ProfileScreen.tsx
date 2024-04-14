@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import {
   Image,
   Platform,
+  Pressable,
   StyleSheet,
   Switch,
   Text,
@@ -14,6 +15,7 @@ import Select from "react-select";
 import { defaultStyles } from "../../components/defaultStyles";
 import "./index.css";
 import { useQuery } from "@tanstack/react-query";
+import { Colors } from "@/constants/Colors";
 
 interface ResponseData {
   createdAt: number;
@@ -29,6 +31,7 @@ interface Demographics {
   gender: string;
   age: number;
   disability: boolean;
+  goal: string;
 }
 
 const ageOptions = [
@@ -75,6 +78,14 @@ const disabilityOptions = [
   { label: "Not Disabled", value: "not_disabled" },
 ];
 
+const goalOptions = [
+  { label: "Path to Citizenship", value: "path_citizenship" },
+  { label: "Seeking Temporary Visa", value: "temporary_visa" },
+  { label: "Seeking Green Card", value: "green_card" },
+  { label: "Refugee / Asylum seeker", value: "refugee_asylum_seeker" },
+  { label: "Other/Unsure", value: "other" },
+];
+
 interface DropdownOption {
   label: string;
   value: string | number; // Adjust this type based on your actual value types
@@ -87,7 +98,8 @@ type DemographicKey =
   | "ethnicity"
   | "veteran"
   | "gender"
-  | "disability";
+  | "disability"
+  | "goal";
 
 // Assuming demographicMappings is an object with keys of DemographicKey type
 // and values of DropdownOption array type
@@ -98,6 +110,7 @@ const demographicMappings: Record<DemographicKey, DropdownOption[]> = {
   veteran: veteranStatusOptions,
   gender: genderOptions,
   disability: disabilityOptions,
+  goal: goalOptions,
   // Add other mappings as necessary
 };
 
@@ -140,6 +153,201 @@ function findDropdownValue(
       ?.value.toString() || ""
   );
 }
+
+const Label = ({ children }) => <Text style={styles.label}>{children}</Text>;
+
+const DropdownComponent = ({ label, value, onValueChange, items }) => {
+  return (
+    <View style={{ zIndex: 1 }}>
+      <Label>{label}</Label>
+      {Platform.OS === "web" ? (
+        <Select
+          className={"dropdownWeb"}
+          value={items.find((item) => item.value === value)}
+          onChange={(selectedOption) => onValueChange(selectedOption.value)}
+          options={items}
+          menuPortalTarget={document.body}
+          styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+        />
+      ) : (
+        <Dropdown
+          data={items}
+          labelField="label"
+          valueField="value"
+          value={value}
+          onChange={(item) => onValueChange(item.value)}
+          style={styles.dropdown}
+          selectedTextStyle={{
+            paddingHorizontal: 8,
+            fontFamily: "KarlaRegular",
+          }}
+          renderRightIcon={() => (
+            <View
+              style={{
+                paddingRight: 12,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Image
+                source={require("@/assets/images/down.png")}
+                style={{ height: 10, width: 18 }}
+              />
+            </View>
+          )}
+        />
+      )}
+    </View>
+  );
+};
+
+const ProfileScreen = () => {
+  const [age, setAge] = useState("68");
+  const [goal, setGoal] = useState(goalOptions[0].label);
+  const [income, setIncome] = useState("<15000");
+  const [ethnicity, setEthnicity] = useState("hispanic_latino");
+  const [veteranStatus, setVeteranStatus] = useState("veteran");
+  const [gender, setGender] = useState("female");
+  const [emailToggle, setEmailToggle] = useState(true);
+  const { isPending, error, data } = useQuery({
+    queryKey: ["repoData"],
+    queryFn: async (): Promise<ResponseData> => {
+      const response = await fetch(
+        "https://dpnk8ddrr0.execute-api.us-west-1.amazonaws.com/dev/handler/test@example.com"
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    },
+  });
+
+  useEffect(() => {
+    // Only update states if data is available
+    if (data) {
+      setAge(findDropdownValue("age", data.demographics.age));
+      setIncome(findDropdownValue("income", data.demographics.income));
+      setEthnicity(findDropdownValue("ethnicity", data.demographics.ethnicity));
+      setVeteranStatus(findDropdownValue("veteran", data.demographics.veteran));
+      setGender(findDropdownValue("gender", data.demographics.gender));
+    }
+  }, [data]);
+
+  // useEffect(() => {
+  //   console.log("THIS IS THE DATA: ", data);
+  // }, [data]);
+
+  if (isPending)
+    return (
+      <View>
+        <Text>Loading data...</Text>
+      </View>
+    );
+
+  return (
+    <View style={styles.container}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+
+          alignItems: "center",
+        }}
+      >
+        <Text style={styles.header}>Hi John Smith</Text>
+        <Image
+          source={require("@/assets/images/greenhappy.png")}
+          style={{ height: 80, width: 80, marginVertical: 12 }}
+        />
+      </View>
+      <Text
+        style={{
+          fontFamily: "KarlaRegular",
+          fontSize: 24,
+          color: "#000000E5",
+          paddingBottom: 10,
+        }}
+      >
+        Your Goal
+      </Text>
+      <DropdownComponent
+        label=""
+        value={goal}
+        onValueChange={setGoal}
+        items={goalOptions}
+      />
+
+      <Text
+        style={{
+          fontFamily: "KarlaRegular",
+          fontSize: 24,
+          color: "#000000E5",
+          paddingBottom: 10,
+        }}
+      >
+        Your Demographics
+      </Text>
+      <DropdownComponent
+        label="Age"
+        value={age}
+        onValueChange={setAge}
+        items={ageOptions}
+      />
+
+      <DropdownComponent
+        label="Income"
+        value={determineIncomeOption(parseInt(income))}
+        onValueChange={setIncome}
+        items={incomeOptions}
+      />
+
+      <DropdownComponent
+        label="Ethnicity"
+        value={ethnicity}
+        onValueChange={setEthnicity}
+        items={ethnicityOptions}
+      />
+
+      <DropdownComponent
+        label="Gender"
+        value={gender}
+        onValueChange={setGender}
+        items={genderOptions}
+      />
+      <Pressable style={{ alignSelf: "center" }} onPress={() => {}}>
+        <Text style={styles.addText}>+ Add Additional Info</Text>
+      </Pressable>
+      <View style={styles.switchContainer}>
+        <Text style={styles.switchLabel}>
+          Email me when Bridge finds new resources?
+        </Text>
+        <Switch
+          value={emailToggle}
+          trackColor={{ true: "#10AB8F" }}
+          onValueChange={() => {
+            setEmailToggle(!emailToggle);
+          }}
+        />
+      </View>
+
+      <TouchableOpacity
+        style={[
+          defaultStyles.pillButton,
+          {
+            backgroundColor: "#10AB8F",
+            marginHorizontal: 80,
+            flexDirection: "row",
+            gap: 8,
+            alignItems: "center",
+          },
+        ]}
+      >
+        <Text style={styles.buttonText}>See my resources</Text>
+        <AntDesign name="arrowright" color={"white"} size={18} />
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -192,188 +400,13 @@ const styles = StyleSheet.create({
     color: "#10AB8F",
     marginBottom: 5,
   },
+  addText: {
+    fontFamily: "KarlaRegular",
+    fontSize: 19,
+    lineHeight: 28,
+    textDecorationLine: "underline",
+    color: Colors.accentPrimary,
+  },
 });
-
-const Label = ({ children }) => <Text style={styles.label}>{children}</Text>;
-
-const DropdownComponent = ({ label, value, onValueChange, items }) => {
-  return (
-    <View style={{ zIndex: 1 }}>
-      <Label>{label}</Label>
-      {Platform.OS === "web" ? (
-        <Select
-          className={"dropdownWeb"}
-          value={items.find((item) => item.value === value)}
-          onChange={(selectedOption) => onValueChange(selectedOption.value)}
-          options={items}
-          menuPortalTarget={document.body}
-          styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
-        />
-      ) : (
-        <Dropdown
-          data={items}
-          labelField="label"
-          valueField="value"
-          value={value}
-          onChange={(item) => onValueChange(item.value)}
-          style={styles.dropdown}
-          selectedTextStyle={{
-            paddingHorizontal: 8,
-            fontFamily: "KarlaRegular",
-          }}
-          renderRightIcon={() => (
-            <View
-              style={{
-                paddingRight: 12,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Image
-                source={require("@/assets/images/down.png")}
-                style={{ height: 10, width: 18 }}
-              />
-            </View>
-          )}
-        />
-      )}
-    </View>
-  );
-};
-
-const ProfileScreen = () => {
-  const [age, setAge] = useState("68");
-  const [income, setIncome] = useState("<15000");
-  const [ethnicity, setEthnicity] = useState("hispanic_latino");
-  const [veteranStatus, setVeteranStatus] = useState("veteran");
-  const [gender, setGender] = useState("female");
-  const [emailToggle, setEmailToggle] = useState(true);
-  const { isPending, error, data } = useQuery({
-    queryKey: ["repoData"],
-    queryFn: async (): Promise<ResponseData> => {
-      const response = await fetch(
-        "https://dpnk8ddrr0.execute-api.us-west-1.amazonaws.com/dev/handler/test@example.com"
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    },
-  });
-
-  useEffect(() => {
-    // Only update states if data is available
-    if (data) {
-      setAge(findDropdownValue("age", data.demographics.age));
-      setIncome(findDropdownValue("income", data.demographics.income));
-      setEthnicity(findDropdownValue("ethnicity", data.demographics.ethnicity));
-      setVeteranStatus(findDropdownValue("veteran", data.demographics.veteran));
-      setGender(findDropdownValue("gender", data.demographics.gender));
-    }
-  }, [data]);
-
-  // useEffect(() => {
-  //   console.log("THIS IS THE DATA: ", data);
-  // }, [data]);
-
-  if (isPending)
-    return (
-      <View>
-        <Text>Loading data...</Text>
-      </View>
-    );
-
-  return (
-    <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          paddingHorizontal: 20,
-          alignItems: "center",
-        }}
-      >
-        <Text style={styles.header}>Hi John Smith</Text>
-        <Image
-          source={require("@/assets/images/greenhappy.png")}
-          style={{ height: 80, width: 80, marginVertical: 12 }}
-        />
-      </View>
-
-      <Text
-        style={{
-          fontFamily: "KarlaRegular",
-          fontSize: 24,
-          color: "#000000E5",
-          paddingBottom: 10,
-        }}
-      >
-        Your Demographics
-      </Text>
-      <DropdownComponent
-        label="Age"
-        value={age}
-        onValueChange={setAge}
-        items={ageOptions}
-      />
-
-      <DropdownComponent
-        label="Income"
-        value={determineIncomeOption(parseInt(income))}
-        onValueChange={setIncome}
-        items={incomeOptions}
-      />
-
-      <DropdownComponent
-        label="Ethnicity"
-        value={ethnicity}
-        onValueChange={setEthnicity}
-        items={ethnicityOptions}
-      />
-
-      <DropdownComponent
-        label="Veteran Status"
-        value={veteranStatus}
-        onValueChange={setVeteranStatus}
-        items={veteranStatusOptions}
-      />
-
-      <DropdownComponent
-        label="Gender"
-        value={gender}
-        onValueChange={setGender}
-        items={genderOptions}
-      />
-      <View style={styles.switchContainer}>
-        <Text style={styles.switchLabel}>
-          Email me when Bridge finds new resources?
-        </Text>
-        <Switch
-          value={emailToggle}
-          trackColor={{ true: "#10AB8F" }}
-          onValueChange={() => {
-            setEmailToggle(!emailToggle);
-          }}
-        />
-      </View>
-
-      <TouchableOpacity
-        style={[
-          defaultStyles.pillButton,
-          {
-            backgroundColor: "#10AB8F",
-            marginHorizontal: 80,
-            flexDirection: "row",
-            gap: 8,
-            alignItems: "center",
-          },
-        ]}
-      >
-        <Text style={styles.buttonText}>See my resources</Text>
-        <AntDesign name="arrowright" color={"white"} size={18} />
-      </TouchableOpacity>
-    </View>
-  );
-};
 
 export default ProfileScreen;

@@ -13,6 +13,7 @@ import LogoContainer from "../../components/LogoContainer";
 import { AntDesign } from "@expo/vector-icons";
 import { defaultStyles } from "../../components/defaultStyles";
 import { useRouter } from "expo-router";
+import { Colors } from "@/constants/Colors";
 
 type Props = {};
 
@@ -79,7 +80,7 @@ const LoginScreen = (props: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#4BA4A4",
+    backgroundColor: Colors.accentPrimary,
     zIndex: 1,
   },
   input: {

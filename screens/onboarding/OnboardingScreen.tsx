@@ -103,7 +103,7 @@ function Index() {
       <Pressable
         style={{ bottom: 60, alignSelf: "center", position: "absolute" }}
         onPress={() => {
-          router.push("/register");
+          router.push("/login");
         }}
       >
         <Text style={styles.loginText}>Been here already? Login.</Text>
