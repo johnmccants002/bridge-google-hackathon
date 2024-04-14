@@ -1,10 +1,10 @@
 import React from "react";
-import OnboardingScreen from "@/screens/onboarding/OnboardingScreen";
+import ChatScreen from "@/screens/chat/ChatScreen";
 
 type Props = {};
 
 const Page = (props: Props) => {
-  return <OnboardingScreen />;
+  return <ChatScreen />;
 };
 
 export default Page;

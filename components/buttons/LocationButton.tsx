@@ -22,12 +22,7 @@ const ButtonType = {
   secondary: "secondary",
 };
 
-const LocationButton: React.FC<CTAButtonProps> = ({
-  onPress,
-  text,
-  type,
-  style,
-}) => {
+const LocationButton: React.FC<CTAButtonProps> = ({ onPress, type, style }) => {
   // Use the colors from the Colors object, providing fallbacks
   const buttonStyle = StyleSheet.create({
     primary: {
