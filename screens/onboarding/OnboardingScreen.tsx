@@ -5,16 +5,17 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import CTAButton from "@/components/buttons/CTAButton";
 import { window } from "@/constants/Web";
+import { useRouter } from "expo-router";
 import {
   Pressable,
   StyleSheet,
+  Text,
   View,
   useWindowDimensions,
-  Text,
 } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
 import Carouseltem from "./Carouseltem";
-import { useRouter } from "expo-router";
+import { Colors } from "@/constants/Colors";
 
 const PAGE_WIDTH = window.width;
 
@@ -61,7 +62,12 @@ function Index() {
   return (
     <SafeAreaView
       edges={["bottom"]}
-      style={{ flex: 1, alignItems: "center", justifyContent: "space-evenly" }}
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "space-evenly",
+        backgroundColor: Colors.accentPrimary,
+      }}
     >
       <View style={styles.container}>
         <Carousel
@@ -89,16 +95,16 @@ function Index() {
         {renderDots()}
       </View>
       <CTAButton
-        onPress={() => {
-          router.push("/register");
-        }}
+        onPress={() => router.push("/onboarding")}
         text="Get Started"
         type="primary"
         style={{ width: 160 }}
       />
       <Pressable
         style={{ bottom: 60, alignSelf: "center", position: "absolute" }}
-        onPress={navigateToLogin}
+        onPress={() => {
+          router.push("/register");
+        }}
       >
         <Text style={styles.loginText}>Been here already? Login.</Text>
       </Pressable>
