@@ -1,13 +1,13 @@
 import React from "react";
 import { View, Image } from "react-native";
-
+import { Colors } from "@/constants/Colors";
 const LogoContainer = () => {
   return (
     <View
       style={{
         paddingHorizontal: 20,
-        paddingTop: 80,
-        backgroundColor: "#4BA4A4",
+        paddingTop: 60,
+        backgroundColor: Colors.accentPrimary,
       }}
     >
       <Image
