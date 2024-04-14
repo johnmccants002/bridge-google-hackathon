@@ -1,24 +1,23 @@
 import LogoContainer from "@/components/LogoContainer";
+import LocationButton from "@/components/buttons/LocationButton";
 import BotMessage from "@/components/messages/BotMessage";
 import UserMessage from "@/components/messages/UserMessage";
 import { Colors } from "@/constants/Colors";
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import { FontAwesome } from "@expo/vector-icons";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  View,
-  Text,
-  ScrollView,
-  TextInput,
-  StyleSheet,
-  useWindowDimensions,
-  Pressable,
+  Animated,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
-  Keyboard,
-  Animated,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  View,
+  useWindowDimensions,
 } from "react-native";
 import ButtonDisplay from "./ButtonDisplay";
-import { FontAwesome } from "@expo/vector-icons";
-import LocationButton from "@/components/buttons/LocationButton";
 
 type Props = {};
 
@@ -28,11 +27,20 @@ const ChatScreen = (props: Props) => {
   const [keyboardStatus, setKeyboardStatus] = useState("");
   const inputRef = useRef<TextInput | null>(null);
   const [message, setMessage] = useState("");
-  const [components, setComponents] = useState<React.JSX.Element[] | null>(
-    null
-  );
+  const [components, setComponents] = useState<React.JSX.Element[]>([]);
   const [keyboardPadding, setKeyboardPadding] = useState(0);
+  const [questionsAnswered, setQuestionsAnswered] = useState({
+    location: false,
+    situation: false,
+  });
   const bottomPosition = useRef(new Animated.Value(20)).current; // Initial bottom position
+
+  const botMessages = [
+    "Let's get started on your journey to finding assistance tailored to your needs!",
+    "First things first, where are you located?",
+    "Great, thanks! This will help us connect you to state and local resources.",
+    "Which of the following best describes your situation?",
+  ];
 
   const scrollToBottom = () => {
     if (scrollViewRef) {
@@ -41,13 +49,55 @@ const ChatScreen = (props: Props) => {
   };
 
   const sendMessage = () => {
-    if (scrollViewRef) {
-      if (components !== null) {
-        setComponents([...components, <UserMessage />]);
-      } else {
-        setComponents([<UserMessage />]);
-      }
-    }
+    setComponents([
+      ...components,
+      <UserMessage message={message} key={components.length} />,
+    ]);
+    setMessage("");
+  };
+
+  const locationPressed = () => {
+    setQuestionsAnswered({ ...questionsAnswered, location: true });
+
+    setComponents((prevComponents) => {
+      // Replace the component with key "2" and add new components
+      if (prevComponents)
+        return [
+          ...prevComponents.map((comp) =>
+            comp.key === "2" ? (
+              <UserMessage message={"Sacramento, CA"} key={2} />
+            ) : (
+              comp
+            )
+          ),
+          <BotMessage message={botMessages[2]} key={3} />,
+          <BotMessage message={botMessages[3]} key={4} />,
+          <ButtonDisplay key={5} />, // Make sure to assign a unique key
+        ];
+    });
+  };
+
+  const sendFirstTwoMessages = () => {
+    setComponents([
+      ...components,
+      <BotMessage message={botMessages[0]} key={0} />,
+      <BotMessage message={botMessages[1]} key={1} />,
+      <LocationButton
+        onPress={locationPressed}
+        type="primary"
+        key={2}
+        style={{ width: 240, alignSelf: "center", marginTop: 12 }}
+      />,
+    ]);
+  };
+
+  const sendNextTwoMessages = () => {
+    setComponents([
+      ...components,
+      <BotMessage message={botMessages[2]} key={3} />,
+      <BotMessage message={botMessages[3]} key={4} />,
+      <ButtonDisplay />,
+    ]);
   };
 
   useEffect(() => {
@@ -70,6 +120,10 @@ const ChatScreen = (props: Props) => {
 
       setKeyboardStatus("Keyboard Hidden");
     });
+
+    if (components.length === 0) {
+      sendFirstTwoMessages();
+    }
 
     return () => {
       showSubscription.remove();
@@ -95,17 +149,9 @@ const ChatScreen = (props: Props) => {
       <LogoContainer />
       <ScrollView
         style={{ width: width, paddingTop: 40 }}
-        contentContainerStyle={{ alignItems: "center", paddingBottom: 100 }}
+        contentContainerStyle={{ paddingBottom: 100, gap: 8 }}
         ref={scrollViewRef}
       >
-        <BotMessage />
-        <UserMessage />
-        <ButtonDisplay />
-        <LocationButton
-          type="primary"
-          onPress={() => {}}
-          style={{ width: 200 }}
-        />
         {components}
       </ScrollView>
       <Animated.View

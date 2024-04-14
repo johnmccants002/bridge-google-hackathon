@@ -5,7 +5,7 @@ import Fonts from "@/constants/Fonts";
 import { Colors } from "@/constants/Colors";
 
 type Props = {
-  message?: string;
+  message: string;
 };
 
 const BotMessage = (props: Props) => {
@@ -26,11 +26,11 @@ const BotMessage = (props: Props) => {
           backgroundColor: Colors.offWhite,
           borderRadius: 8,
           paddingHorizontal: 12,
+          flexGrow: 1,
         }}
       >
         <Text style={{ fontFamily: Fonts.medium, color: Colors.accentDark }}>
-          Let's get started on your journey to finding assistance tailored to
-          your needs!
+          {props.message}
         </Text>
       </View>
     </View>

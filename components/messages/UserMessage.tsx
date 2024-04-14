@@ -6,7 +6,7 @@ import { Colors } from "@/constants/Colors";
 import UserIcon from "./UserIcon";
 
 type Props = {
-  message?: string;
+  message: string;
 };
 
 const UserMessage = (props: Props) => {
@@ -32,7 +32,7 @@ const UserMessage = (props: Props) => {
         }}
       >
         <Text style={{ fontFamily: Fonts.medium, color: Colors.accentDark }}>
-          Houston, Texas 77001
+          {props.message}
         </Text>
       </View>
       <UserIcon />
