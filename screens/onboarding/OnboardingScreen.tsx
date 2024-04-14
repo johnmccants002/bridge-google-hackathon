@@ -89,7 +89,9 @@ function Index() {
         {renderDots()}
       </View>
       <CTAButton
-        onPress={() => {}}
+        onPress={() => {
+          router.push("/register");
+        }}
         text="Get Started"
         type="primary"
         style={{ width: 160 }}
