@@ -13,7 +13,7 @@ const Page = (props: Props) => {
   useEffect(() => {}, []);
   return (
     <View style={styles.container}>
-      <OnboardingScreen />
+      <StartScreen />
     </View>
   );
 };
