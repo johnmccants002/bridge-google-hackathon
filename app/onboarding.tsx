@@ -1,10 +1,10 @@
-import LoginScreen from "@/screens/login/LoginScreen";
 import React from "react";
+import OnboardingScreen from "@/screens/onboarding/OnboardingScreen";
 
 type Props = {};
 
 const Page = (props: Props) => {
-  return <LoginScreen />;
+  return <OnboardingScreen />;
 };
 
 export default Page;

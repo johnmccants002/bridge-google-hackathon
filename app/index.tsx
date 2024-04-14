@@ -4,6 +4,8 @@ import { StyleSheet, View } from "react-native";
 
 import StartScreen from "@/screens/start/StartScreen";
 import LoadingAnimation from "@/components/LoadingAnimation";
+import OnboardingScreen from "@/screens/onboarding/OnboardingScreen";
+import OnboardingOne from "@/screens/onboarding/svgs/OnboardingOne";
 
 interface Props {}
 
