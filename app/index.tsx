@@ -6,6 +6,8 @@ import StartScreen from "@/screens/start/StartScreen";
 import LoadingAnimation from "@/components/LoadingAnimation";
 import OnboardingScreen from "@/screens/onboarding/OnboardingScreen";
 import OnboardingOne from "@/screens/onboarding/svgs/OnboardingOne";
+import QueryEntryScreen from "@/screens/queryEntry/QueryEntryScreen";
+import ChatScreen from "@/screens/chat/ChatScreen";
 
 interface Props {}
 
@@ -13,7 +15,7 @@ const Page = (props: Props) => {
   useEffect(() => {}, []);
   return (
     <View style={styles.container}>
-      <StartScreen />
+      <ChatScreen />
     </View>
   );
 };
