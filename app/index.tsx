@@ -13,21 +13,17 @@ interface Props {}
 
 const Page = (props: Props) => {
   useEffect(() => {}, []);
-  return (
-    <View style={styles.container}>
-      <ChatScreen />
-    </View>
-  );
+  return <ChatScreen />;
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#4BA4A4",
-    zIndex: 1,
-    paddingHorizontal: 40,
-    alignItems: "center",
-    justifyContent: "center",
+    // flex: 1,
+    // backgroundColor: "#4BA4A4",
+    // zIndex: 1,
+    // paddingHorizontal: 40,
+    // alignItems: "center",
+    // justifyContent: "center",
   },
 });
 

@@ -25,6 +25,7 @@ const BotMessage = (props: Props) => {
           padding: 8,
           backgroundColor: Colors.offWhite,
           borderRadius: 8,
+          paddingHorizontal: 12,
         }}
       >
         <Text style={{ fontFamily: Fonts.medium, color: Colors.accentDark }}>
