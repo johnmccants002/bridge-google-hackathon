@@ -10,8 +10,10 @@ import {
   TextInput,
   StyleSheet,
   useWindowDimensions,
+  Pressable,
 } from "react-native";
 import ButtonDisplay from "./ButtonDisplay";
+import { FontAwesome } from "@expo/vector-icons";
 
 type Props = {};
 
@@ -27,11 +29,16 @@ const ChatScreen = (props: Props) => {
       </ScrollView>
       <View
         style={{
-          width: width * 0.8,
+          //   width: width * 0.8,
           justifyContent: "center",
           alignItems: "center",
-          flexDirection: "column",
-          alignSelf: "center",
+          flexDirection: "row",
+
+          bottom: 40,
+          right: 20,
+          left: 20,
+          height: 60,
+          position: "relative",
         }}
       >
         <TextInput
@@ -43,6 +50,25 @@ const ChatScreen = (props: Props) => {
           placeholder="Start typing here"
           placeholderTextColor="#125858"
         />
+        <View
+          style={{
+            position: "relative",
+            right: 40,
+            height: 30,
+            width: 30,
+            alignItems: "center",
+            justifyContent: "center",
+            alignSelf: "center",
+          }}
+        >
+          <Pressable>
+            <FontAwesome
+              name="microphone"
+              size={24}
+              color={Colors.accentPrimary}
+            />
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -51,14 +77,15 @@ const ChatScreen = (props: Props) => {
 const styles = StyleSheet.create({
   textInput: {
     backgroundColor: "white",
-    // width: 240,
-    width: "100%",
-    // minHeight: 32,
+    width: "90%",
+    // flexGrow: 1,
+    height: 44,
     borderRadius: 8,
     padding: 8,
-    paddingTop: 8,
-    marginTop: 20,
-    marginBottom: 40,
+    paddingTop: 12,
+    paddingLeft: 12,
+    paddingRight: 12,
+
     fontSize: 16,
     color: "#125858",
   },
