@@ -34,6 +34,7 @@ const ChatScreen = (props: Props) => {
     situation: false,
   });
   const bottomPosition = useRef(new Animated.Value(20)).current; // Initial bottom position
+  const [showSituation, setShowSituation] = useState(false);
 
   const botMessages = [
     "Let's get started on your journey to finding assistance tailored to your needs!",
@@ -48,6 +49,8 @@ const ChatScreen = (props: Props) => {
     }
   };
 
+  const continuedPressed = () => {};
+
   const sendMessage = () => {
     setComponents([
       ...components,
@@ -60,44 +63,68 @@ const ChatScreen = (props: Props) => {
     setQuestionsAnswered({ ...questionsAnswered, location: true });
 
     setComponents((prevComponents) => {
-      // Replace the component with key "2" and add new components
-      if (prevComponents)
-        return [
-          ...prevComponents.map((comp) =>
-            comp.key === "2" ? (
-              <UserMessage message={"Sacramento, CA"} key={2} />
-            ) : (
-              comp
-            )
-          ),
-          <BotMessage message={botMessages[2]} key={3} />,
-          <BotMessage message={botMessages[3]} key={4} />,
-          <ButtonDisplay key={5} />, // Make sure to assign a unique key
-        ];
+      // Replace the component with key "2" and return the array
+      return prevComponents.map((comp) =>
+        comp.key === "2" ? (
+          <UserMessage message={"Sacramento, CA"} key={2} />
+        ) : (
+          comp
+        )
+      );
     });
+    setShowSituation(true);
+
+    // Start adding new components with delays
+    setTimeout(() => {
+      setComponents((prevComponents) => [
+        ...prevComponents,
+        <BotMessage message={botMessages[2]} key={3} />,
+      ]);
+    }, 0); // Delay of 3 seconds
+
+    setTimeout(() => {
+      setComponents((prevComponents) => [
+        ...prevComponents,
+        <BotMessage message={botMessages[3]} key={4} />,
+      ]);
+    }, 3000); // Additional 3 seconds, making a total of 6 seconds
+
+    setTimeout(() => {
+      setComponents((prevComponents) => [
+        ...prevComponents,
+        <ButtonDisplay key={5} />, // Make sure to assign a unique key
+      ]);
+    }, 6000); // Additional 3 seconds, making a total of 9 seconds
   };
 
   const sendFirstTwoMessages = () => {
-    setComponents([
-      ...components,
-      <BotMessage message={botMessages[0]} key={0} />,
-      <BotMessage message={botMessages[1]} key={1} />,
-      <LocationButton
-        onPress={locationPressed}
-        type="primary"
-        key={2}
-        style={{ width: 240, alignSelf: "center", marginTop: 12 }}
-      />,
-    ]);
-  };
+    // Add the first bot message immediately
+    setTimeout(() => {
+      setComponents((prevComponents) => [
+        ...prevComponents,
+        <BotMessage message={botMessages[0]} key={0} />,
+      ]);
+    }, 500);
+    // Add the second bot message after an additional delay
+    setTimeout(() => {
+      setComponents((prevComponents) => [
+        ...prevComponents,
+        <BotMessage message={botMessages[1]} key={1} />,
+      ]);
+    }, 3500); // Total 8 seconds delay (3s + 5s)
 
-  const sendNextTwoMessages = () => {
-    setComponents([
-      ...components,
-      <BotMessage message={botMessages[2]} key={3} />,
-      <BotMessage message={botMessages[3]} key={4} />,
-      <ButtonDisplay />,
-    ]);
+    // Add the location button after an additional delay
+    setTimeout(() => {
+      setComponents((prevComponents) => [
+        ...prevComponents,
+        <LocationButton
+          onPress={locationPressed}
+          type="primary"
+          key={2}
+          style={{ width: 240, alignSelf: "center", marginTop: 12 }}
+        />,
+      ]);
+    }, 6500); // Total 10 seconds delay (3s + 5s + 2s)
   };
 
   useEffect(() => {
@@ -154,52 +181,56 @@ const ChatScreen = (props: Props) => {
       >
         {components}
       </ScrollView>
-      <Animated.View
-        style={{
-          //   width: width * 0.8,
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "row",
-
-          bottom: bottomPosition,
-          right: 20,
-          left: 20,
-          height: 60,
-          position: "relative",
-        }}
-      >
-        <TextInput
-          style={styles.textInput}
-          ref={inputRef}
-          allowFontScaling
-          editable
-          multiline
-          value={message}
-          onChangeText={(text) => setMessage(text)}
-          textAlignVertical="center"
-          placeholder="Start typing here"
-          placeholderTextColor="#125858"
-        />
-        <View
+      {showSituation ? (
+        <></>
+      ) : (
+        <Animated.View
           style={{
-            position: "relative",
-            right: 40,
-            height: 30,
-            width: 30,
-            alignItems: "center",
+            //   width: width * 0.8,
             justifyContent: "center",
-            alignSelf: "center",
+            alignItems: "center",
+            flexDirection: "row",
+
+            bottom: bottomPosition,
+            right: 20,
+            left: 20,
+            height: 60,
+            position: "relative",
           }}
         >
-          <Pressable onPress={sendMessage}>
-            <FontAwesome
-              name={message === "" ? "microphone" : "arrow-circle-o-up"}
-              size={24}
-              color={Colors.accentPrimary}
-            />
-          </Pressable>
-        </View>
-      </Animated.View>
+          <TextInput
+            style={styles.textInput}
+            ref={inputRef}
+            allowFontScaling
+            editable
+            multiline
+            value={message}
+            onChangeText={(text) => setMessage(text)}
+            textAlignVertical="center"
+            placeholder="Start typing here"
+            placeholderTextColor="#125858"
+          />
+          <View
+            style={{
+              position: "relative",
+              right: 40,
+              height: 30,
+              width: 30,
+              alignItems: "center",
+              justifyContent: "center",
+              alignSelf: "center",
+            }}
+          >
+            <Pressable onPress={sendMessage}>
+              <FontAwesome
+                name={message === "" ? "microphone" : "arrow-circle-o-up"}
+                size={24}
+                color={Colors.accentPrimary}
+              />
+            </Pressable>
+          </View>
+        </Animated.View>
+      )}
     </KeyboardAvoidingView>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { View, StyleSheet, Text, Animated } from "react-native";
 
-const Dot = ({ animationDelay }: { animationDelay: number }) => {
+export const Dot = ({ animationDelay }: { animationDelay: number }) => {
   const animatedValue = useRef(new Animated.Value(0)).current;
 
   const doAnimation = () => {
@@ -10,17 +10,17 @@ const Dot = ({ animationDelay }: { animationDelay: number }) => {
       Animated.sequence([
         Animated.timing(animatedValue, {
           toValue: 0,
-          duration: 1000,
+          duration: 800,
           useNativeDriver: true,
         }),
         Animated.timing(animatedValue, {
           toValue: 1,
-          duration: 1000,
+          duration: 800,
           useNativeDriver: true,
         }),
         Animated.timing(animatedValue, {
           toValue: 0,
-          duration: 1000,
+          duration: 800,
           useNativeDriver: true,
         }),
       ])

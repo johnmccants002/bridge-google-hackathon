@@ -79,7 +79,7 @@ const LocationButton: React.FC<CTAButtonProps> = ({
     <Pressable style={[buttonStyle[type], style]} onPress={onPress}>
       {/* Assuming you want to display the iconName or some text here */}
       <Text style={textStyle[type]}>Share my location</Text>
-      <Feather name="map-pin" size={24} />
+      <Feather name="map-pin" size={24} color={Colors.accentDark} />
 
       {/* If you have an Icon component, it could be used here based on iconName */}
     </Pressable>
