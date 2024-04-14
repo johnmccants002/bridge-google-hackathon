@@ -6,7 +6,7 @@ const LogoContainer = () => {
     <View
       style={{
         paddingHorizontal: 20,
-        paddingTop: 80,
+        paddingTop: 60,
         backgroundColor: Colors.accentPrimary,
       }}
     >
