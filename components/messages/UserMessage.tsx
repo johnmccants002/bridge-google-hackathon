@@ -28,6 +28,7 @@ const UserMessage = (props: Props) => {
           backgroundColor: Colors.white,
           borderRadius: 8,
           flexGrow: 1,
+          paddingHorizontal: 12,
         }}
       >
         <Text style={{ fontFamily: Fonts.medium, color: Colors.accentDark }}>

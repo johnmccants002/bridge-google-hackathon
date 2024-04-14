@@ -27,7 +27,7 @@ const Button = ({ text, onPress, isSelected }: ButtonProps) => {
         borderColor: Colors.accentLight,
         backgroundColor: isSelected ? Colors.accentDark : Colors.accentPrimary,
         borderRadius: 24,
-        width: "47.5%",
+        width: "44%",
         height: 100,
         alignItems: "center",
         justifyContent: "center",

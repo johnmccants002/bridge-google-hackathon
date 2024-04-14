@@ -19,6 +19,7 @@
     "@tanstack/react-query": "^5.29.0",
     "expo": "~50.0.14",
     "expo-font": "~11.10.3",
+    "expo-image": "~1.10.6",
     "expo-linking": "~6.2.2",
     "expo-router": "~3.4.8",
     "expo-splash-screen": "~0.26.4",
@@ -30,14 +31,14 @@
     "react-native": "0.73.6",
     "react-native-element-dropdown": "^2.10.4",
     "react-native-gesture-handler": "~2.14.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-reanimated": "~3.6.2",
     "react-native-reanimated-carousel": "^3.5.1",
     "react-native-safe-area-context": "4.8.2",
     "react-native-screens": "~3.29.0",
+    "react-native-svg": "14.1.0",
     "react-native-web": "~0.19.6",
-    "react-select": "^5.8.0",
-    "expo-image": "~1.10.6",
-    "react-native-svg": "14.1.0"
+    "react-select": "^5.8.0"
   },
   "devDependencies": {
     "@aws-sdk/client-dynamodb": "^3.549.0",
