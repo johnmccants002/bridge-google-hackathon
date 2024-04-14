@@ -1,5 +1,5 @@
 
 
 function test(){
-    return "New test"
+    return "hello"
 }
