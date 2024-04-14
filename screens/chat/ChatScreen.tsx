@@ -11,6 +11,7 @@ import {
   StyleSheet,
   useWindowDimensions,
 } from "react-native";
+import ButtonDisplay from "./ButtonDisplay";
 
 type Props = {};
 
@@ -22,6 +23,7 @@ const ChatScreen = (props: Props) => {
       <ScrollView style={{ width: width }}>
         <BotMessage />
         <UserMessage />
+        <ButtonDisplay />
       </ScrollView>
       <View
         style={{
