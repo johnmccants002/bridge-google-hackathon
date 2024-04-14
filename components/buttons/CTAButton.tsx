@@ -14,6 +14,7 @@ type CTAButtonProps = {
   onPress: () => void;
   text: string;
   type: ButtonTypeKeys;
+  style?: ViewStyle;
 };
 
 const ButtonType = {
@@ -21,7 +22,12 @@ const ButtonType = {
   secondary: "secondary",
 };
 
-const CTAButton: React.FC<CTAButtonProps> = ({ onPress, text, type }) => {
+const CTAButton: React.FC<CTAButtonProps> = ({
+  onPress,
+  text,
+  type,
+  style,
+}) => {
   // Use the colors from the Colors object, providing fallbacks
   const buttonStyle = StyleSheet.create({
     primary: {
@@ -70,7 +76,7 @@ const CTAButton: React.FC<CTAButtonProps> = ({ onPress, text, type }) => {
   });
 
   return (
-    <Pressable style={buttonStyle[type]} onPress={onPress}>
+    <Pressable style={[buttonStyle[type], style]} onPress={onPress}>
       {/* Assuming you want to display the iconName or some text here */}
       <Text style={textStyle[type]}>{text}</Text>
       <AntDesign

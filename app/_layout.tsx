@@ -12,6 +12,8 @@ import { useEffect } from "react";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { Pressable, Text, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+
 import {
   QueryClient,
   QueryClientProvider,
@@ -65,62 +67,65 @@ function RootLayoutNav() {
   const router = useRouter();
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <QueryClientProvider client={queryClient}>
-        <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="results"
-            options={{
-              // headerStyle: { backgroundColor: "#E9FBFF" },
-              header: () => (
-                <View
-                  style={{
-                    backgroundColor: "#E9FBFF",
-                    justifyContent: "center",
-                    height: 100,
-                    paddingTop: 40,
-                    padding: 20,
-                  }}
-                >
-                  <Pressable
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <QueryClientProvider client={queryClient}>
+          <Stack>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="results"
+              options={{
+                // headerStyle: { backgroundColor: "#E9FBFF" },
+                header: () => (
+                  <View
                     style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 4,
                       backgroundColor: "#E9FBFF",
+                      justifyContent: "center",
+                      height: 100,
+                      paddingTop: 40,
+                      padding: 20,
                     }}
-                    onPress={router.back}
                   >
-                    <AntDesign name="arrowleft" size={24} color={"#4BA4A4"} />
-                    <Text
+                    <Pressable
                       style={{
-                        fontFamily: "KarlaRegular",
-                        fontWeight: "500",
-                        fontSize: 24,
-                        color: "#4BA4A4",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 4,
+                        backgroundColor: "#E9FBFF",
                       }}
+                      onPress={router.back}
                     >
-                      Back
-                    </Text>
-                  </Pressable>
-                </View>
-              ),
+                      <AntDesign name="arrowleft" size={24} color={"#4BA4A4"} />
+                      <Text
+                        style={{
+                          fontFamily: "KarlaRegular",
+                          fontWeight: "500",
+                          fontSize: 24,
+                          color: "#4BA4A4",
+                        }}
+                      >
+                        Back
+                      </Text>
+                    </Pressable>
+                  </View>
+                ),
 
-              title: "",
-            }}
-          />
+                title: "",
+              }}
+            />
 
-          <Stack.Screen name="login" options={{ headerShown: false }} />
-          <Stack.Screen name="register" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="account-created"
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen name="search" options={{ headerShown: false }} />
-          <Stack.Screen name="profile" options={{ headerShown: false }} />
-        </Stack>
-      </QueryClientProvider>
-    </ThemeProvider>
+            <Stack.Screen name="login" options={{ headerShown: false }} />
+            <Stack.Screen name="register" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="account-created"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="search" options={{ headerShown: false }} />
+            <Stack.Screen name="profile" options={{ headerShown: false }} />
+            <Stack.Screen name="onboarding" options={{ headerShown: false }} />
+          </Stack>
+        </QueryClientProvider>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }
