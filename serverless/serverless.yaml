@@ -23,6 +23,8 @@ provider:
     GEMINI_KEY: ${param:GEMINI_KEY}
     GEMINI_URL: ${param:GEMINI_URL}
     USER_SCHEMA: UserTable
+       AWS_ACCESS_KEY_ID: ${env:AWS_ACCESS_KEY_ID}
+    AWS_SECRET_ACCESS_KEY: ${env:AWS_SECRET_ACCESS_KEY}
 
 functions:
   postHandler:
