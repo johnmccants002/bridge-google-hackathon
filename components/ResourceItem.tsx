@@ -23,12 +23,19 @@ const ResourceItem: React.FC<Props> = ({ title, description, tags }) => {
       }}
       onPress={() => router.push(`/${title}`)}
     >
-      <View style={{ flexDirection: "column", gap: 12, paddingTop: 20 }}>
+      <View
+        style={{
+          flexDirection: "column",
+          gap: 12,
+          paddingTop: 20,
+        }}
+      >
         <Text
           style={{
             color: Colors.accentDark,
             fontFamily: "KarlaBold",
             fontSize: 16,
+            maxWidth: "80%",
           }}
         >
           {title || "Center for Career Transformation, Houston"}
@@ -38,6 +45,7 @@ const ResourceItem: React.FC<Props> = ({ title, description, tags }) => {
             color: Colors.accentDark,
             fontFamily: "KarlaRegular",
             fontSize: 14,
+            maxWidth: "80%",
           }}
         >
           {description ||
