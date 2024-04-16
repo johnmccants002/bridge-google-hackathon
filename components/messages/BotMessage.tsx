@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import BotIcon from "./BotIcon";
 import Fonts from "@/constants/Fonts";
 import { Colors } from "@/constants/Colors";
 import LoadingAnimation, { Dot } from "../LoadingAnimation";
+import ToolTipIcon from "../svgs/ToolTipIcon";
 
 type Props = {
   message: string;
   delay?: number;
+  toolTip?: boolean;
+  toolTipPressed?: () => void;
 };
 
 const BotMessage = (props: Props) => {
@@ -50,11 +53,27 @@ const BotMessage = (props: Props) => {
             paddingHorizontal: 12,
             flexGrow: 1,
             maxWidth: 300,
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 20,
           }}
         >
-          <Text style={{ fontFamily: Fonts.medium, color: Colors.accentDark }}>
+          <Text
+            style={{
+              fontFamily: Fonts.medium,
+              color: Colors.accentDark,
+              width: props.toolTip ? "80%" : "auto",
+            }}
+          >
             {props.message}
           </Text>
+          {props.toolTip ? (
+            <Pressable onPress={props.toolTipPressed}>
+              <ToolTipIcon />
+            </Pressable>
+          ) : (
+            <></>
+          )}
         </View>
       )}
     </View>

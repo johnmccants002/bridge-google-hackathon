@@ -1,14 +1,13 @@
 import LogoContainer from "@/components/LogoContainer";
-import OnboardingScreen from "@/screens/onboarding/OnboardingScreen";
 import UserStoryScreen from "@/screens/user-story/UserStoryScreen";
+import React from "react";
 
-interface Props {}
+type Props = {};
 
 const Page = (props: Props) => {
   return (
     <>
-      <LogoContainer />
-      <OnboardingScreen />
+      <UserStoryScreen />
     </>
   );
 };
