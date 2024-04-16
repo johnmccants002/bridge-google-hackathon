@@ -173,6 +173,12 @@ function RootLayoutNav() {
                 headerShown: false,
               }}
             />
+            <Stack.Screen
+              name="user-story"
+              options={{
+                headerShown: false,
+              }}
+            />
           </Stack>
         </QueryClientProvider>
       </ThemeProvider>
