@@ -19,6 +19,8 @@ import {
   QueryClientProvider,
   useQuery,
 } from "@tanstack/react-query";
+import BackArrow from "@/components/svgs/BackArrow";
+import { Colors } from "@/constants/Colors";
 
 const queryClient = new QueryClient();
 
@@ -65,6 +67,42 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
   const router = useRouter();
+
+  const Header = (props: { color: string }) => {
+    return (
+      <View
+        style={{
+          backgroundColor: props.color,
+          justifyContent: "center",
+          height: 120,
+          paddingTop: 60,
+          padding: 20,
+        }}
+      >
+        <Pressable
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 4,
+            backgroundColor: props.color,
+          }}
+          onPress={router.back}
+        >
+          <AntDesign name="arrowleft" size={24} color={"white"} />
+          <Text
+            style={{
+              fontFamily: "KarlaRegular",
+              fontWeight: "500",
+              fontSize: 24,
+              color: "white",
+            }}
+          >
+            Back
+          </Text>
+        </Pressable>
+      </View>
+    );
+  };
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -122,7 +160,13 @@ function RootLayoutNav() {
             />
             <Stack.Screen name="search" options={{ headerShown: false }} />
             <Stack.Screen name="profile" options={{ headerShown: false }} />
-            <Stack.Screen name="onboarding" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="onboarding"
+              options={{
+                headerShown: true,
+                header: () => <Header color={Colors.accentPrimary} />,
+              }}
+            />
           </Stack>
         </QueryClientProvider>
       </ThemeProvider>
