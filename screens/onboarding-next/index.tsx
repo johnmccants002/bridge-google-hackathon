@@ -159,7 +159,9 @@ const Index = (props: Props) => {
           <CTAButton
             type="primary"
             text="Continue"
-            onPress={() => {}}
+            onPress={() => {
+              router.push("/onboarding-next");
+            }}
             style={{
               position: "absolute",
               bottom: -10,
