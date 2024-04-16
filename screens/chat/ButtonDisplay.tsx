@@ -9,6 +9,7 @@ import {
 import { Colors } from "@/constants/Colors";
 import Fonts from "@/constants/Fonts";
 import CTAButton from "@/components/buttons/CTAButton";
+import { useRouter } from "expo-router";
 
 type Props = {};
 
@@ -52,6 +53,7 @@ const Button = ({ text, onPress, isSelected }: ButtonProps) => {
 
 const ButtonDisplay = (props: Props) => {
   const [selectedButton, setSelectedButton] = useState<string | null>(null);
+  const router = useRouter();
   const handleButtonPress = (buttonText: string) => {
     setSelectedButton(buttonText);
   };
@@ -116,7 +118,13 @@ const ButtonDisplay = (props: Props) => {
       </TouchableHighlight>
 
       <View style={{ padding: 8 }}>
-        <CTAButton text="Continue" type="primary" onPress={() => {}} />
+        <CTAButton
+          text="Continue"
+          type="primary"
+          onPress={() => {
+            router.push("/user-story");
+          }}
+        />
       </View>
     </View>
   );
