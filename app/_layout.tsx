@@ -214,6 +214,18 @@ function RootLayoutNav() {
                 headerShown: false,
               }}
             />
+            <Stack.Screen
+              name="[resource]"
+              options={{
+                headerShown: true,
+                header: () => (
+                  <Header
+                    color={Colors.accentLight}
+                    iconTextColor={Colors.accentDark}
+                  />
+                ),
+              }}
+            />
           </Stack>
         </QueryClientProvider>
       </ThemeProvider>
