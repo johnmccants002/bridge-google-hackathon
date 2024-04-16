@@ -68,7 +68,7 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
   const router = useRouter();
 
-  const Header = (props: { color: string }) => {
+  const Header = (props: { color: string; iconTextColor: string }) => {
     return (
       <View
         style={{
@@ -88,13 +88,17 @@ function RootLayoutNav() {
           }}
           onPress={router.back}
         >
-          <AntDesign name="arrowleft" size={24} color={"white"} />
+          <AntDesign
+            name="arrowleft"
+            size={24}
+            color={props.iconTextColor ? props.iconTextColor : "white"}
+          />
           <Text
             style={{
               fontFamily: "KarlaRegular",
               fontWeight: "500",
               fontSize: 24,
-              color: "white",
+              color: props.iconTextColor ? props.iconTextColor : "white",
             }}
           >
             Back
@@ -118,10 +122,12 @@ function RootLayoutNav() {
                   <View
                     style={{
                       backgroundColor: "#E9FBFF",
-                      justifyContent: "center",
-                      height: 100,
-                      paddingTop: 40,
+                      justifyContent: "space-between",
+                      height: 120,
+                      paddingTop: 60,
                       padding: 20,
+                      flexDirection: "row",
+                      alignItems: "center",
                     }}
                   >
                     <Pressable
@@ -145,6 +151,20 @@ function RootLayoutNav() {
                         Back
                       </Text>
                     </Pressable>
+                    <Pressable
+                      onPress={() => router.push("/edit-demographics")}
+                    >
+                      <Text
+                        style={{
+                          textDecorationLine: "underline",
+                          fontFamily: "KarlaMedium",
+                          fontSize: 14,
+                          color: Colors.accentDark,
+                        }}
+                      >
+                        Edit Demographics
+                      </Text>
+                    </Pressable>
                   </View>
                 ),
 
@@ -161,10 +181,25 @@ function RootLayoutNav() {
             <Stack.Screen name="search" options={{ headerShown: false }} />
             <Stack.Screen name="profile" options={{ headerShown: false }} />
             <Stack.Screen
+              name="edit-demographics"
+              options={{
+                headerShown: true,
+                header: () => (
+                  <Header
+                    color={Colors.white}
+                    iconTextColor={Colors.accentPrimary}
+                  />
+                ),
+              }}
+            />
+
+            <Stack.Screen
               name="onboarding"
               options={{
                 headerShown: true,
-                header: () => <Header color={Colors.accentPrimary} />,
+                header: () => (
+                  <Header color={Colors.accentPrimary} iconTextColor="white" />
+                ),
               }}
             />
             <Stack.Screen

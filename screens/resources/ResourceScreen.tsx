@@ -1,24 +1,29 @@
+import { Colors } from "@/constants/Colors";
 import { Datum } from "@/screens/resources/mockData/benefits_mock";
+import { MaterialCommunityIcons, Octicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
 import {
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
-  Touchable,
   TouchableOpacity,
   View,
+  useWindowDimensions,
 } from "react-native";
-import BenefitList from "./BenefitList";
 import { defaultStyles } from "../../components/defaultStyles";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import ResourceItem from "@/components/ResourceItem";
+import { resourceData } from "@/data/DummyData";
+import BoldCheck from "@/components/svgs/BoldCheck";
 
 interface Props {
   data: Datum[];
 }
 
 const ResourcesScreen = (props: Props) => {
+  const { width } = useWindowDimensions();
   const router = useRouter();
 
   const { data } = props;
@@ -41,28 +46,122 @@ const ResourcesScreen = (props: Props) => {
             { color: "#125858", paddingRight: 80, paddingTop: 12 },
           ]}
         >
-          We found 8 resources available to you.
+          {`Good news! \nWe found `}
+          <Text style={{ textDecorationLine: "underline" }}>
+            8 resources
+          </Text>{" "}
+          available to you.
         </Text>
-        {data.map((item: Datum, idx: number) => (
-          <BenefitList data={item} key={idx} />
-        ))}
-        <TouchableOpacity
+
+        <View>
+          <Text
+            style={{
+              fontFamily: "KarlaMedium",
+              fontSize: 24,
+              color: Colors.black,
+            }}
+          >
+            Useful right now
+          </Text>
+          <View
+            style={{
+              width: width - 36,
+              height: 1,
+              backgroundColor: Colors.black,
+              alignSelf: "center",
+              marginTop: 8,
+            }}
+          />
+          {resourceData[0].map((data, index) => (
+            <ResourceItem
+              title={data.title}
+              description={data.description}
+              tags={data.tags}
+            />
+          ))}
+        </View>
+
+        <View>
+          <Text
+            style={{
+              fontFamily: "KarlaMedium",
+              fontSize: 24,
+              color: Colors.black,
+            }}
+          >
+            Who can help
+          </Text>
+          <View
+            style={{
+              width: width - 36,
+              height: 1,
+              backgroundColor: Colors.black,
+              alignSelf: "center",
+              marginTop: 8,
+            }}
+          />
+          {resourceData[1].map((data, index) => (
+            <ResourceItem
+              title={data.title}
+              description={data.description}
+              tags={data.tags}
+            />
+          ))}
+        </View>
+
+        <View>
+          <Text
+            style={{
+              fontFamily: "KarlaMedium",
+              fontSize: 24,
+              color: Colors.black,
+            }}
+          >
+            Next Steps
+          </Text>
+          <View
+            style={{
+              width: width - 36,
+              height: 1,
+              backgroundColor: Colors.black,
+              alignSelf: "center",
+              marginTop: 8,
+            }}
+          />
+          {resourceData[2].map((data, index) => (
+            <ResourceItem
+              title={data.title}
+              description={data.description}
+              tags={data.tags}
+            />
+          ))}
+        </View>
+
+        <Pressable
           style={{
             flexDirection: "row",
-            gap: 8,
-            borderWidth: 2,
-            borderColor: "#125858",
-            borderRadius: 24,
-            height: 40,
+            gap: 12,
             alignItems: "center",
             justifyContent: "center",
-            width: 200,
-            alignSelf: "center",
+            paddingHorizontal: 8,
+            borderRadius: 24,
+            borderWidth: 2,
+            borderColor: Colors.accentDark,
+            height: 40,
+            marginTop: 12,
           }}
         >
-          <Text>Save to profile</Text>
-          <MaterialCommunityIcons name="check" color={"#125858"} size={20} />
-        </TouchableOpacity>
+          <Text
+            style={{
+              fontFamily: "KarlaMedium",
+              fontSize: 14,
+              color: Colors.accentDark,
+            }}
+          >
+            Create account and save to profile
+          </Text>
+          <BoldCheck />
+        </Pressable>
         <View
           style={{
             backgroundColor: "#10AB8F",
