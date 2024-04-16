@@ -16,6 +16,7 @@ import {
 import { defaultStyles } from "../../components/defaultStyles";
 import ResourceItem from "@/components/ResourceItem";
 import { resourceData } from "@/data/DummyData";
+import BoldCheck from "@/components/svgs/BoldCheck";
 
 interface Props {
   data: Datum[];
@@ -45,7 +46,11 @@ const ResourcesScreen = (props: Props) => {
             { color: "#125858", paddingRight: 80, paddingTop: 12 },
           ]}
         >
-          We found 8 resources available to you.
+          {`Good news! \nWe found `}
+          <Text style={{ textDecorationLine: "underline" }}>
+            8 resources
+          </Text>{" "}
+          available to you.
         </Text>
 
         <View>
@@ -132,23 +137,31 @@ const ResourcesScreen = (props: Props) => {
           ))}
         </View>
 
-        <TouchableOpacity
+        <Pressable
           style={{
             flexDirection: "row",
-            gap: 8,
-            borderWidth: 2,
-            borderColor: "#125858",
-            borderRadius: 24,
-            height: 40,
+            gap: 12,
             alignItems: "center",
             justifyContent: "center",
-            width: 200,
-            alignSelf: "center",
+            paddingHorizontal: 8,
+            borderRadius: 24,
+            borderWidth: 2,
+            borderColor: Colors.accentDark,
+            height: 40,
+            marginTop: 12,
           }}
         >
-          <Text>Save to profile</Text>
-          <MaterialCommunityIcons name="check" color={"#125858"} size={20} />
-        </TouchableOpacity>
+          <Text
+            style={{
+              fontFamily: "KarlaMedium",
+              fontSize: 14,
+              color: Colors.accentDark,
+            }}
+          >
+            Create account and save to profile
+          </Text>
+          <BoldCheck />
+        </Pressable>
         <View
           style={{
             backgroundColor: "#10AB8F",
