@@ -7,9 +7,8 @@ interface Props {}
 const Page = (props: Props) => {
   return (
     <>
-      {/* <LogoContainer />
-      <OnboardingScreen /> */}
-      <UserStoryScreen />
+      <LogoContainer />
+      <OnboardingScreen />
     </>
   );
 };
