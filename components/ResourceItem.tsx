@@ -2,6 +2,7 @@ import React from "react";
 import { Pressable, Text, View, ViewStyle, TextStyle } from "react-native";
 import { Octicons } from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
+import { useRouter } from "expo-router";
 
 // Define the types for the props
 type Props = {
@@ -11,6 +12,7 @@ type Props = {
 };
 
 const ResourceItem: React.FC<Props> = ({ title, description, tags }) => {
+  const router = useRouter();
   return (
     <Pressable
       style={{
@@ -19,6 +21,7 @@ const ResourceItem: React.FC<Props> = ({ title, description, tags }) => {
         alignItems: "center",
         gap: 12,
       }}
+      onPress={() => router.push(`/${title}`)}
     >
       <View style={{ flexDirection: "column", gap: 12, paddingTop: 20 }}>
         <Text
