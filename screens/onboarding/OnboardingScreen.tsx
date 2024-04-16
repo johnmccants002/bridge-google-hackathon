@@ -1,9 +1,9 @@
 import * as React from "react";
 import type { ICarouselInstance } from "react-native-reanimated-carousel";
-import Carousel from "react-native-reanimated-carousel";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import CTAButton from "@/components/buttons/CTAButton";
+import { Colors } from "@/constants/Colors";
 import { window } from "@/constants/Web";
 import { useRouter } from "expo-router";
 import {
@@ -14,50 +14,21 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
-import Carouseltem from "./Carouseltem";
-import { Colors } from "@/constants/Colors";
+import Carouseltem from "../onboarding-next/Carouseltem";
+import OnboardingZero from "./svgs/OnboardingZero";
 
 const PAGE_WIDTH = window.width;
 
 function Index() {
   const windowWidth = useWindowDimensions().width;
-  const scrollOffsetValue = useSharedValue<number>(0);
   const [data, setData] = React.useState([...new Array(5).keys()]);
   const [isVertical, setIsVertical] = React.useState(false);
-  const [isFast, setIsFast] = React.useState(false);
-  const [isPagingEnabled, setIsPagingEnabled] = React.useState(true);
   const ref = React.useRef<ICarouselInstance>(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const router = useRouter();
   const navigateToLogin = () => {
     router.replace("/login");
   };
-
-  const baseOptions = isVertical
-    ? ({
-        vertical: true,
-        width: windowWidth,
-        height: PAGE_WIDTH / 2,
-      } as const)
-    : ({
-        vertical: false,
-        width: windowWidth,
-        height: PAGE_WIDTH / 2,
-      } as const);
-
-  const renderDots = () => (
-    <View style={styles.dotContainer}>
-      {data.map((_, index) => (
-        <View
-          key={index}
-          style={[
-            styles.dot,
-            { backgroundColor: currentIndex === index ? "#404040" : "white" },
-          ]}
-        />
-      ))}
-    </View>
-  );
 
   return (
     <SafeAreaView
@@ -70,30 +41,29 @@ function Index() {
       }}
     >
       <View style={styles.container}>
-        <Carousel
-          {...baseOptions}
-          loop
-          enabled // Default is true, just for demo
-          ref={ref}
-          defaultScrollOffsetValue={scrollOffsetValue}
-          testID={"xxx"}
-          style={{ width: 340, height: 440 }}
-          autoPlay={true}
-          autoPlayInterval={3000}
-          data={data}
-          onScrollStart={() => {
-            console.log("===1");
+        <Carouseltem
+          component={<OnboardingZero />}
+          title="Immigration support the right way"
+          description="Bridge is your guide to finding essential resources and support-no matter where you are in your immigration journey. "
+          containerStyle={{
+            height: 460,
+            flexDirection: "column",
+            justifyContent: "space-around",
+            backgroundColor: Colors.accentLight,
+            alignItems: "center",
+            paddingVertical: 20,
+            borderRadius: 8,
           }}
-          onScrollEnd={() => {
-            console.log("===2");
-          }}
-          onConfigurePanGesture={(g) => g.enabled(false)}
-          pagingEnabled={isPagingEnabled}
-          onSnapToItem={(index) => setCurrentIndex(index)}
-          renderItem={({ index }) => <Carouseltem key={index} index={index} />}
         />
-        {renderDots()}
       </View>
+      <Pressable
+        style={{ alignSelf: "center" }}
+        onPress={() => {
+          router.push("/login");
+        }}
+      >
+        <Text style={styles.loginText}>Been here already? Login.</Text>
+      </Pressable>
       <CTAButton
         onPress={() => router.push("/onboarding")}
         text="Get Started"
@@ -101,12 +71,14 @@ function Index() {
         style={{ width: 160 }}
       />
       <Pressable
-        style={{ bottom: 60, alignSelf: "center", position: "absolute" }}
+        style={{ alignSelf: "center" }}
         onPress={() => {
           router.push("/login");
         }}
       >
-        <Text style={styles.loginText}>Been here already? Login.</Text>
+        <Text
+          style={styles.loginText}
+        >{`Don't speak English?\n Continuar en Espanol`}</Text>
       </Pressable>
     </SafeAreaView>
   );
@@ -136,6 +108,7 @@ const styles = StyleSheet.create({
     lineHeight: 28,
     textDecorationLine: "underline",
     color: "white",
+    textAlign: "center",
   },
 });
 
