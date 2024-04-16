@@ -59,19 +59,25 @@ const ChatScreen = (props: Props) => {
     setMessage("");
   };
 
-  const locationPressed = () => {
+  const analyzeAndSendMessage = () => {
+    if (message.length > 7) {
+      sendLocation();
+    } else {
+      setComponents((prev) => [
+        ...prev,
+        <UserMessage key={prev.length} message={message} />,
+      ]);
+    }
+  };
+
+  const sendLocation = () => {
     setQuestionsAnswered({ ...questionsAnswered, location: true });
 
-    setComponents((prevComponents) => {
-      // Replace the component with key "2" and return the array
-      return prevComponents.map((comp) =>
-        comp.key === "2" ? (
-          <UserMessage message={"Sacramento, CA"} key={2} />
-        ) : (
-          comp
-        )
-      );
-    });
+    setComponents((prev) => [
+      ...prev,
+      <UserMessage key={prev.length} message={message} />,
+    ]);
+
     setShowSituation(true);
 
     // Start adding new components with delays
@@ -114,17 +120,6 @@ const ChatScreen = (props: Props) => {
     }, 3500); // Total 8 seconds delay (3s + 5s)
 
     // Add the location button after an additional delay
-    setTimeout(() => {
-      setComponents((prevComponents) => [
-        ...prevComponents,
-        <LocationButton
-          onPress={locationPressed}
-          type="primary"
-          key={2}
-          style={{ width: 240, alignSelf: "center", marginTop: 12 }}
-        />,
-      ]);
-    }, 6500); // Total 10 seconds delay (3s + 5s + 2s)
   };
 
   useEffect(() => {
@@ -221,7 +216,7 @@ const ChatScreen = (props: Props) => {
               alignSelf: "center",
             }}
           >
-            <Pressable onPress={sendMessage}>
+            <Pressable onPress={analyzeAndSendMessage}>
               <FontAwesome
                 name={message === "" ? "microphone" : "arrow-circle-o-up"}
                 size={24}

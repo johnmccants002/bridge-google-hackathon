@@ -167,6 +167,12 @@ function RootLayoutNav() {
                 header: () => <Header color={Colors.accentPrimary} />,
               }}
             />
+            <Stack.Screen
+              name="onboarding-next"
+              options={{
+                headerShown: false,
+              }}
+            />
           </Stack>
         </QueryClientProvider>
       </ThemeProvider>
