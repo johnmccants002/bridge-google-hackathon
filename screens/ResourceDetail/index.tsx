@@ -1,14 +1,23 @@
+import ResourceItem from "@/components/ResourceItem";
 import UpRightArrow from "@/components/svgs/UpRightArrow";
 import { Colors } from "@/constants/Colors";
-import { Feather, Octicons } from "@expo/vector-icons";
+import { Octicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import {
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+  useWindowDimensions,
+} from "react-native";
 
 type Props = {};
 
 const ResourceDetailScreen = (props: Props) => {
+  const { width } = useWindowDimensions();
   const params = useLocalSearchParams();
+  const [showSimilar, setShowSimilar] = useState(false);
   const [showHours, setShowHours] = useState(false);
   return (
     <ScrollView
@@ -19,6 +28,7 @@ const ResourceDetailScreen = (props: Props) => {
         gap: 16,
         backgroundColor: Colors.accentLight,
       }}
+      style={{ backgroundColor: Colors.accentLight }}
     >
       <Text
         style={{
@@ -139,9 +149,7 @@ Sunday Closed`}
       </Pressable>
       <View
         style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
+          flexDirection: "column",
           paddingHorizontal: 12,
           paddingVertical: 16,
           borderRadius: 8,
@@ -150,10 +158,36 @@ Sunday Closed`}
           marginTop: 20,
         }}
       >
-        <Text style={{ fontFamily: "KarlaMedium", fontSize: 24 }}>
-          Similiar Resources
-        </Text>
-        <Octicons name="chevron-down" color={Colors.black} size={32} />
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ fontFamily: "KarlaMedium", fontSize: 24 }}>
+            Similiar Resources
+          </Text>
+          <Pressable onPress={() => setShowSimilar(!showSimilar)}>
+            <Octicons
+              name={showSimilar ? "chevron-up" : "chevron-down"}
+              color={Colors.black}
+              size={32}
+            />
+          </Pressable>
+        </View>
+        {showSimilar ? (
+          <View>
+            <View
+              style={{
+                backgroundColor: Colors.black,
+                width: width - 34,
+                marginTop: 8,
+              }}
+            />
+            <ResourceItem tags={["job training"]} />
+          </View>
+        ) : null}
       </View>
     </ScrollView>
   );
