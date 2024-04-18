@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -12,16 +12,30 @@ import { Colors } from "@/constants/Colors";
 import PrimaryTextInput from "@/components/inputs/PrimaryTextInput";
 import CTAButton from "@/components/buttons/CTAButton";
 import { useRouter } from "expo-router";
+import axios from "axios";
 
 type Props = {};
 
 const RegisterScreen = (props: Props) => {
   const { width } = useWindowDimensions();
   const router = useRouter();
+  const [ email, setEmail ] = useState("")
+  const [ password, setPassword ] = useState("")
+
+  const createAccount = async () => {
+    let payload = { email: email, password: password }
+    let response = await axios.post("https://dpnk8ddrr0.execute-api.us-west-1.amazonaws.com/dev/signup", payload, {
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      }
+    })
+    console.log(response)
+  }
   
   return (
     <View style={styles.container}>
       <LogoContainer />
+       {/* TODO: Implement as a scrollView with offset when keyboard is revealed in mobile */}
       <View
         style={{
           flexDirection: "column",
@@ -50,12 +64,12 @@ const RegisterScreen = (props: Props) => {
         >
           <PrimaryTextInput label="First name" placeholder="John" />
           <PrimaryTextInput label="Last name" placeholder="Smith" />
-          <PrimaryTextInput label="Email" placeholder="example@mail.com" />
-          <PrimaryTextInput label="Password" placeholder="********" />
+          <PrimaryTextInput label="Email" placeholder="example@mail.com" onChangeText={ (text) => setEmail(text)}/>
+          <PrimaryTextInput label="Password" placeholder="********" onChangeText={ (text) => setPassword(text)} />
 
           <CTAButton
           style={{ marginTop: 20 }}
-          onPress={() => router.push("/")}
+          onPress={() => createAccount() }
           text="Create Account"
           type="primary"
         />

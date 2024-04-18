@@ -1,21 +1,21 @@
 import React from "react";
-import { Text, StyleSheet, ViewStyle, TextInput, useWindowDimensions, View } from "react-native";
+import { Text, StyleSheet, ViewStyle, TextInput, useWindowDimensions, View, NativeSyntheticEvent, TextInputChangeEventData } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { defaultStyles } from "../defaultStyles";
 
 type TextInputProps = {
-  onChange?: () => void;
+  onChangeText?: (text: string) => void;
   label?: string;
   placeholder: string;
 };
 
-const PrimaryTextInput: React.FC<TextInputProps> = ({ onChange, label, placeholder }) => {
+const PrimaryTextInput: React.FC<TextInputProps> = ({ onChangeText, label, placeholder }) => {
   const { width } = useWindowDimensions();
   
   const styles = StyleSheet.create({
     primary: {
       backgroundColor: Colors.accentLight,
-      width: Math.min(width - 40, 800),
+      width: Math.min(width - 40, 400),
       color: Colors.accentDark,
       fontSize: 14,
       fontWeight: "500",
@@ -31,7 +31,7 @@ const PrimaryTextInput: React.FC<TextInputProps> = ({ onChange, label, placehold
   return (
     <View>
       { label === null ? <></> : labelText }
-      <TextInput style={styles.primary} placeholder={placeholder} onChange={onChange}/>
+      <TextInput style={styles.primary} placeholder={placeholder} onChangeText={onChangeText}/>
     </View>
   )
 }
