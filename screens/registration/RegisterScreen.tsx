@@ -3,20 +3,22 @@ import {
   View,
   Text,
   StyleSheet,
-  Pressable,
   Image,
-  TextInput,
-  TouchableOpacity,
   useWindowDimensions,
 } from "react-native";
 import LogoContainer from "../../components/LogoContainer";
-import { AntDesign } from "@expo/vector-icons";
 import { defaultStyles } from "../../components/defaultStyles";
+import { Colors } from "@/constants/Colors";
+import PrimaryTextInput from "@/components/inputs/PrimaryTextInput";
+import CTAButton from "@/components/buttons/CTAButton";
+import { useRouter } from "expo-router";
 
 type Props = {};
 
 const RegisterScreen = (props: Props) => {
   const { width } = useWindowDimensions();
+  const router = useRouter();
+  
   return (
     <View style={styles.container}>
       <LogoContainer />
@@ -46,40 +48,19 @@ const RegisterScreen = (props: Props) => {
             alignItems: "center",
           }}
         >
-          <View>
-            <Text style={defaultStyles.inputLabelText}>First</Text>
-            <TextInput
-              style={[styles.input, { width: width - 40 }]}
-              placeholder="John"
-            />
-          </View>
-          <View>
-            <Text style={defaultStyles.inputLabelText}>Last</Text>
-            <TextInput
-              style={[styles.input, { width: width - 40 }]}
-              placeholder="Smith"
-            />
-          </View>
-          <View>
-            <Text style={defaultStyles.inputLabelText}>Email</Text>
-            <TextInput
-              style={[styles.input, { width: width - 40 }]}
-              placeholder="example@mail.com"
-            />
-          </View>
-          <View>
-            <Text style={defaultStyles.inputLabelText}>Password</Text>
-            <TextInput
-              style={[styles.input, { width: width - 40 }]}
-              placeholder="********"
-            />
-          </View>
-        </View>
+          <PrimaryTextInput label="First name" placeholder="John" />
+          <PrimaryTextInput label="Last name" placeholder="Smith" />
+          <PrimaryTextInput label="Email" placeholder="example@mail.com" />
+          <PrimaryTextInput label="Password" placeholder="********" />
 
-        <TouchableOpacity style={defaultStyles.button}>
-          <Text style={defaultStyles.buttonText}>Create Account</Text>
-          <AntDesign name="arrowright" color={"#1C6A6A"} />
-        </TouchableOpacity>
+          <CTAButton
+          style={{ marginTop: 20 }}
+          onPress={() => router.push("/")}
+          text="Create Account"
+          type="primary"
+        />
+
+        </View>
       </View>
     </View>
   );
@@ -88,7 +69,7 @@ const RegisterScreen = (props: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#4BA4A4",
+    backgroundColor: Colors.accentPrimary,
     zIndex: 1,
   },
   input: {
