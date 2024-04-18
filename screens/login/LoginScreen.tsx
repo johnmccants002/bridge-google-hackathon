@@ -15,6 +15,7 @@ import { defaultStyles } from "../../components/defaultStyles";
 import { useRouter } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import CTAButton from "@/components/buttons/CTAButton";
+import PrimaryTextInput from "@/components/inputs/PrimaryTextInput";
 
 type Props = {};
 
@@ -50,20 +51,8 @@ const LoginScreen = (props: Props) => {
             alignItems: "center",
           }}
         >
-          <View>
-            <Text style={defaultStyles.inputLabelText}>Email</Text>
-            <TextInput
-              style={[styles.input, { width: Math.min(width - 40, 800) }]}
-              placeholder="example@mail.com"
-            />
-          </View>
-          <View>
-            <Text style={defaultStyles.inputLabelText}>Password</Text>
-            <TextInput
-              style={[styles.input, { width: Math.min(width - 40, 800) }]}
-              placeholder="********"
-            />
-          </View>
+          <PrimaryTextInput label="Email" placeholder="example@mail.com"/>
+          <PrimaryTextInput label="Password" placeholder="********"/>
         </View>
 
         <CTAButton
@@ -82,17 +71,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.accentPrimary,
     zIndex: 1,
-  },
-  input: {
-    backgroundColor: Colors.accentLight,
-    width: 240,
-    color: Colors.accentDark,
-    fontSize: 14,
-    fontWeight: "500",
-    height: 40,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginTop: 10,
   },
   loginText: {
     color: "#E9FBFF",
