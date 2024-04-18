@@ -68,7 +68,7 @@ function Index() {
         onPress={() => router.push("/onboarding")}
         text="Get Started"
         type="primary"
-        style={{ width: 160 }}
+        // style={{ width: 160 }}
       />
       <Pressable
         style={{ alignSelf: "center" }}
@@ -78,7 +78,7 @@ function Index() {
       >
         <Text
           style={styles.loginText}
-        >{`Don't speak English?\n Continuar en Espanol`}</Text>
+        >{`Don't speak English?\nContinuar en Espanol`}</Text>
       </Pressable>
     </SafeAreaView>
   );
@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
   },
   loginText: {
     fontFamily: "KarlaRegular",
-    fontSize: 19,
-    lineHeight: 28,
+    fontSize: 16,
+    lineHeight: 20,
     textDecorationLine: "underline",
     color: "white",
     textAlign: "center",

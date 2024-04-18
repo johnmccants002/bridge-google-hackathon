@@ -19,15 +19,15 @@ export const defaultStyles = StyleSheet.create({
   buttonText: {
     color: "#227272",
     fontFamily: "KarlaBold",
+    fontSize: 16
   },
   button: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "white",
     padding: 12,
-    width: 164,
     height: 48,
-    borderRadius: 16,
+    borderRadius: 24,
     gap: 8,
     justifyContent: "center",
     marginTop: 40,
