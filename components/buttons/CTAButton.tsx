@@ -40,7 +40,7 @@ const CTAButton: React.FC<CTAButtonProps> = ({
       paddingHorizontal: 16,
       borderRadius: 24,
       flexDirection: "row",
-      gap: 8,
+      gap: 12,
     },
 
     secondary: {
@@ -79,7 +79,7 @@ const CTAButton: React.FC<CTAButtonProps> = ({
     <Pressable style={[buttonStyle[type], style]} onPress={onPress}>
       {/* Assuming you want to display the iconName or some text here */}
       <Text style={textStyle[type]}>{text}</Text>
-      <AntDesign
+      <AntDesign style={{ fontSize: 28 }}
         name={type === "primary" ? "arrowright" : "check"}
         color={type === "primary" ? Colors.accentDark : Colors.accentLight}
       />

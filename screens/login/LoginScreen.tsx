@@ -14,6 +14,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { defaultStyles } from "../../components/defaultStyles";
 import { useRouter } from "expo-router";
 import { Colors } from "@/constants/Colors";
+import CTAButton from "@/components/buttons/CTAButton";
 
 type Props = {};
 
@@ -52,26 +53,25 @@ const LoginScreen = (props: Props) => {
           <View>
             <Text style={defaultStyles.inputLabelText}>Email</Text>
             <TextInput
-              style={[styles.input, { width: width - 40 }]}
+              style={[styles.input, { width: Math.min(width - 40, 800) }]}
               placeholder="example@mail.com"
             />
           </View>
           <View>
             <Text style={defaultStyles.inputLabelText}>Password</Text>
             <TextInput
-              style={[styles.input, { width: width - 40 }]}
+              style={[styles.input, { width: Math.min(width - 40, 800) }]}
               placeholder="********"
             />
           </View>
         </View>
 
-        <TouchableOpacity
-          style={defaultStyles.button}
+        <CTAButton
+          style={{ marginTop: 20 }}
           onPress={() => router.push("/profile")}
-        >
-          <Text style={defaultStyles.buttonText}>Login</Text>
-          <AntDesign name="arrowright" color={"#1C6A6A"} />
-        </TouchableOpacity>
+          text="Login"
+          type="primary"
+        />
       </View>
     </View>
   );
@@ -84,11 +84,13 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   input: {
-    backgroundColor: "white",
+    backgroundColor: Colors.accentLight,
     width: 240,
-    color: "gray",
-    height: 35,
-    borderRadius: 16,
+    color: Colors.accentDark,
+    fontSize: 14,
+    fontWeight: "500",
+    height: 40,
+    borderRadius: 8,
     paddingHorizontal: 10,
     marginTop: 10,
   },
