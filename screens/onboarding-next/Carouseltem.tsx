@@ -14,7 +14,6 @@ const CarouselItem: React.FC<Props> = ({
   component,
   title,
   description,
-
   containerStyle,
 }) => {
   return (
@@ -31,9 +30,7 @@ const CarouselItem: React.FC<Props> = ({
 // Using StyleSheet for better performance and cleaner code
 const styles = StyleSheet.create({
   container: {
-    width: 340,
     height: 580,
-
     borderRadius: 8,
     backgroundColor: "#E7FFFB",
     alignItems: "center",
@@ -41,6 +38,7 @@ const styles = StyleSheet.create({
     padding: 8,
     paddingHorizontal: 12,
     paddingVertical: 80,
+    marginHorizontal: 20,
   },
   componentContainer: {
     height: 240,

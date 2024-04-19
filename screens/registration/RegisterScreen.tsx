@@ -23,13 +23,28 @@ const RegisterScreen = (props: Props) => {
   const [ password, setPassword ] = useState("")
 
   const createAccount = async () => {
-    let payload = { email: email, password: password }
-    let response = await axios.post("https://dpnk8ddrr0.execute-api.us-west-1.amazonaws.com/dev/signup", payload, {
-      headers: {
-        'Access-Control-Allow-Origin': '*'
+    const url = "https://dpnk8ddrr0.execute-api.us-west-1.amazonaws.com/dev/signup"
+
+    const headers = {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "HEAD, DELETE, POST, GET, OPTIONS, PUT, PATCH",
+      "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type,Authorization, Accept",
+    }
+
+    let payload = { 
+      email: email, 
+      password: password , 
+      demographics: {
+        household: 1
       }
-    })
-    console.log(response)
+    }
+
+    try {
+      const response = await axios.post(url, payload, { headers: headers })
+      console.log(response)
+    } catch (error) {
+      console.error(error)
+    }
   }
   
   return (

@@ -9,17 +9,13 @@ import { useRouter } from "expo-router";
 import {
   Pressable,
   StyleSheet,
-  Text,
+  Image,
   View,
   useWindowDimensions,
 } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
 import Carouseltem from "./Carouseltem";
 import { Colors } from "@/constants/Colors";
-import BuddyOne from "../onboarding/svgs/BuddyOne";
-import BuddyTwo from "../onboarding/svgs/BuddyTwo";
-import BuddyThree from "../onboarding/svgs/BuddyThree";
-import BuddyFour from "../onboarding/svgs/BuddyFour";
 import LeftCaret from "@/components/svgs/LeftCaret";
 import RightCaret from "@/components/svgs/RightCaret";
 
@@ -31,8 +27,6 @@ const Index = (props: Props) => {
   const windowWidth = useWindowDimensions().width;
   const scrollOffsetValue = useSharedValue<number>(0);
   const [data, setData] = React.useState([...new Array(4).keys()]);
-  const [isVertical, setIsVertical] = React.useState(false);
-  const [isFast, setIsFast] = React.useState(false);
   const [isPagingEnabled, setIsPagingEnabled] = React.useState(true);
   const ref = React.useRef<ICarouselInstance>(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -46,15 +40,16 @@ const Index = (props: Props) => {
 
   const goToNext = () => {
     if (ref && ref.current) {
+      console.log("did next")
       ref.current.next();
     }
   };
 
   const components = [
-    <BuddyOne />,
-    <BuddyTwo />,
-    <BuddyThree />,
-    <BuddyFour />,
+    <Image resizeMode="contain" style={styles.illustration} source={require("@/assets/images/bridge-buddy-a.png")} />,
+    <Image resizeMode="contain" style={styles.illustration} source={require("@/assets/images/bridge-buddy-b.png")} />,
+    <Image resizeMode="contain" style={styles.illustration} source={require("@/assets/images/bridge-buddy-c.png")} />,
+    <Image resizeMode="contain" style={styles.illustration} source={require("@/assets/images/bridge-buddy-d.png")} />,
   ];
   const titles = [
     "Bridge Buddy",
@@ -94,6 +89,10 @@ const Index = (props: Props) => {
       </View>
     );
   };
+
+  const isLeftArrowVisible = (currentIndex: number) => currentIndex === 1 || currentIndex === 2
+
+
   return (
     <SafeAreaView
       edges={["bottom"]}
@@ -111,7 +110,7 @@ const Index = (props: Props) => {
         ref={ref}
         defaultScrollOffsetValue={scrollOffsetValue}
         testID={"xxx"}
-        style={{ width: 340, height: 580 }}
+        style={{ height: 580 }}
         data={data}
         onScrollStart={() => {
           console.log("===1");
@@ -138,14 +137,15 @@ const Index = (props: Props) => {
           width: windowWidth,
           paddingHorizontal: 20,
           alignItems: "center",
+          height: 48
         }}
       >
-        {currentIndex === 1 || currentIndex === 2 ? (
+        {isLeftArrowVisible(currentIndex) ? (
           <Pressable onPress={goToPrev}>
             <LeftCaret />
           </Pressable>
         ) : (
-          <View style={{ width: 30, height: 30 }}></View>
+          <View style={{ width: 14, height: 24 }}></View>
         )}
         {renderDots()}
         {currentIndex !== 3 ? (
@@ -165,7 +165,7 @@ const Index = (props: Props) => {
             style={{
               position: "absolute",
               bottom: -10,
-              right: 30,
+              right: 20,
               marginTop: 24,
             }}
           />
@@ -201,6 +201,10 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     color: "white",
   },
+  illustration: {
+    width: 196,
+    height: 262
+  }
 });
 
 export default Index;
