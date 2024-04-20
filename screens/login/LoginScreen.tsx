@@ -51,8 +51,8 @@ const LoginScreen = (props: Props) => {
             alignItems: "center",
           }}
         >
-          <PrimaryTextInput label="Email" placeholder="example@mail.com"/>
-          <PrimaryTextInput label="Password" placeholder="********"/>
+          <PrimaryTextInput label="Email" placeholder="example@mail.com" />
+          <PrimaryTextInput label="Password" placeholder="********" />
         </View>
 
         <CTAButton
@@ -61,6 +61,18 @@ const LoginScreen = (props: Props) => {
           text="Login"
           type="primary"
         />
+
+        <Pressable onPress={() => router.push("/register")}>
+          <Text
+            style={{
+              textDecorationLine: "underline",
+              fontFamily: "Karla-Medium",
+              fontSize: 14,
+            }}
+          >
+            Already have an account?
+          </Text>
+        </Pressable>
       </View>
     </View>
   );
