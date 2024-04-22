@@ -1,4 +1,5 @@
-const { handler } = require("./post");
+import { handler } from "./post"; // Replace with the path to your Lambda handler file
+
 // Create a mock event object with a JSON body
 const mockEvent = {
   body: JSON.stringify({
@@ -15,10 +16,10 @@ const mockEvent = {
 };
 
 // Create an empty context object
-const context: any = {};
+const context = {};
 
 // Call your Lambda handler function with the mock event and context
-handler(mockEvent, context, (error: any, response: any) => {
+handler(mockEvent, context, (error, response) => {
   if (error) {
     console.error("Error:", error);
   } else {
