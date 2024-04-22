@@ -1,12 +1,12 @@
 /** Lambda Function
- * 
+ *
  * Post user data to DynamoDB
  * @param event {object} - Request object
  */
 
-import { APIGatewayProxyHandler } from 'aws-lambda';
-import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
-import { DynamoDBDocumentClient, PutCommand } from '@aws-sdk/lib-dynamodb';
+import { APIGatewayProxyHandler } from "aws-lambda";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
 
 // Create a DynamoDB client
 const ddbClient = new DynamoDBClient();
@@ -14,31 +14,31 @@ const docClient = DynamoDBDocumentClient.from(ddbClient);
 
 export const handler: APIGatewayProxyHandler = async (event, _context) => {
   const timestamp = new Date().getTime();
-  const data = JSON.parse(event.body || '{}');
+  const data = JSON.parse(event.body || "{}");
 
   const TableName = process.env.USER_SCHEMA;
 
   if (!TableName) {
-    console.error('Table name not set');
+    console.error("Table name not set");
     return {
       statusCode: 500,
       body: JSON.stringify({
-        message: 'Table name not set',
+        message: "Table name not set",
       }),
     };
   }
 
   type Demographics = {
     age: number;
-    income: number,
-    ethnicity: string,
-    veteran: boolean,
-    disability: boolean,
-    gender: string
-  }
+    income: number;
+    ethnicity: string;
+    veteran: boolean;
+    disability: boolean;
+    gender: string;
+  };
 
   const demographics: Demographics = data.demographics;
-  
+
   const params = {
     TableName,
     Item: {
