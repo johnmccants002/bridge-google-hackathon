@@ -9,33 +9,33 @@
     },
     "demographics": {
       "type": "object",
-      "properties": {
+      "properties": {       
+        "gender": {
+          "type": "string"
+        },
         "age": {
           "type": "number"
         },
         "income": {
           "type": "number"
         },
-        "ethnicity": {
+        "employmentStatus": {
           "type": "string"
         },
-        "veteran": {
-          "type": "boolean"
+        "householdNumber": {
+          "type": "number"
         },
-        "disability": {
-          "type": "boolean"
-        },
-        "gender": {
-          "type": "string"
+        "dependents": {
+          "type": "number"
         }
       },
       "required": [
+        "gender",
         "age",
         "income",
-        "ethnicity",
-        "veteran",
-        "disability",
-        "gender"
+        "employmentStatus",
+        "householdNumber",
+        "dependents"
       ]
     }
   },
