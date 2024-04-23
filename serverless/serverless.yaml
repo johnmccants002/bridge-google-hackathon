@@ -23,20 +23,19 @@ provider:
     GEMINI_KEY: ${param:GEMINI_KEY}
     GEMINI_URL: ${param:GEMINI_URL}
     USER_SCHEMA: UserTable
-    COGNITO_CLIENT_ID: ${param:COGNITO_CLIENT_ID}
-    COGNITO_CLIENT_SECRET: ${param:COGNITO_CLIENT_SECRET}
+    SALT: ${param:SALT}
 
 functions:
-  postHandler:
-    handler: src/post.handler
+  signUp:
+    handler: src/signUp.handler
     events:
       - http:
-          path: /handler
+          path: /signup
           method: post
           cors: true
           request:
             schemas:
-              application/json: ${file(models/post-model.json)}
+              application/json: ${file(models/signup-model.json)}
     iamRoleStatementsName: userTablePostRole
     iamRoleStatements:
       - Effect: Allow
@@ -53,21 +52,17 @@ functions:
           - dynamodb:Query
         Resource:
           - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.USER_SCHEMA}"
-      - Effect: Allow
-        Action:
-          - cognito-idp:AdminCreateUser
-        Resource: "arn:aws:cognito-idp:us-west-1:098121828254:userpool/us-west-1_fUQe9TbVk"
     
-  getHandler:
-    handler: src/get.handler
+  login:
+    handler: src/login.handler
     events:
       - http:
-          path: /handler/{id}
-          method: get
+          path: /login
+          method: post
           cors: true
-          authorizer:
-            type: COGNITO_USER_POOLS
-            authorizerId: {Ref: CognitoAuthorizer}
+          request:
+            schemas:
+              application/json: ${file(models/login-model.json)}
     iamRoleStatementsName: userTableGetRole
     iamRoleStatements:
       - Effect: Allow
@@ -108,49 +103,6 @@ functions:
               application/json: ${file(models/gemini-user-data-model.json)}
     timeout: 30
 
-  signupHandler:
-    handler: src/signUp.handler
-    events:
-      - http:
-          path: /signup
-          method: post
-          cors: true
-    iamRoleStatements:
-      - Effect: Allow
-        Action:
-          - xray:PutTelemetryRecords
-          - xray:PutTraceSegments
-        Resource: "*"
-      - Effect: Allow
-        Action:
-          - dynamodb:PutItem
-          - dynamodb:GetItem
-          - dynamodb:Scan
-          - dynamodb:Query
-        Resource:
-          - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.USER_SCHEMA}"
-
-  loginHandler:
-    handler: src/login.handler
-    events:
-      - http:
-          path: /login
-          method: post
-          cors: true
-    iamRoleStatements:
-      - Effect: Allow
-        Action:
-          - xray:PutTelemetryRecords
-          - xray:PutTraceSegments
-        Resource: "*"
-      - Effect: Allow
-        Action:
-          - dynamodb:GetItem
-          - dynamodb:Scan
-          - dynamodb:Query
-        Resource:
-          - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.USER_SCHEMA}"
-
 resources:
   Resources:
     UserTable:
@@ -164,13 +116,3 @@ resources:
           - AttributeName: 'id'
             KeyType: 'HASH'
         BillingMode: PAY_PER_REQUEST
-    CognitoAuthorizer:
-      Type: AWS::ApiGateway::Authorizer
-      Properties:
-        Name: CognitoAuthorizer
-        IdentitySource: method.request.header.Authorization
-        RestApiId:
-          Ref: ApiGatewayRestApi
-        Type: COGNITO_USER_POOLS
-        ProviderARNs:
-          - arn:aws:cognito-idp:us-west-1:098121828254:userpool/us-west-1_fUQe9TbVk
