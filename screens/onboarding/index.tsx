@@ -15,7 +15,7 @@ import {
 } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
 import Carouseltem from "./Carouseltem";
-import { Colors } from "@/constants/Colors";
+import Color from "@/constants/Color";
 import LeftCaret from "@/components/svgs/LeftCaret";
 import RightCaret from "@/components/svgs/RightCaret";
 
@@ -23,7 +23,7 @@ type Props = {};
 
 const PAGE_WIDTH = window.width;
 
-const Index = (props: Props) => {
+const Onboarding = (props: Props) => {
   const windowWidth = useWindowDimensions().width;
   const scrollOffsetValue = useSharedValue<number>(0);
   const [data, setData] = React.useState([...new Array(4).keys()]);
@@ -100,7 +100,7 @@ const Index = (props: Props) => {
         flex: 1,
         alignItems: "center",
         justifyContent: "space-evenly",
-        backgroundColor: Colors.accentPrimary,
+        backgroundColor: Color.accentPrimary,
       }}
     >
       <Carousel
@@ -160,7 +160,7 @@ const Index = (props: Props) => {
             type="primary"
             text="Continue"
             onPress={() => {
-              router.push("/onboarding-next");
+              router.replace("/chat-immigration-status");
             }}
             style={{
               position: "absolute",
@@ -207,4 +207,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Index;
+export default Onboarding;

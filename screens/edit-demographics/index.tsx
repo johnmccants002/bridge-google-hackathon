@@ -15,7 +15,7 @@ import Select from "react-select";
 import { defaultStyles } from "../../components/defaultStyles";
 import "@/screens/profile/index.css";
 import { useQuery } from "@tanstack/react-query";
-import { Colors } from "@/constants/Colors";
+import Color from "@/constants/Color";
 import CTAButton from "@/components/buttons/CTAButton";
 import BoldCheck from "@/components/svgs/BoldCheck";
 
@@ -304,7 +304,7 @@ const Index = () => {
           paddingHorizontal: 8,
           borderRadius: 24,
           borderWidth: 2,
-          borderColor: Colors.accentDark,
+          borderColor: Color.accentDark,
           height: 40,
           marginTop: 8,
         }}
@@ -313,7 +313,7 @@ const Index = () => {
           style={{
             fontFamily: "KarlaMedium",
             fontSize: 14,
-            color: Colors.accentDark,
+            color: Color.accentDark,
           }}
         >
           Create account and save to profile
@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontFamily: "KarlaMedium",
-    color: Colors.accentPrimary,
+    color: Color.accentPrimary,
     marginBottom: 5,
   },
   addText: {
@@ -380,7 +380,7 @@ const styles = StyleSheet.create({
     fontSize: 19,
     lineHeight: 28,
     textDecorationLine: "underline",
-    color: Colors.accentPrimary,
+    color: Color.accentPrimary,
   },
 });
 

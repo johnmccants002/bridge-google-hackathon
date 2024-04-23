@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableHighlight,
 } from "react-native";
-import { Colors } from "@/constants/Colors";
+import Color from "@/constants/Color";
 import Fonts from "@/constants/Fonts";
 import CTAButton from "@/components/buttons/CTAButton";
 import { useRouter } from "expo-router";
@@ -25,22 +25,22 @@ const Button = ({ text, onPress, isSelected }: ButtonProps) => {
       style={{
         padding: 8,
         borderWidth: 2,
-        borderColor: Colors.accentLight,
-        backgroundColor: isSelected ? Colors.accentDark : Colors.accentPrimary,
+        borderColor: Color.accentLight,
+        backgroundColor: isSelected ? Color.accentDark : Color.accentPrimary,
         borderRadius: 24,
         width: "44%",
         height: 100,
         alignItems: "center",
         justifyContent: "center",
       }}
-      underlayColor={Colors.accentDark}
+      underlayColor={Color.accentDark}
       onPress={onPress}
     >
       <Text
         style={{
           fontFamily: Fonts.medium,
           fontSize: 16,
-          color: Colors.accentLight,
+          color: Color.accentLight,
           textAlign: "center",
           padding: 8,
         }}
@@ -102,14 +102,14 @@ const ButtonDisplay = (props: Props) => {
         </View>
       </View>
       <TouchableHighlight
-        underlayColor={Colors.accentDark}
+        underlayColor={Color.accentDark}
         style={[
           styles.bottomButton,
           {
             backgroundColor:
               selectedButton === "Other/Unsure"
-                ? Colors.accentDark
-                : Colors.accentPrimary,
+                ? Color.accentDark
+                : Color.accentPrimary,
           },
         ]}
         onPress={() => handleButtonPress("Other/Unsure")}
@@ -122,7 +122,7 @@ const ButtonDisplay = (props: Props) => {
           text="Continue"
           type="primary"
           onPress={() => {
-            router.push("/user-story");
+            router.push("/chat-user-story");
           }}
         />
       </View>
@@ -134,14 +134,14 @@ const styles = StyleSheet.create({
   buttonText: {
     fontFamily: Fonts.medium,
     fontSize: 16,
-    color: Colors.accentLight,
+    color: Color.accentLight,
     textAlign: "center",
     padding: 8,
   },
   bottomButton: {
     padding: 8,
     borderWidth: 2,
-    borderColor: Colors.accentLight,
+    borderColor: Color.accentLight,
     borderRadius: 24,
     width: "95%",
     height: 50,

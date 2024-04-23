@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import LogoContainer from "../../components/LogoContainer";
 import { defaultStyles } from "../../components/defaultStyles";
-import { Colors } from "@/constants/Colors";
+import Color from "@/constants/Color";
 import PrimaryTextInput from "@/components/inputs/PrimaryTextInput";
 import CTAButton from "@/components/buttons/CTAButton";
 import { useRouter } from "expo-router";
@@ -16,7 +16,7 @@ import axios from "axios";
 
 type Props = {};
 
-const RegisterScreen = (props: Props) => {
+const Index = (props: Props) => {
   const { width } = useWindowDimensions();
   const router = useRouter();
   const [ email, setEmail ] = useState("")
@@ -98,7 +98,7 @@ const RegisterScreen = (props: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.accentPrimary,
+    backgroundColor: Color.accentPrimary,
     zIndex: 1,
   },
   input: {
@@ -115,4 +115,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterScreen;
+export default Index;

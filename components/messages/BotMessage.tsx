@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import BotIcon from "./BotIcon";
 import Fonts from "@/constants/Fonts";
-import { Colors } from "@/constants/Colors";
+import Color from "@/constants/Color";
 import LoadingAnimation, { Dot } from "../LoadingAnimation";
 import ToolTipIcon from "../svgs/ToolTipIcon";
 
@@ -35,7 +35,7 @@ const BotMessage = (props: Props) => {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: Colors.accentPrimary,
+            backgroundColor: Color.accentPrimary,
             width: 120,
             height: "auto",
           }}
@@ -48,7 +48,7 @@ const BotMessage = (props: Props) => {
         <View
           style={{
             padding: 8,
-            backgroundColor: Colors.offWhite,
+            backgroundColor: Color.offWhite,
             borderRadius: 8,
             paddingHorizontal: 12,
             flexGrow: 1,
@@ -61,7 +61,7 @@ const BotMessage = (props: Props) => {
           <Text
             style={{
               fontFamily: Fonts.medium,
-              color: Colors.accentDark,
+              color: Color.accentDark,
               width: props.toolTip ? "80%" : "auto",
             }}
           >

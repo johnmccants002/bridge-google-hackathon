@@ -1,12 +1,9 @@
 import LogoContainer from "@/components/LogoContainer";
-import ToolTip from "@/components/ToolTip";
-import CTAButton from "@/components/buttons/CTAButton";
+import LocationButton from "@/components/buttons/LocationButton";
 import BotMessage from "@/components/messages/BotMessage";
 import UserMessage from "@/components/messages/UserMessage";
-import BackArrow from "@/components/svgs/BackArrow";
-import { Colors } from "@/constants/Colors";
+import Color from "@/constants/Color";
 import { FontAwesome } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
@@ -19,60 +16,32 @@ import {
   TextInput,
   View,
   useWindowDimensions,
-  Text,
-  Modal,
 } from "react-native";
+import ButtonDisplay from "./ButtonDisplay";
 
 type Props = {};
 
-const UserStoryScreen = (props: Props) => {
+const Index = (props: Props) => {
   const { width, height } = useWindowDimensions();
   const scrollViewRef = useRef<ScrollView | null>(null);
   const [keyboardStatus, setKeyboardStatus] = useState("");
   const inputRef = useRef<TextInput | null>(null);
   const [message, setMessage] = useState("");
   const [components, setComponents] = useState<React.JSX.Element[]>([]);
-  const [showToolTip, setShowToolTip] = useState(false);
   const [keyboardPadding, setKeyboardPadding] = useState(0);
-  const [botStep, setBotStep] = useState(0);
-
+  const [questionsAnswered, setQuestionsAnswered] = useState({
+    location: false,
+    situation: false,
+  });
   const bottomPosition = useRef(new Animated.Value(20)).current; // Initial bottom position
-  const [showResults, setShowResults] = useState(false);
-  const router = useRouter();
+  const [showSituation, setShowSituation] = useState(false);
 
-  const createBotMessage = (type: string, key: number) => {
-    switch (type) {
-      case "firstMessage":
-        return (
-          <BotMessage
-            message="Now tell me a little about yourself and your situation. How may I assist you?"
-            key={key}
-            toolTip={true}
-            toolTipPressed={() => setShowToolTip(true)}
-          />
-        );
-      case "thanks":
-        return (
-          <BotMessage message="Thanks, that's helpful to know!" key={key} />
-        );
-      case "ageQuestion":
-        return (
-          <BotMessage
-            message="One more thing - could you tell us how old you are?"
-            key={key}
-          />
-        );
-      case "resultsFound":
-        return (
-          <BotMessage
-            message="Awesome, we've got everything we need! Let's take a look at what we found."
-            key={key}
-          />
-        );
-      default:
-        return <></>; // Return null or a default component if the type is not found
-    }
-  };
+  const botMessages = [
+    "Let's get started on your journey to finding assistance tailored to your needs!",
+    "First things first, where are you located?",
+    "Great, thanks! This will help us connect you to state and local resources.",
+    "Which of the following best describes your situation?",
+  ];
 
   const scrollToBottom = () => {
     if (scrollViewRef) {
@@ -80,74 +49,75 @@ const UserStoryScreen = (props: Props) => {
     }
   };
 
+  const continuedPressed = () => {};
+
+  const sendMessage = () => {
+    setComponents([
+      ...components,
+      <UserMessage message={message} key={components.length} />,
+    ]);
+    setMessage("");
+  };
+
   const analyzeAndSendMessage = () => {
+    if (message.length > 7) {
+      sendLocation();
+    } else {
+      setComponents((prev) => [
+        ...prev,
+        <UserMessage key={prev.length} message={message} />,
+      ]);
+    }
+  };
+
+  const sendLocation = () => {
+    setQuestionsAnswered({ ...questionsAnswered, location: true });
+
     setComponents((prev) => [
       ...prev,
       <UserMessage key={prev.length} message={message} />,
     ]);
-    setMessage("");
-    analyzeAndSendBotMessage();
-    setBotStep(botStep + 1);
-  };
 
-  const analyzeAndSendBotMessage = () => {
-    console.log(components.length);
+    setShowSituation(true);
 
-    switch (botStep) {
-      case 0:
-        setComponents((prev) => [
-          ...prev,
-          createBotMessage("thanks", components.length + 1),
-          createBotMessage("ageQuestion", components.length + 2),
-        ]);
-        return;
-
-      case 1:
-        setComponents((prev) => [
-          ...prev,
-          createBotMessage("resultsFound", components.length + 3),
-        ]);
-        return;
-    }
-  };
-
-  const sendBotResultsMessage = () => {
+    // Start adding new components with delays
     setTimeout(() => {
-      setComponents((prev) => [
-        ...prev,
-        <BotMessage
-          key={prev.length}
-          message={
-            "Awesome, we've got everything we need! Let's take a look at what we found."
-          }
-        />,
+      setComponents((prevComponents) => [
+        ...prevComponents,
+        <BotMessage message={botMessages[2]} key={3} />,
+      ]);
+    }, 0); // Delay of 3 seconds
+
+    setTimeout(() => {
+      setComponents((prevComponents) => [
+        ...prevComponents,
+        <BotMessage message={botMessages[3]} key={4} />,
+      ]);
+    }, 3000); // Additional 3 seconds, making a total of 6 seconds
+
+    setTimeout(() => {
+      setComponents((prevComponents) => [
+        ...prevComponents,
+        <ButtonDisplay key={5} />, // Make sure to assign a unique key
+      ]);
+    }, 6000); // Additional 3 seconds, making a total of 9 seconds
+  };
+
+  const sendFirstTwoMessages = () => {
+    // Add the first bot message immediately
+    setTimeout(() => {
+      setComponents((prevComponents) => [
+        ...prevComponents,
+        <BotMessage message={botMessages[0]} key={0} />,
       ]);
     }, 500);
-
-    setTimeout(() => {
-      setShowResults(true);
-    }, 2000);
-  };
-
-  const sendFirstMessage = () => {
-    // Add the first bot message immediately
-
     // Add the second bot message after an additional delay
     setTimeout(() => {
       setComponents((prevComponents) => [
         ...prevComponents,
-        <BotMessage
-          message={
-            "Now tell me a little about yourself and your situation. How may I assist you?"
-          }
-          key={0}
-          toolTip={true}
-          toolTipPressed={() => {
-            setShowToolTip(true);
-          }}
-        />,
+        <BotMessage message={botMessages[1]} key={1} />,
       ]);
-    }, 500); // Total 8 seconds delay (3s + 5s)
+    }, 3500); // Total 8 seconds delay (3s + 5s)
 
     // Add the location button after an additional delay
   };
@@ -174,7 +144,7 @@ const UserStoryScreen = (props: Props) => {
     });
 
     if (components.length === 0) {
-      sendFirstMessage();
+      sendFirstTwoMessages();
     }
 
     return () => {
@@ -192,35 +162,13 @@ const UserStoryScreen = (props: Props) => {
         {
           //   flex: 1,
           height: height,
-          backgroundColor: Colors.accentPrimary,
+          backgroundColor: Color.accentPrimary,
           paddingBottom: keyboardPadding,
         },
       ]}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <LogoContainer />
-      <Pressable
-        style={{
-          flexDirection: "row",
-          gap: 12,
-          width: width,
-          paddingHorizontal: 12,
-          alignItems: "center",
-          marginTop: 12,
-        }}
-        onPress={router.back}
-      >
-        <BackArrow />
-        <Text
-          style={{
-            fontFamily: "KarlaRegular",
-            color: Colors.white,
-            fontSize: 24,
-          }}
-        >
-          Back
-        </Text>
-      </Pressable>
       <ScrollView
         style={{ width: width, paddingTop: 40 }}
         contentContainerStyle={{ paddingBottom: 100, gap: 8 }}
@@ -228,18 +176,8 @@ const UserStoryScreen = (props: Props) => {
       >
         {components}
       </ScrollView>
-      {botStep === 2 ? (
-        <CTAButton
-          type="primary"
-          text="See my results"
-          onPress={() => router.push("/results")}
-          style={{
-            left: 20,
-            right: 20,
-            position: "absolute",
-            bottom: 40,
-          }}
-        />
+      {showSituation ? (
+        <></>
       ) : (
         <Animated.View
           style={{
@@ -282,41 +220,12 @@ const UserStoryScreen = (props: Props) => {
               <FontAwesome
                 name={message === "" ? "microphone" : "arrow-circle-o-up"}
                 size={24}
-                color={Colors.accentPrimary}
+                color={Color.accentPrimary}
               />
             </Pressable>
           </View>
         </Animated.View>
       )}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={showToolTip}
-        onRequestClose={() => {
-          setShowToolTip(false);
-        }}
-        presentationStyle="overFullScreen"
-      >
-        <View
-          style={{
-            position: "absolute",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            bottom: 0,
-            right: 0,
-            left: 0,
-            top: 0,
-            backgroundColor: "rgba(52, 52, 52, 0.4)",
-          }}
-        >
-          <ToolTip
-            onPress={() => {
-              setShowToolTip(false);
-            }}
-          />
-        </View>
-      </Modal>
     </KeyboardAvoidingView>
   );
 };
@@ -353,4 +262,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserStoryScreen;
+export default Index;

@@ -12,7 +12,7 @@ import { AntDesign } from "@expo/vector-icons";
 
 type Props = {};
 
-const AccountCreatedScreen = (props: Props) => {
+const Index = (props: Props) => {
   const { height } = useWindowDimensions();
   return (
     <View style={defaultStyles.container}>
@@ -42,4 +42,4 @@ const AccountCreatedScreen = (props: Props) => {
   );
 };
 
-export default AccountCreatedScreen;
+export default Index;

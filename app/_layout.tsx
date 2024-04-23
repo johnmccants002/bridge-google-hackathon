@@ -18,7 +18,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import { Colors } from "@/constants/Colors";
+import Color from "@/constants/Color";
 import NavigationHeader from "@/components/headers/NavigationHeader";
 
 const queryClient = new QueryClient();
@@ -67,46 +67,6 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
   const router = useRouter();
 
-  const Header = (props: { color: string; iconTextColor: string }) => {
-    return (
-      <View
-        style={{
-          backgroundColor: props.color,
-          justifyContent: "center",
-          height: 120,
-          paddingTop: 60,
-          padding: 20,
-        }}
-      >
-        <Pressable
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 4,
-            backgroundColor: props.color,
-          }}
-          onPress={router.back}
-        >
-          <AntDesign
-            name="arrowleft"
-            size={24}
-            color={props.iconTextColor ? props.iconTextColor : "white"}
-          />
-          <Text
-            style={{
-              fontFamily: "KarlaRegular",
-              fontWeight: "500",
-              fontSize: 24,
-              color: props.iconTextColor ? props.iconTextColor : "white",
-            }}
-          >
-            Back
-          </Text>
-        </Pressable>
-      </View>
-    );
-  };
-
   const editDemographicsButton =
     <Pressable
       onPress={() => router.push("/edit-demographics")}
@@ -116,7 +76,7 @@ function RootLayoutNav() {
           textDecorationLine: "underline",
           fontFamily: "KarlaMedium",
           fontSize: 14,
-          color: Colors.accentDark,
+          color: Color.accentDark,
         }}
       >
         Edit Demographics
@@ -133,6 +93,22 @@ function RootLayoutNav() {
               options={{ headerShown: false }}
             />
             <Stack.Screen
+              name="login"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="onboarding"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="chat-immigration-status"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="chat-user-story"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
               name="results"
               options={{
                 header: () => <NavigationHeader rightItem={editDemographicsButton} />,
@@ -140,11 +116,7 @@ function RootLayoutNav() {
               }}
             />
             <Stack.Screen
-              name="login"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="register"
+              name="registration"
               options={{ headerShown: false }}
             />
             <Stack.Screen
@@ -164,25 +136,6 @@ function RootLayoutNav() {
               options={{
                 headerShown: true,
                 header: () => <NavigationHeader />,
-              }}
-            />
-            <Stack.Screen
-              name="onboarding"
-              options={{
-                headerShown: true,
-                header: () => <NavigationHeader tintColor="white" backgroundColor={Colors.accentPrimary} />,
-              }}
-            />
-            <Stack.Screen
-              name="onboarding-next"
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="user-story"
-              options={{
-                headerShown: false,
               }}
             />
             <Stack.Screen

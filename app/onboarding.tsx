@@ -1,10 +1,10 @@
-import OnboardingNext from "@/screens/onboarding-next";
+import Onboarding from "@/screens/onboarding";
 import React from "react";
 
 type Props = {};
 
 const Page = (props: Props) => {
-  return <OnboardingNext />;
+  return <Onboarding />;
 };
 
 export default Page;

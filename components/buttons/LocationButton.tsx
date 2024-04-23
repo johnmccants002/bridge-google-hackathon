@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable, Text, StyleSheet, ViewStyle } from "react-native";
 
-import { Colors } from "@/constants/Colors";
+import Color from "@/constants/Color";
 import Fonts from "@/constants/Fonts";
 import { Feather } from "@expo/vector-icons";
 
@@ -26,8 +26,8 @@ const LocationButton: React.FC<CTAButtonProps> = ({ onPress, type, style }) => {
   // Use the colors from the Colors object, providing fallbacks
   const buttonStyle = StyleSheet.create({
     primary: {
-      backgroundColor: Colors.accentLight,
-      color: Colors.accentDark,
+      backgroundColor: Color.accentLight,
+      color: Color.accentDark,
       alignItems: "center",
       justifyContent: "center",
       height: 48,
@@ -39,7 +39,7 @@ const LocationButton: React.FC<CTAButtonProps> = ({ onPress, type, style }) => {
     },
 
     secondary: {
-      backgroundColor: Colors.accentDark,
+      backgroundColor: Color.accentDark,
       alignItems: "center",
       justifyContent: "center",
       height: 40,
@@ -53,7 +53,7 @@ const LocationButton: React.FC<CTAButtonProps> = ({ onPress, type, style }) => {
 
   const textStyle = StyleSheet.create({
     primary: {
-      color: Colors.accentDark,
+      color: Color.accentDark,
       fontFamily: Fonts.medium,
       fontSize: 16,
       fontWeight: "500",
@@ -61,7 +61,7 @@ const LocationButton: React.FC<CTAButtonProps> = ({ onPress, type, style }) => {
       textAlign: "left",
     },
     secondary: {
-      color: Colors.accentLight,
+      color: Color.accentLight,
       fontFamily: Fonts.medium,
       fontSize: 16,
       fontWeight: "500",
@@ -74,7 +74,7 @@ const LocationButton: React.FC<CTAButtonProps> = ({ onPress, type, style }) => {
     <Pressable style={[buttonStyle[type], style]} onPress={onPress}>
       {/* Assuming you want to display the iconName or some text here */}
       <Text style={textStyle[type]}>Share my location</Text>
-      <Feather name="map-pin" size={24} color={Colors.accentDark} />
+      <Feather name="map-pin" size={24} color={Color.accentDark} />
 
       {/* If you have an Icon component, it could be used here based on iconName */}
     </Pressable>

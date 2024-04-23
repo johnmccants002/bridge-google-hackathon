@@ -1,6 +1,6 @@
 import ResourceItem from "@/components/ResourceItem";
 import UpRightArrow from "@/components/svgs/UpRightArrow";
-import { Colors } from "@/constants/Colors";
+import Color from "@/constants/Color";
 import { Octicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
@@ -26,15 +26,15 @@ const ResourceDetailScreen = (props: Props) => {
         flex: 1,
         paddingHorizontal: 20,
         gap: 16,
-        backgroundColor: Colors.accentLight,
+        backgroundColor: Color.accentLight,
       }}
-      style={{ backgroundColor: Colors.accentLight }}
+      style={{ backgroundColor: Color.accentLight }}
     >
       <Text
         style={{
           fontFamily: "KarlaBold",
           fontSize: 24,
-          color: Colors.black,
+          color: Color.black,
         }}
       >
         United We Dream's Texas Know Your Rights Fact Sheet
@@ -43,7 +43,7 @@ const ResourceDetailScreen = (props: Props) => {
         style={{
           fontFamily: "KarlaRegular",
           fontSize: 24,
-          color: Colors.accentDark,
+          color: Color.accentDark,
         }}
       >
         List of recommendations for ICE agent encounters
@@ -52,7 +52,7 @@ const ResourceDetailScreen = (props: Props) => {
         style={{
           fontFamily: "KarlaMedium",
           fontSize: 24,
-          color: Colors.accentDark,
+          color: Color.accentDark,
         }}
       >
         {params.resource}
@@ -60,7 +60,7 @@ const ResourceDetailScreen = (props: Props) => {
       <View style={{ flexDirection: "column", gap: 8 }}>
         <Text
           style={{
-            color: Colors.accentDark,
+            color: Color.accentDark,
             fontSize: 16,
             fontFamily: "KarlaMedium",
           }}
@@ -71,7 +71,7 @@ const ResourceDetailScreen = (props: Props) => {
           style={{
             fontFamily: "KarlaRegular",
             fontSize: 16,
-            color: Colors.accentDark,
+            color: Color.accentDark,
           }}
         >
           6363 Richmond Ave, Houston, TX
@@ -87,7 +87,7 @@ const ResourceDetailScreen = (props: Props) => {
         >
           <Text
             style={{
-              color: Colors.accentDark,
+              color: Color.accentDark,
               fontSize: 16,
               fontFamily: "KarlaMedium",
             }}
@@ -98,7 +98,7 @@ const ResourceDetailScreen = (props: Props) => {
             <Octicons
               name={showHours ? "chevron-up" : "chevron-down"}
               size={24}
-              color={Colors.black}
+              color={Color.black}
             />
           </Pressable>
         </View>
@@ -107,7 +107,7 @@ const ResourceDetailScreen = (props: Props) => {
             style={{
               fontFamily: "KarlaRegular",
               fontSize: 16,
-              color: Colors.accentDark,
+              color: Color.accentDark,
             }}
           >
             {`
@@ -125,7 +125,7 @@ Sunday Closed`}
       </View>
       <Pressable
         style={{
-          backgroundColor: Colors.accentPrimary,
+          backgroundColor: Color.accentPrimary,
           flexDirection: "row",
           justifyContent: "center",
           padding: 12,
@@ -138,7 +138,7 @@ Sunday Closed`}
       >
         <Text
           style={{
-            color: Colors.white,
+            color: Color.white,
             fontFamily: "KarlaMedium",
             fontSize: 16,
           }}
@@ -154,7 +154,7 @@ Sunday Closed`}
           paddingVertical: 16,
           borderRadius: 8,
           borderWidth: 2,
-          borderColor: Colors.black,
+          borderColor: Color.black,
           marginTop: 20,
         }}
       >
@@ -171,7 +171,7 @@ Sunday Closed`}
           <Pressable onPress={() => setShowSimilar(!showSimilar)}>
             <Octicons
               name={showSimilar ? "chevron-up" : "chevron-down"}
-              color={Colors.black}
+              color={Color.black}
               size={32}
             />
           </Pressable>
@@ -180,7 +180,7 @@ Sunday Closed`}
           <View>
             <View
               style={{
-                backgroundColor: Colors.black,
+                backgroundColor: Color.black,
                 width: width - 34,
                 marginTop: 8,
               }}

@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, useWindowDimensions } from "react-native";
 import BotIcon from "./BotIcon";
 import Fonts from "@/constants/Fonts";
-import { Colors } from "@/constants/Colors";
+import Color from "@/constants/Color";
 import UserIcon from "./UserIcon";
 
 type Props = {
@@ -25,13 +25,13 @@ const UserMessage = (props: Props) => {
       <View
         style={{
           padding: 8,
-          backgroundColor: Colors.white,
+          backgroundColor: Color.white,
           borderRadius: 8,
           flexGrow: 1,
           paddingHorizontal: 12,
         }}
       >
-        <Text style={{ fontFamily: Fonts.medium, color: Colors.accentDark }}>
+        <Text style={{ fontFamily: Fonts.medium, color: Color.accentDark }}>
           {props.message}
         </Text>
       </View>

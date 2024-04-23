@@ -1,5 +1,5 @@
 import React from "react";
-import EditDemographics from "@/screens/EditDemographics";
+import EditDemographics from "@/screens/edit-demographics";
 
 type Props = {};
 

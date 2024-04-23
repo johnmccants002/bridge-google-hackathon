@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { Colors } from "@/constants/Colors";
+import Color from "@/constants/Color";
 import CTAButton from "./buttons/CTAButton";
 
 type Props = {
@@ -11,7 +11,7 @@ const ToolTip = (props: Props) => {
   return (
     <View
       style={{
-        backgroundColor: Colors.accentLight,
+        backgroundColor: Color.accentLight,
         flexDirection: "column",
         justifyContent: "space-between",
         alignItems: "center",
@@ -24,7 +24,7 @@ const ToolTip = (props: Props) => {
         style={{
           fontFamily: "KarlaMedium",
           fontSize: 18,
-          color: Colors.accentDark,
+          color: Color.accentDark,
           paddingHorizontal: 20,
           maxWidth: 300,
         }}
