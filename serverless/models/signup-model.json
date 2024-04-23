@@ -4,6 +4,9 @@
     "id": {
       "type": "string"
     },
+    "password": {
+      "type": "string"
+    },
     "demographics": {
       "type": "object",
       "properties": {

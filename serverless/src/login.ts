@@ -1,51 +1,22 @@
 /** Lambda Function
  * 
- * Post login and fetch data from DynamoDB on success
- * @param event {object} - Request object
+ * Get user data to DynamoDB
+ * @param pathParameters.id {string} - ID of the user
  */
 
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import { CognitoIdentityProviderClient, InitiateAuthCommand, InitiateAuthCommandInput   } from '@aws-sdk/client-cognito-identity-provider';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient, GetCommand } from '@aws-sdk/lib-dynamodb';
-import { generateSecretHash } from './helpers';
+import { checkPassword } from './helpers';
 
 const ddbClient = new DynamoDBClient();
 const dynamoDB = DynamoDBDocumentClient.from(ddbClient);
-const cognitoClient = new CognitoIdentityProviderClient({ region: process.env.AWS_REGION });
 
 export const handler: APIGatewayProxyHandler = async (event, _context) => {
-  const { email, password } = JSON.parse(event.body || '{}');
+  const data = JSON.parse(event.body || '{}')
 
-  if (!email || !password) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ message: 'Email and password are required' }),
-    };
-  }
-
-  // Authenticate with AWS Cognito using Client Secret
-  try {
-    const authParams: InitiateAuthCommandInput  = {
-      AuthFlow: 'USER_PASSWORD_AUTH',
-        ClientId: process.env.COGNITO_CLIENT_ID,
-        AuthParameters: {
-          USERNAME: email,
-          PASSWORD: password,
-          SECRET_HASH: generateSecretHash(email)
-        },
-    };
-    await cognitoClient.send(new InitiateAuthCommand(authParams));
-  } catch (error) {
-    console.error('Cognito Auth Error:', error);
-    return {
-      statusCode: 401,
-      body: JSON.stringify({ message: 'Authentication failed' }),
-    };
-  }
-
-  // Fetch user data from DynamoDB
   const TableName = process.env.USER_SCHEMA;
+
   if (!TableName) {
     console.error('Table name not set');
     return {
@@ -56,20 +27,40 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     };
   }
 
+  const { id, password } = data;
+
+  if (!id || !password) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ message: 'ID and password are required' }),
+    };
+  }
+
   const params = {
     TableName,
     Key: {
-      id: email,
+      id
     },
   };
 
   try {
     const result = await dynamoDB.send(new GetCommand(params));
+
     if (result.Item) {
-      return {
-        statusCode: 200,
-        body: JSON.stringify(result.Item),
-      };
+      const isValid = await checkPassword(password, result.Item.password);
+      if (!isValid) {
+        return {
+          statusCode: 401,
+          body: JSON.stringify({
+            message: 'Invalid password',
+          }),
+        };
+      } else {
+        return {
+          statusCode: 200,
+          body: JSON.stringify(result.Item),
+        };
+      }
     } else {
       return {
         statusCode: 404,
@@ -79,7 +70,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
       };
     }
   } catch (error) {
-    console.error('DynamoDB Fetch Error:', error);
+    console.error(error);
     return {
       statusCode: 500,
       body: JSON.stringify({
