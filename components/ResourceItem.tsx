@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable, Text, View, ViewStyle, TextStyle } from "react-native";
 import { Octicons } from "@expo/vector-icons";
-import { Colors } from "@/constants/Colors";
+import Color from "@/constants/Color";
 import { useRouter } from "expo-router";
 
 // Define the types for the props
@@ -32,7 +32,7 @@ const ResourceItem: React.FC<Props> = ({ title, description, tags }) => {
       >
         <Text
           style={{
-            color: Colors.accentDark,
+            color: Color.accentDark,
             fontFamily: "KarlaBold",
             fontSize: 16,
             maxWidth: "80%",
@@ -42,7 +42,7 @@ const ResourceItem: React.FC<Props> = ({ title, description, tags }) => {
         </Text>
         <Text
           style={{
-            color: Colors.accentDark,
+            color: Color.accentDark,
             fontFamily: "KarlaRegular",
             fontSize: 14,
             maxWidth: "80%",
@@ -59,14 +59,14 @@ const ResourceItem: React.FC<Props> = ({ title, description, tags }) => {
                 style={{
                   alignSelf: "flex-start",
                   borderWidth: 1,
-                  borderColor: Colors.accentPrimary,
+                  borderColor: Color.accentPrimary,
                   borderRadius: 16,
                   padding: 4,
                 }}
               >
                 <Text
                   style={{
-                    color: Colors.accentPrimary,
+                    color: Color.accentPrimary,
                     fontFamily: "KarlaRegular",
                     fontSize: 14,
                   }}
@@ -79,7 +79,7 @@ const ResourceItem: React.FC<Props> = ({ title, description, tags }) => {
         ) : null}
       </View>
 
-      <Octicons name="chevron-right" color={Colors.accentDark} size={32} />
+      <Octicons name="chevron-right" color={Color.accentDark} size={32} />
     </Pressable>
   );
 };

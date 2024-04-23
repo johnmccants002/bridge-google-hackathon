@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, StyleSheet, ViewStyle, TextInput, useWindowDimensions, View, NativeSyntheticEvent, TextInputChangeEventData } from "react-native";
-import { Colors } from "@/constants/Colors";
+import Color from "@/constants/Color";
 import { defaultStyles } from "../defaultStyles";
 
 type TextInputProps = {
@@ -14,9 +14,9 @@ const PrimaryTextInput: React.FC<TextInputProps> = ({ onChangeText, label, place
   
   const styles = StyleSheet.create({
     primary: {
-      backgroundColor: Colors.accentLight,
+      backgroundColor: Color.accentLight,
       width: Math.min(width - 40, 400),
-      color: Colors.accentDark,
+      color: Color.accentDark,
       fontSize: 14,
       fontWeight: "500",
       height: 40,

@@ -1,4 +1,4 @@
-import LoginScreen from "@/screens/login/LoginScreen";
+import LoginScreen from "@/screens/login";
 import React from "react";
 
 type Props = {};

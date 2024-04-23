@@ -15,7 +15,7 @@ import Select from "react-select";
 import { defaultStyles } from "../../components/defaultStyles";
 import "./index.css";
 import { useQuery } from "@tanstack/react-query";
-import { Colors } from "@/constants/Colors";
+import Color from "@/constants/Color";
 
 interface ResponseData {
   createdAt: number;
@@ -201,7 +201,7 @@ const DropdownComponent = ({ label, value, onValueChange, items }) => {
   );
 };
 
-const ProfileScreen = () => {
+const Index = () => {
   const [age, setAge] = useState("68");
   const [goal, setGoal] = useState(goalOptions[0].label);
   const [income, setIncome] = useState("<15000");
@@ -405,8 +405,8 @@ const styles = StyleSheet.create({
     fontSize: 19,
     lineHeight: 28,
     textDecorationLine: "underline",
-    color: Colors.accentPrimary,
+    color: Color.accentPrimary,
   },
 });
 
-export default ProfileScreen;
+export default Index;

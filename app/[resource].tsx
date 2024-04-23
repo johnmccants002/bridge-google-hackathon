@@ -1,4 +1,4 @@
-import ResourceDetailScreen from "@/screens/ResourceDetail";
+import ResourceDetailScreen from "@/screens/resource-detail";
 import React from "react";
 
 type Props = {};

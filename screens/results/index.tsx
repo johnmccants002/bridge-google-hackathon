@@ -1,5 +1,5 @@
-import { Colors } from "@/constants/Colors";
-import { Datum } from "@/screens/resources/mockData/benefits_mock";
+import Color from "@/constants/Color";
+import { Datum } from "@/screens/results/mockData/benefits_mock";
 import { MaterialCommunityIcons, Octicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
@@ -22,7 +22,7 @@ interface Props {
   data: Datum[];
 }
 
-const ResourcesScreen = (props: Props) => {
+const Index = (props: Props) => {
   const { width } = useWindowDimensions();
   const router = useRouter();
 
@@ -58,7 +58,7 @@ const ResourcesScreen = (props: Props) => {
             style={{
               fontFamily: "KarlaMedium",
               fontSize: 24,
-              color: Colors.black,
+              color: Color.black,
             }}
           >
             Useful right now
@@ -67,7 +67,7 @@ const ResourcesScreen = (props: Props) => {
             style={{
               width: width - 36,
               height: 1,
-              backgroundColor: Colors.black,
+              backgroundColor: Color.black,
               alignSelf: "center",
               marginTop: 8,
             }}
@@ -86,7 +86,7 @@ const ResourcesScreen = (props: Props) => {
             style={{
               fontFamily: "KarlaMedium",
               fontSize: 24,
-              color: Colors.black,
+              color: Color.black,
             }}
           >
             Who can help
@@ -95,7 +95,7 @@ const ResourcesScreen = (props: Props) => {
             style={{
               width: width - 36,
               height: 1,
-              backgroundColor: Colors.black,
+              backgroundColor: Color.black,
               alignSelf: "center",
               marginTop: 8,
             }}
@@ -114,7 +114,7 @@ const ResourcesScreen = (props: Props) => {
             style={{
               fontFamily: "KarlaMedium",
               fontSize: 24,
-              color: Colors.black,
+              color: Color.black,
             }}
           >
             Next Steps
@@ -123,7 +123,7 @@ const ResourcesScreen = (props: Props) => {
             style={{
               width: width - 36,
               height: 1,
-              backgroundColor: Colors.black,
+              backgroundColor: Color.black,
               alignSelf: "center",
               marginTop: 8,
             }}
@@ -146,7 +146,7 @@ const ResourcesScreen = (props: Props) => {
             paddingHorizontal: 8,
             borderRadius: 24,
             borderWidth: 2,
-            borderColor: Colors.accentDark,
+            borderColor: Color.accentDark,
             height: 40,
             marginTop: 12,
           }}
@@ -155,7 +155,7 @@ const ResourcesScreen = (props: Props) => {
             style={{
               fontFamily: "KarlaMedium",
               fontSize: 14,
-              color: Colors.accentDark,
+              color: Color.accentDark,
             }}
           >
             Create account and save to profile
@@ -243,4 +243,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ResourcesScreen;
+export default Index;

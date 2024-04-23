@@ -1,4 +1,4 @@
-import ChatScreen from "@/screens/chat/ChatScreen";
+import ChatScreen from "@/screens/chat-immigration-status";
 import React from "react";
 
 type Props = {};

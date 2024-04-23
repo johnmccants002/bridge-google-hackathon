@@ -1,5 +1,4 @@
-import LogoContainer from "@/components/LogoContainer";
-import UserStoryScreen from "@/screens/user-story/UserStoryScreen";
+import UserStoryScreen from "@/screens/chat-user-story";
 import React from "react";
 
 type Props = {};

@@ -1,4 +1,4 @@
-import { Colors } from "@/constants/Colors";
+import Color from "@/constants/Color";
 import { AntDesign } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React from "react"
@@ -12,8 +12,8 @@ type NavigationHeaderProps = {
 
 const NavigationHeader: React.FC<NavigationHeaderProps> = ({ tintColor, backgroundColor, rightItem }) => {
   const router = useRouter();
-  const tint = tintColor ?? Colors.accentDark
-  const background = backgroundColor ?? Colors.accentLight
+  const tint = tintColor ?? Color.accentDark
+  const background = backgroundColor ?? Color.accentLight
 
   const styles = StyleSheet.create({
     backButton: {

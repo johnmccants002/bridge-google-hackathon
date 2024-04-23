@@ -13,13 +13,13 @@ import LogoContainer from "../../components/LogoContainer";
 import { AntDesign } from "@expo/vector-icons";
 import { defaultStyles } from "../../components/defaultStyles";
 import { useRouter } from "expo-router";
-import { Colors } from "@/constants/Colors";
+import Color from "@/constants/Color";
 import CTAButton from "@/components/buttons/CTAButton";
 import PrimaryTextInput from "@/components/inputs/PrimaryTextInput";
 
 type Props = {};
 
-const LoginScreen = (props: Props) => {
+const Index = (props: Props) => {
   const router = useRouter();
   const { width } = useWindowDimensions();
   return (
@@ -81,7 +81,7 @@ const LoginScreen = (props: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.accentPrimary,
+    backgroundColor: Color.accentPrimary,
     zIndex: 1,
   },
   loginText: {
@@ -89,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default Index;

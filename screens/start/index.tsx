@@ -3,7 +3,7 @@ import type { ICarouselInstance } from "react-native-reanimated-carousel";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import CTAButton from "@/components/buttons/CTAButton";
-import { Colors } from "@/constants/Colors";
+import Color from "@/constants/Color";
 import { window } from "@/constants/Web";
 import { useRouter } from "expo-router";
 import {
@@ -14,7 +14,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
-import Carouseltem from "../onboarding-next/Carouseltem";
+import Carouseltem from "../onboarding/Carouseltem";
 import OnboardingZero from "./svgs/OnboardingZero";
 
 const PAGE_WIDTH = window.width;
@@ -37,7 +37,7 @@ function StartScreen() {
         flex: 1,
         alignItems: "center",
         justifyContent: "space-evenly",
-        backgroundColor: Colors.accentPrimary,
+        backgroundColor: Color.accentPrimary,
       }}
     >
       <View style={styles.container}>
@@ -49,7 +49,7 @@ function StartScreen() {
             height: 460,
             flexDirection: "column",
             justifyContent: "space-around",
-            backgroundColor: Colors.accentLight,
+            backgroundColor: Color.accentLight,
             alignItems: "center",
             paddingVertical: 20,
             borderRadius: 8,
