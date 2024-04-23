@@ -1,96 +1,115 @@
-import { useState, useEffect } from "react";
-import { Link, useRouter } from "expo-router";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  Image,
-  Platform,
-} from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import * as React from "react";
+import type { ICarouselInstance } from "react-native-reanimated-carousel";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 import CTAButton from "@/components/buttons/CTAButton";
+import { Colors } from "@/constants/Colors";
+import { window } from "@/constants/Web";
+import { useRouter } from "expo-router";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from "react-native";
+import { useSharedValue } from "react-native-reanimated";
+import Carouseltem from "../onboarding-next/Carouseltem";
+import OnboardingZero from "./svgs/OnboardingZero";
 
-interface Props {}
+const PAGE_WIDTH = window.width;
 
-const Component = (props: Props) => {
+function StartScreen() {
+  const windowWidth = useWindowDimensions().width;
+  const [data, setData] = React.useState([...new Array(5).keys()]);
+  const [isVertical, setIsVertical] = React.useState(false);
+  const ref = React.useRef<ICarouselInstance>(null);
+  const [currentIndex, setCurrentIndex] = React.useState(0);
   const router = useRouter();
-  const [item, setItem] = useState("");
-
   const navigateToLogin = () => {
     router.replace("/login");
   };
 
-  useEffect(() => {}, []);
   return (
-    <View style={styles.container}>
-      <Image
-        source={require("@/assets/images/bridgelogo.png")}
-        style={{ top: 40, left: 20, resizeMode: "contain", width: 100 }}
-      />
-      <View style={{ marginTop: 140, paddingLeft: 20 }}>
-        <Text style={styles.textBold}>
-          Hi there. We're Bridge. We help connect people to the resources that
-          they need.
-        </Text>
-        <Text style={styles.textRegular}>
-          No combing through endless government websites
-        </Text>
-        <Text style={styles.textRegular}>
-          No wondering if you're missing something.
-        </Text>
-        <Text style={styles.textRegular}>Just help.</Text>
-        <View style={{ width: 200, marginTop: 20 }}>
-          <CTAButton
-            text="Get Started"
-            type="primary"
-            onPress={() =>
-              Platform.OS === "web"
-                ? router.push("/search")
-                : router.push("/results")
-            }
-          />
-        </View>
+    <SafeAreaView
+      edges={["bottom"]}
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "space-evenly",
+        backgroundColor: Colors.accentPrimary,
+      }}
+    >
+      <View style={styles.container}>
+        <Carouseltem
+          component={<OnboardingZero />}
+          title="Immigration support the right way"
+          description="Bridge is your guide to finding essential resources and support-no matter where you are in your immigration journey. "
+          containerStyle={{
+            height: 460,
+            flexDirection: "column",
+            justifyContent: "space-around",
+            backgroundColor: Colors.accentLight,
+            alignItems: "center",
+            paddingVertical: 20,
+            borderRadius: 8,
+          }}
+        />
       </View>
       <Pressable
-        style={{ bottom: 60, alignSelf: "center", position: "absolute" }}
-        onPress={navigateToLogin}
+        style={{ alignSelf: "center" }}
+        onPress={() => {
+          router.push("/login");
+        }}
       >
         <Text style={styles.loginText}>Been here already? Login.</Text>
       </Pressable>
-    </View>
+      <CTAButton
+        onPress={() => router.push("/onboarding")}
+        text="Get Started"
+        type="primary"
+        // style={{ width: 160 }}
+      />
+      <Pressable
+        style={{ alignSelf: "center" }}
+        onPress={() => {
+          router.push("/login");
+        }}
+      >
+        <Text
+          style={styles.loginText}
+        >{`Don't speak English?\nContinuar en Espanol`}</Text>
+      </Pressable>
+    </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
+  dotContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingTop: 20,
+  },
+  dot: {
+    height: 15,
+    width: 15,
+    borderRadius: 7.5,
+    marginHorizontal: 4,
+  },
   container: {
-    flex: 1,
-    backgroundColor: "#4BA4A4",
-  },
-  buttonText: {
-    color: "#227272",
-    fontFamily: "KarlaBold",
-  },
-  textRegular: {
-    color: "#E9FBFF",
-    fontFamily: "KarlaRegular",
-    fontSize: 16,
+    paddingHorizontal: 20,
     marginTop: 20,
-    lineHeight: 18.7,
-  },
-  textBold: {
-    fontFamily: "KarlaRegular",
-    color: "white",
-    fontSize: 24,
-    lineHeight: 28,
+    alignItems: "center",
+    justifyContent: "center",
   },
   loginText: {
     fontFamily: "KarlaRegular",
-    fontSize: 19,
-    lineHeight: 28,
+    fontSize: 16,
+    lineHeight: 20,
     textDecorationLine: "underline",
-    color: "#227272",
+    color: "white",
+    textAlign: "center",
   },
 });
 
-export default Component;
+export default StartScreen;

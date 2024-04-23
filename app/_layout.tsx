@@ -17,10 +17,9 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   QueryClient,
   QueryClientProvider,
-  useQuery,
 } from "@tanstack/react-query";
-import BackArrow from "@/components/svgs/BackArrow";
 import { Colors } from "@/constants/Colors";
+import NavigationHeader from "@/components/headers/NavigationHeader";
 
 const queryClient = new QueryClient();
 
@@ -108,98 +107,70 @@ function RootLayoutNav() {
     );
   };
 
+  const editDemographicsButton =
+    <Pressable
+      onPress={() => router.push("/edit-demographics")}
+    >
+      <Text
+        style={{
+          textDecorationLine: "underline",
+          fontFamily: "KarlaMedium",
+          fontSize: 14,
+          color: Colors.accentDark,
+        }}
+      >
+        Edit Demographics
+      </Text>
+    </Pressable>
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <QueryClientProvider client={queryClient}>
           <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="index"
+              options={{ headerShown: false }}
+            />
             <Stack.Screen
               name="results"
               options={{
-                // headerStyle: { backgroundColor: "#E9FBFF" },
-                header: () => (
-                  <View
-                    style={{
-                      backgroundColor: "#E9FBFF",
-                      justifyContent: "space-between",
-                      height: 120,
-                      paddingTop: 60,
-                      padding: 20,
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Pressable
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: 4,
-                        backgroundColor: "#E9FBFF",
-                      }}
-                      onPress={router.back}
-                    >
-                      <AntDesign name="arrowleft" size={24} color={"#4BA4A4"} />
-                      <Text
-                        style={{
-                          fontFamily: "KarlaRegular",
-                          fontWeight: "500",
-                          fontSize: 24,
-                          color: "#4BA4A4",
-                        }}
-                      >
-                        Back
-                      </Text>
-                    </Pressable>
-                    <Pressable
-                      onPress={() => router.push("/edit-demographics")}
-                    >
-                      <Text
-                        style={{
-                          textDecorationLine: "underline",
-                          fontFamily: "KarlaMedium",
-                          fontSize: 14,
-                          color: Colors.accentDark,
-                        }}
-                      >
-                        Edit Demographics
-                      </Text>
-                    </Pressable>
-                  </View>
-                ),
-
+                header: () => <NavigationHeader rightItem={editDemographicsButton} />,
                 title: "",
               }}
             />
-
-            <Stack.Screen name="login" options={{ headerShown: false }} />
-            <Stack.Screen name="register" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="login"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="register"
+              options={{ headerShown: false }}
+            />
             <Stack.Screen
               name="account-created"
               options={{ headerShown: false }}
             />
-            <Stack.Screen name="search" options={{ headerShown: false }} />
-            <Stack.Screen name="profile" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="search"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="profile"
+              options={{ headerShown: false }}
+            />
             <Stack.Screen
               name="edit-demographics"
               options={{
                 headerShown: true,
-                header: () => (
-                  <Header
-                    color={Colors.white}
-                    iconTextColor={Colors.accentPrimary}
-                  />
-                ),
+                header: () => <NavigationHeader />,
               }}
             />
-
             <Stack.Screen
               name="onboarding"
               options={{
                 headerShown: true,
-                header: () => (
-                  <Header color={Colors.accentPrimary} iconTextColor="white" />
-                ),
+                header: () => <NavigationHeader tintColor="white" backgroundColor={Colors.accentPrimary} />,
               }}
             />
             <Stack.Screen
@@ -218,12 +189,7 @@ function RootLayoutNav() {
               name="[resource]"
               options={{
                 headerShown: true,
-                header: () => (
-                  <Header
-                    color={Colors.accentLight}
-                    iconTextColor={Colors.accentDark}
-                  />
-                ),
+                header: () => <NavigationHeader />,
               }}
             />
           </Stack>

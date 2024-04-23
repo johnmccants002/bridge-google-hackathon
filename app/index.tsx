@@ -1,5 +1,5 @@
 import LogoContainer from "@/components/LogoContainer";
-import OnboardingScreen from "@/screens/onboarding/OnboardingScreen";
+import StartScreen from "@/screens/start/StartScreen";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "@/constants/Colors"
 
@@ -9,7 +9,7 @@ const Page = (props: Props) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.accentPrimary }}>
       <LogoContainer />
-      <OnboardingScreen />
+      <StartScreen />
     </SafeAreaView>
   );
 };
