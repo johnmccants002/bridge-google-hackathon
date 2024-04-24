@@ -3,11 +3,23 @@ app: bridge
 service: gap
 
 plugins:
-  - serverless-esbuild
+  - serverless-jetpack
   - serverless-iam-roles-per-function
   - serverless-plugin-tracing
   - serverless-dynamodb-local
-  - serverless-offline    
+  - serverless-offline
+  - serverless-plugin-typescript
+
+package:
+  exclude:
+    - "*"
+    - "**/node_modules/aws-sdk/**" # included on Lambda.
+    - "!package.json"
+    - "**/node_modules/@mapbox/node-pre-gyp"
+
+custom:
+  jetpack:
+    trace: true
 
 provider:
   name: aws
@@ -23,7 +35,6 @@ provider:
     GEMINI_KEY: ${param:GEMINI_KEY}
     GEMINI_URL: ${param:GEMINI_URL}
     USER_SCHEMA: UserTable
-    SALT: ${param:SALT}
 
 functions:
   signUp:
@@ -36,7 +47,7 @@ functions:
           request:
             schemas:
               application/json: ${file(models/signup-model.json)}
-    iamRoleStatementsName: userTablePostRole
+    iamRoleStatementsName: userSignUpPostRole
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -63,7 +74,7 @@ functions:
           request:
             schemas:
               application/json: ${file(models/login-model.json)}
-    iamRoleStatementsName: userTableGetRole
+    iamRoleStatementsName: userLoginRole
     iamRoleStatements:
       - Effect: Allow
         Action:
