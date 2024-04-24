@@ -3,23 +3,20 @@ app: bridge
 service: gap
 
 plugins:
-  - serverless-jetpack
+  - serverless-esbuild
   - serverless-iam-roles-per-function
   - serverless-plugin-tracing
   - serverless-dynamodb-local
   - serverless-offline
-  - serverless-plugin-typescript
-
-package:
-  exclude:
-    - "*"
-    - "**/node_modules/aws-sdk/**" # included on Lambda.
-    - "!package.json"
-    - "**/node_modules/@mapbox/node-pre-gyp"
 
 custom:
-  jetpack:
-    trace: true
+  esbuild:
+    bundle: true
+    minify: false
+    sourcemap: true
+    target: 'node14'  # Set according to your runtime
+    loader: 
+      '.html': 'text'  # Treat HTML files as raw text
 
 provider:
   name: aws
