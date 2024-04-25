@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
   DarkTheme,
@@ -7,19 +8,16 @@ import {
 import { useFonts } from "expo-font";
 import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { Pressable, Text, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import {
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Color from "@/constants/Color";
 import NavigationHeader from "@/components/headers/NavigationHeader";
+import { GlobalStateProvider } from "@/context/GlobalStateContext";
 
 const queryClient = new QueryClient();
 
@@ -67,10 +65,8 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
   const router = useRouter();
 
-  const editDemographicsButton =
-    <Pressable
-      onPress={() => router.push("/edit-demographics")}
-    >
+  const editDemographicsButton = (
+    <Pressable onPress={() => router.push("/edit-demographics")}>
       <Text
         style={{
           textDecorationLine: "underline",
@@ -82,72 +78,67 @@ function RootLayoutNav() {
         Edit Demographics
       </Text>
     </Pressable>
+  );
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <QueryClientProvider client={queryClient}>
-          <Stack>
-            <Stack.Screen
-              name="index"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="login"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="onboarding"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="chat-immigration-status"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="chat-user-story"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="results"
-              options={{
-                header: () => <NavigationHeader rightItem={editDemographicsButton} />,
-                title: "",
-              }}
-            />
-            <Stack.Screen
-              name="registration"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="account-created"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="search"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="profile"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="edit-demographics"
-              options={{
-                headerShown: true,
-                header: () => <NavigationHeader />,
-              }}
-            />
-            <Stack.Screen
-              name="[resource]"
-              options={{
-                headerShown: true,
-                header: () => <NavigationHeader />,
-              }}
-            />
-          </Stack>
-        </QueryClientProvider>
-      </ThemeProvider>
-    </GestureHandlerRootView>
+    <GlobalStateProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <QueryClientProvider client={queryClient}>
+            <Stack>
+              <Stack.Screen name="index" options={{ headerShown: false }} />
+              <Stack.Screen name="login" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="onboarding"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="chat-immigration-status"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="chat-user-story"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="results"
+                options={{
+                  header: () => (
+                    <NavigationHeader rightItem={editDemographicsButton} />
+                  ),
+                  title: "",
+                }}
+              />
+              <Stack.Screen
+                name="registration"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="account-created"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen name="search" options={{ headerShown: false }} />
+              <Stack.Screen name="profile" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="edit-demographics"
+                options={{
+                  headerShown: true,
+                  header: () => <NavigationHeader />,
+                }}
+              />
+              <Stack.Screen
+                name="[resource]"
+                options={{
+                  headerShown: true,
+                  header: () => <NavigationHeader />,
+                }}
+              />
+            </Stack>
+          </QueryClientProvider>
+        </ThemeProvider>
+      </GestureHandlerRootView>
+    </GlobalStateProvider>
   );
 }

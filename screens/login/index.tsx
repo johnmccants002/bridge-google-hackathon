@@ -16,10 +16,14 @@ import { useRouter } from "expo-router";
 import Color from "@/constants/Color";
 import CTAButton from "@/components/buttons/CTAButton";
 import PrimaryTextInput from "@/components/inputs/PrimaryTextInput";
+import { useGlobalState } from "@/hooks/useGlobalState";
 
 type Props = {};
 
 const Index = (props: Props) => {
+  const globalState = useGlobalState();
+  console.log(globalState);
+
   const router = useRouter();
   const { width } = useWindowDimensions();
   return (
