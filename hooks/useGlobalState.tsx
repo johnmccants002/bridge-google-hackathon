@@ -9,3 +9,11 @@ export const useGlobalState = () => {
   }
   return context;
 };
+
+/* 
+How to use this hook in a any component 
+import { useGlobalState } from "@/hooks/useGlobalState";
+
+const globalState = useGlobalState();
+console.log(globalState);
+*/
