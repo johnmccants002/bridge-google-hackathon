@@ -66,7 +66,9 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     await docClient.send(new PutCommand(params));
     return {
       statusCode: 200,
-      body: JSON.stringify(params.Item),
+      body: JSON.stringify({
+        message: 'Sign up successful.',
+      }),
     };
   } catch (error) {
     console.error(error);
