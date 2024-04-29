@@ -12,6 +12,7 @@ import Color from "@/constants/Color";
 import PrimaryTextInput from "@/components/inputs/PrimaryTextInput";
 import CTAButton from "@/components/buttons/CTAButton";
 import { useRouter } from "expo-router";
+import { signup } from "@/services/api-serivce";
 import axios from "axios";
 
 type Props = {};
@@ -19,38 +20,32 @@ type Props = {};
 const Index = (props: Props) => {
   const { width } = useWindowDimensions();
   const router = useRouter();
-  const [ email, setEmail ] = useState("")
-  const [ password, setPassword ] = useState("")
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (fieldName: string, value: string) => {
+    setUser((user) => ({
+      ...user,
+      [fieldName]: value,
+    }));
+  };
 
   const createAccount = async () => {
-    const url = "https://dpnk8ddrr0.execute-api.us-west-1.amazonaws.com/dev/signup"
-
-    const headers = {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "HEAD, DELETE, POST, GET, OPTIONS, PUT, PATCH",
-      "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type,Authorization, Accept",
-    }
-
-    let payload = { 
-      email: email, 
-      password: password , 
-      demographics: {
-        household: 1
-      }
-    }
-
     try {
-      const response = await axios.post(url, payload, { headers: headers })
-      console.log(response)
+      const response = await signup(user.email, user.password);
+      console.log("Registration response:", response);
+      router.push("/profile");
     } catch (error) {
-      console.error(error)
+      console.error("Registration error:", error);
     }
-  }
-  
+  };
+
   return (
     <View style={styles.container}>
       <LogoContainer />
-       {/* TODO: Implement as a scrollView with offset when keyboard is revealed in mobile */}
+      {/* TODO: Implement as a scrollView with offset when keyboard is revealed in mobile */}
       <View
         style={{
           flexDirection: "column",
@@ -79,16 +74,23 @@ const Index = (props: Props) => {
         >
           <PrimaryTextInput label="First name" placeholder="John" />
           <PrimaryTextInput label="Last name" placeholder="Smith" />
-          <PrimaryTextInput label="Email" placeholder="example@mail.com" onChangeText={ (text) => setEmail(text)}/>
-          <PrimaryTextInput label="Password" placeholder="********" onChangeText={ (text) => setPassword(text)} />
+          <PrimaryTextInput
+            label="Email"
+            placeholder="example@mail.com"
+            onChangeText={(text) => handleChange("email", text)}
+          />
+          <PrimaryTextInput
+            label="Password"
+            placeholder="********"
+            onChangeText={(text) => handleChange("password", text)}
+          />
 
           <CTAButton
-          style={{ marginTop: 20 }}
-          onPress={() => createAccount() }
-          text="Create Account"
-          type="primary"
-        />
-
+            style={{ marginTop: 20 }}
+            onPress={() => createAccount()}
+            text="Create Account"
+            type="primary"
+          />
         </View>
       </View>
     </View>

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { login } from "@/services/api-serivce";
 import {
   View,
   Text,
@@ -22,6 +23,28 @@ type Props = {};
 const Index = (props: Props) => {
   const router = useRouter();
   const { width } = useWindowDimensions();
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (fieldName: string, value: string) => {
+    setUser((user) => ({
+      ...user,
+      [fieldName]: value,
+    }));
+  };
+
+  const handleLogin = async () => {
+    try {
+      const response = await login(user.email, user.password);
+      console.log("Login response:", response.data);
+      router.push("/profile");
+    } catch (error) {
+      console.error("Login error:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <LogoContainer />
@@ -51,13 +74,22 @@ const Index = (props: Props) => {
             alignItems: "center",
           }}
         >
-          <PrimaryTextInput label="Email" placeholder="example@mail.com" />
-          <PrimaryTextInput label="Password" placeholder="********" />
+          <PrimaryTextInput
+            label="Email"
+            placeholder="example@mail.com"
+            onChangeText={(text) => handleChange("email", text)}
+          />
+          <PrimaryTextInput
+            label="Password"
+            placeholder="********"
+            onChangeText={(text) => handleChange("password", text)}
+          />
         </View>
 
         <CTAButton
           style={{ marginTop: 20 }}
-          onPress={() => router.push("/profile")}
+          // onPress={() => router.push("/profile")}
+          onPress={handleLogin}
           text="Login"
           type="primary"
         />
