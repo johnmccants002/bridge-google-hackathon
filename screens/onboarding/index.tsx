@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { ICarouselInstance } from "react-native-reanimated-carousel";
 import Carousel from "react-native-reanimated-carousel";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 
 import CTAButton from "@/components/buttons/CTAButton";
 import { window } from "@/constants/Web";
@@ -12,6 +12,7 @@ import {
   Image,
   View,
   useWindowDimensions,
+  Platform,
 } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
 import Carouseltem from "./Carouseltem";
@@ -22,15 +23,20 @@ import RightCaret from "@/components/svgs/RightCaret";
 type Props = {};
 
 const PAGE_WIDTH = window.width;
+const PAGE_HEIGHT = window.height;
 
 const Onboarding = (props: Props) => {
   const windowWidth = useWindowDimensions().width;
+  const windowHeight = useWindowDimensions().height;
   const scrollOffsetValue = useSharedValue<number>(0);
   const [data, setData] = React.useState([...new Array(4).keys()]);
   const [isPagingEnabled, setIsPagingEnabled] = React.useState(true);
   const ref = React.useRef<ICarouselInstance>(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const router = useRouter();
+  const insets = useSafeAreaInsets()
+  const dotBarHeight = 48
+  const carouselHeigth = windowHeight - (insets.top + insets.bottom) - dotBarHeight - 120
 
   const goToPrev = () => {
     if (ref && ref.current) {
@@ -46,10 +52,10 @@ const Onboarding = (props: Props) => {
   };
 
   const components = [
-    <Image resizeMode="contain" style={styles.illustration} source={require("@/assets/images/bridge-buddy-a.png")} />,
-    <Image resizeMode="contain" style={styles.illustration} source={require("@/assets/images/bridge-buddy-b.png")} />,
-    <Image resizeMode="contain" style={styles.illustration} source={require("@/assets/images/bridge-buddy-c.png")} />,
-    <Image resizeMode="contain" style={styles.illustration} source={require("@/assets/images/bridge-buddy-d.png")} />,
+    <Image style={styles.illustration} source={require("@/assets/images/bridge-buddy-a.png")} />,
+    <Image style={styles.illustration} source={require("@/assets/images/bridge-buddy-b.png")} />,
+    <Image style={styles.illustration} source={require("@/assets/images/bridge-buddy-c.png")} />,
+    <Image style={styles.illustration} source={require("@/assets/images/bridge-buddy-d.png")} />,
   ];
   const titles = [
     "Bridge Buddy",
@@ -66,7 +72,7 @@ const Onboarding = (props: Props) => {
   const baseOptions = {
     vertical: false,
     width: windowWidth,
-    height: PAGE_WIDTH / 2,
+    height: carouselHeigth,
   } as const;
 
   const renderDots = () => {
@@ -92,14 +98,13 @@ const Onboarding = (props: Props) => {
 
   const isLeftArrowVisible = (currentIndex: number) => currentIndex === 1 || currentIndex === 2
 
-
   return (
     <SafeAreaView
-      edges={["bottom"]}
+      edges={["top", "bottom"]}
       style={{
         flex: 1,
         alignItems: "center",
-        justifyContent: "space-evenly",
+        justifyContent: "space-between",
         backgroundColor: Color.accentPrimary,
       }}
     >
@@ -110,13 +115,13 @@ const Onboarding = (props: Props) => {
         ref={ref}
         defaultScrollOffsetValue={scrollOffsetValue}
         testID={"xxx"}
-        style={{ height: 580 }}
+        style={{ display: "flex", flexBasis: "auto" }}
         data={data}
         onScrollStart={() => {
-          console.log("===1");
+          console.log("ScrollStart");
         }}
         onScrollEnd={() => {
-          console.log("===2");
+          console.log("ScrollEnd");
         }}
         onConfigurePanGesture={(g: any) => g.enabled(false)}
         pagingEnabled={isPagingEnabled}
@@ -137,7 +142,7 @@ const Onboarding = (props: Props) => {
           width: windowWidth,
           paddingHorizontal: 20,
           alignItems: "center",
-          height: 48
+          height: dotBarHeight
         }}
       >
         {isLeftArrowVisible(currentIndex) ? (
@@ -148,6 +153,7 @@ const Onboarding = (props: Props) => {
           <View style={{ width: 14, height: 24 }}></View>
         )}
         {renderDots()}
+        
         {currentIndex !== 3 ? (
           <Pressable onPress={goToNext}>
             <RightCaret />
@@ -202,8 +208,8 @@ const styles = StyleSheet.create({
     color: "white",
   },
   illustration: {
-    width: 196,
-    height: 262
+    flex: 1,
+    resizeMode: 'contain'
   }
 });
 

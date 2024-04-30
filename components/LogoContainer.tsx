@@ -1,12 +1,15 @@
 import React from "react";
-import { View, Image } from "react-native";
+import { View, Image, Platform } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Color from "@/constants/Color";
+
 const LogoContainer = () => {
   return (
-    <View
+    <SafeAreaView 
+      edges={["top"]}
       style={{
         paddingHorizontal: 20,
-        paddingTop: 20,
+        paddingTop: Platform.OS === "web" ? 20 : 0,
         backgroundColor: Color.accentPrimary,
       }}
     >
@@ -18,7 +21,7 @@ const LogoContainer = () => {
           height: 60,
         }}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

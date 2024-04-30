@@ -83,16 +83,23 @@ function RootLayoutNav() {
   return (
     <GlobalStateProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <ThemeProvider
-          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-        >
+        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
           <QueryClientProvider client={queryClient}>
             <Stack>
-              <Stack.Screen name="index" options={{ headerShown: false }} />
-              <Stack.Screen name="login" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="index"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="login"
+                options={{ headerShown: false }}
+              />
               <Stack.Screen
                 name="onboarding"
-                options={{ headerShown: false }}
+                options={{
+                  headerShown: true,
+                  header: () => <NavigationHeader tintColor="white" backgroundColor={Color.accentPrimary} />,
+                }}
               />
               <Stack.Screen
                 name="chat-immigration-status"
@@ -119,8 +126,14 @@ function RootLayoutNav() {
                 name="account-created"
                 options={{ headerShown: false }}
               />
-              <Stack.Screen name="search" options={{ headerShown: false }} />
-              <Stack.Screen name="profile" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="search"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="profile"
+                options={{ headerShown: false }}
+              />
               <Stack.Screen
                 name="edit-demographics"
                 options={{

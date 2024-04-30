@@ -2,7 +2,8 @@ import Color from "@/constants/Color";
 import { AntDesign } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React from "react"
-import { Pressable, Text, View, StyleSheet } from "react-native";
+import { Pressable, Text, View, StyleSheet, Platform } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type NavigationHeaderProps = {
   tintColor?: string,
@@ -19,9 +20,8 @@ const NavigationHeader: React.FC<NavigationHeaderProps> = ({ tintColor, backgrou
     backButton: {
         backgroundColor: background,
         justifyContent: "space-between",
-        height: 120,
-        paddingTop: 60,
-        padding: 20,
+        paddingVertical: Platform.OS === "web" ? 40 : 8,
+        paddingHorizontal: 20,
         flexDirection: "row",
         alignItems: "center",
     },
@@ -39,15 +39,15 @@ const NavigationHeader: React.FC<NavigationHeaderProps> = ({ tintColor, backgrou
   })
   
   return (
-  <View style={styles.backButton} >
+  <SafeAreaView edges={["top"]} style={styles.backButton} >
       <Pressable style={styles.flexContainer} onPress={router.back} >
-        <AntDesign name="arrowleft" size={24} color={tint} />
+        <AntDesign name="arrowleft" size={Platform.OS === "web" ? 36 : 24} color={tint} />
         <Text style={styles.backButtonText}>
           Back
         </Text>
       </Pressable>
       {rightItem}
-    </View>
+    </SafeAreaView>
     )
 }
 

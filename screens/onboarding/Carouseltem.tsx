@@ -18,7 +18,9 @@ const CarouselItem: React.FC<Props> = ({
 }) => {
   return (
     <View style={containerStyle ? containerStyle : styles.container}>
-      <View style={styles.componentContainer}>{component}</View>
+      <View style={styles.componentContainer}>
+        {component}
+      </View>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{description}</Text>
@@ -30,19 +32,22 @@ const CarouselItem: React.FC<Props> = ({
 // Using StyleSheet for better performance and cleaner code
 const styles = StyleSheet.create({
   container: {
-    height: 580,
+    // height: 580,
+    flex: 1,
+    // flexBasis: "auto",
     borderRadius: 8,
     backgroundColor: "#E7FFFB",
     alignItems: "center",
     justifyContent: "space-between",
     padding: 8,
     paddingHorizontal: 12,
-    paddingVertical: 80,
+    paddingVertical: 60,
     marginHorizontal: 20,
   },
   componentContainer: {
-    height: 240,
+    height: 300,
     width: "auto",
+    paddingBottom: 20
   },
   textContainer: {
     flexDirection: "column",
