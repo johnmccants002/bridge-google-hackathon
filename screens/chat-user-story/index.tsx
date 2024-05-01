@@ -1,6 +1,7 @@
 import LogoContainer from "@/components/LogoContainer";
 import ToolTip from "@/components/ToolTip";
 import CTAButton from "@/components/buttons/CTAButton";
+import NavigationHeader from "@/components/headers/NavigationHeader";
 import BotMessage from "@/components/messages/BotMessage";
 import UserMessage from "@/components/messages/UserMessage";
 import BackArrow from "@/components/svgs/BackArrow";
@@ -198,29 +199,8 @@ const Index = (props: Props) => {
       ]}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <LogoContainer />
-      <Pressable
-        style={{
-          flexDirection: "row",
-          gap: 12,
-          width: width,
-          paddingHorizontal: 12,
-          alignItems: "center",
-          marginTop: 12,
-        }}
-        onPress={router.back}
-      >
-        <BackArrow />
-        <Text
-          style={{
-            fontFamily: "KarlaRegular",
-            color: Color.white,
-            fontSize: 24,
-          }}
-        >
-          Back
-        </Text>
-      </Pressable>
+      <NavigationHeader tintColor="white" backgroundColor={Color.accentPrimary} />
+
       <ScrollView
         style={{ width: width, paddingTop: 40 }}
         contentContainerStyle={{ paddingBottom: 100, gap: 8 }}

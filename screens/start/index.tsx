@@ -1,5 +1,4 @@
 import * as React from "react";
-import type { ICarouselInstance } from "react-native-reanimated-carousel";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import CTAButton from "@/components/buttons/CTAButton";
@@ -13,18 +12,9 @@ import {
   View,
   useWindowDimensions,
 } from "react-native";
-import { useSharedValue } from "react-native-reanimated";
-import Carouseltem from "../onboarding/Carouseltem";
-import OnboardingZero from "./svgs/OnboardingZero";
-
-const PAGE_WIDTH = window.width;
+import IllustrationMosaic from "./IllustrationMosaic";
 
 function StartScreen() {
-  const windowWidth = useWindowDimensions().width;
-  const [data, setData] = React.useState([...new Array(5).keys()]);
-  const [isVertical, setIsVertical] = React.useState(false);
-  const ref = React.useRef<ICarouselInstance>(null);
-  const [currentIndex, setCurrentIndex] = React.useState(0);
   const router = useRouter();
   const navigateToLogin = () => {
     router.replace("/login");
@@ -40,22 +30,25 @@ function StartScreen() {
         backgroundColor: Color.accentPrimary,
       }}
     >
-      <View style={styles.container}>
-        <Carouseltem
-          component={<OnboardingZero />}
-          title="Immigration support the right way"
-          description="Bridge is your guide to finding essential resources and support-no matter where you are in your immigration journey. "
-          containerStyle={{
-            height: 460,
-            flexDirection: "column",
-            justifyContent: "space-around",
-            backgroundColor: Color.accentLight,
-            alignItems: "center",
-            paddingVertical: 20,
-            borderRadius: 8,
-          }}
-        />
+
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "column",
+          gap: 16,
+          // justifyContent: "space-around",
+          backgroundColor: Color.accentLight,
+          alignItems: "center",
+          padding: 24,
+          borderRadius: 8,
+          margin: 20
+        }}
+      >
+        <IllustrationMosaic />
+        <Text style={styles.title}>Immigration support the right way</Text>
+        <Text style={styles.description}>Bridge is your guide to finding essential resources and support-no matter where you are in your immigration journey.</Text>
       </View>
+
       <Pressable
         style={{ alignSelf: "center" }}
         onPress={() => {
@@ -64,12 +57,14 @@ function StartScreen() {
       >
         <Text style={styles.loginText}>Been here already? Login.</Text>
       </Pressable>
+
       <CTAButton
+        style={{ marginVertical: 20 }}
         onPress={() => router.push("/onboarding")}
         text="Get Started"
         type="primary"
-        // style={{ width: 160 }}
       />
+
       <Pressable
         style={{ alignSelf: "center" }}
         onPress={() => {
@@ -80,6 +75,7 @@ function StartScreen() {
           style={styles.loginText}
         >{`Don't speak English?\nContinuar en Espanol`}</Text>
       </Pressable>
+      
     </SafeAreaView>
   );
 }
@@ -98,8 +94,8 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: 20,
-    marginTop: 20,
-    alignItems: "center",
+    // marginTop: 20
+    // alignItems: "center",
     justifyContent: "center",
   },
   loginText: {
@@ -110,6 +106,16 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
   },
+  title: {
+    fontFamily: "KarlaMedium",
+    fontSize: 24,
+    textAlign: "left",
+  },
+  description: {
+    fontFamily: "KarlaRegular",
+    fontSize: 16,
+    textAlign: "left",
+  }
 });
 
 export default StartScreen;

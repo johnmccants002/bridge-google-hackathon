@@ -115,7 +115,7 @@ const Onboarding = (props: Props) => {
         ref={ref}
         defaultScrollOffsetValue={scrollOffsetValue}
         testID={"xxx"}
-        style={{ display: "flex", flexBasis: "auto" }}
+        style={{  }}
         data={data}
         onScrollStart={() => {
           console.log("ScrollStart");
@@ -187,6 +187,7 @@ const styles = StyleSheet.create({
   dotContainer: {
     flexDirection: "row",
     justifyContent: "center",
+    paddingVertical: 20,
   },
   dot: {
     height: 15,

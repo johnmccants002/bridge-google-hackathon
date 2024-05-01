@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, Text, StyleSheet, ViewStyle } from "react-native";
+import { Pressable, Text, StyleSheet, ViewStyle, TouchableOpacity } from "react-native";
 
 import Color from "@/constants/Color";
 import Fonts from "@/constants/Fonts";
@@ -76,7 +76,7 @@ const CTAButton: React.FC<CTAButtonProps> = ({
   });
 
   return (
-    <Pressable style={[buttonStyle[type], style]} onPress={onPress}>
+    <TouchableOpacity style={[buttonStyle[type], style]} onPress={onPress}>
       {/* Assuming you want to display the iconName or some text here */}
       <Text style={textStyle[type]}>{text}</Text>
       <AntDesign style={{ fontSize: 28 }}
@@ -85,7 +85,7 @@ const CTAButton: React.FC<CTAButtonProps> = ({
       />
 
       {/* If you have an Icon component, it could be used here based on iconName */}
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 
