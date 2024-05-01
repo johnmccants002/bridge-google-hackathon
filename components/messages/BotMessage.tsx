@@ -61,6 +61,7 @@ const BotMessage = (props: Props) => {
           <Text
             style={{
               fontFamily: Fonts.medium,
+              fontSize: 16,
               color: Color.accentDark,
               width: props.toolTip ? "80%" : "auto",
             }}

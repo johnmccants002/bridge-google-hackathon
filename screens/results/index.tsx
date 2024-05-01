@@ -17,6 +17,7 @@ import { defaultStyles } from "../../components/defaultStyles";
 import ResourceItem from "@/components/ResourceItem";
 import { resourceData } from "@/data/DummyData";
 import BoldCheck from "@/components/svgs/BoldCheck";
+import CTAButton from "@/components/buttons/CTAButton";
 
 interface Props {
   data: Datum[];
@@ -175,27 +176,37 @@ const Index = (props: Props) => {
           }}
         >
           <Text
-            style={{ fontFamily: "KarlaMedium", fontSize: 18, color: "white" }}
+            style={{ fontFamily: "KarlaBold", fontSize: 18, color: "white" }}
           >
             Don't want to create an account? Get this list in an email instead.
           </Text>
 
           <View>
             <Text style={defaultStyles.inputLabelText}>Your Email</Text>
+
             <TextInput
-              style={defaultStyles.input}
+              style={{
+                backgroundColor: Color.accentLight,
+                color: Color.accentDark,
+                height: 40,
+                borderRadius: 8,
+                paddingHorizontal: 10,
+                marginTop: 8,
+                marginBottom: 16
+              }}
               placeholder="example@mail.com"
             />
-            <TouchableOpacity
-              style={[defaultStyles.button, { alignSelf: "center", gap: 20 }]}
-            >
-              <Text style={[defaultStyles.buttonText]}>Send</Text>
-              <MaterialCommunityIcons
-                name="arrow-right"
-                color={"#4BA4A4"}
-                size={20}
-              />
-            </TouchableOpacity>
+  
+            <CTAButton
+              type="primary"
+              text="Send"
+              onPress={() => {
+                console.log("pressed");
+              }}
+              style={{
+                alignSelf: "center"
+              }}
+            />
           </View>
         </View>
       </ScrollView>

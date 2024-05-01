@@ -103,11 +103,17 @@ function RootLayoutNav() {
               />
               <Stack.Screen
                 name="chat-immigration-status"
-                options={{ headerShown: false }}
+                options={{
+                  headerShown: false,
+                  // header: () => <NavigationHeader tintColor="white" backgroundColor={Color.accentPrimary} />,
+                }}
               />
               <Stack.Screen
                 name="chat-user-story"
-                options={{ headerShown: false }}
+                options={{
+                  headerShown: false,
+                  // header: () => <NavigationHeader tintColor="white" backgroundColor={Color.accentPrimary} />,
+                }}
               />
               <Stack.Screen
                 name="results"

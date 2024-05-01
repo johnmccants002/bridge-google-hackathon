@@ -18,6 +18,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import ButtonDisplay from "./ButtonDisplay";
+import NavigationHeader from "@/components/headers/NavigationHeader";
 
 type Props = {};
 
@@ -168,7 +169,8 @@ const Index = (props: Props) => {
       ]}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <LogoContainer />
+      {/* <LogoContainer /> */}
+      <NavigationHeader tintColor="white" backgroundColor={Color.accentPrimary} />
       <ScrollView
         style={{ width: width, paddingTop: 40 }}
         contentContainerStyle={{ paddingBottom: 100, gap: 8 }}
