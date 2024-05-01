@@ -169,8 +169,8 @@ const Index = (props: Props) => {
       ]}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      {/* <LogoContainer /> */}
       <NavigationHeader tintColor="white" backgroundColor={Color.accentPrimary} />
+      
       <ScrollView
         style={{ width: width, paddingTop: 40 }}
         contentContainerStyle={{ paddingBottom: 100, gap: 8 }}
