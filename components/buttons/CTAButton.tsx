@@ -61,7 +61,7 @@ const CTAButton: React.FC<CTAButtonProps> = ({
       justifyContent: "center",
       height: 48,
       width: "auto",
-      paddingHorizontal: 16,
+      paddingHorizontal: 30,
       borderRadius: 24,
       flexDirection: "row",
       alignSelf: 'flex-start',

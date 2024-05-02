@@ -47,7 +47,7 @@ function StartScreen() {
           padding: 24,
           borderRadius: 8,
           margin: 20,
-          ...(Platform.OS === 'web' ? { alignItems: 'left', width: '60%' } : {})
+          ...(Platform.OS === 'web' ? { alignItems: 'left', width: '60%', margin: 50, } : {})
         }}
       >
         <IllustrationMosaic />
@@ -58,7 +58,7 @@ function StartScreen() {
         </View>
         {isDesktop && (
           <CTAButton
-            style={{ marginVertical: 20, backgroundColor: Color.accentPrimary, marginHorizontal: 0,}}
+            style={{ marginTop: -5, marginBottom: 30, marginLeft: '40%'}}
             onPress={() => router.push("/onboarding")}
             text="Get Started"
             type="desktopPrimary"
@@ -75,20 +75,13 @@ function StartScreen() {
       )}
       
       <Pressable
-        style={{ alignSelf: "center" }}
+        style={{ alignSelf: "center", ...(Platform.OS === 'web' ? {alignSelf: 'left'} : {}) }}
         onPress={() => {
           router.push("/login");
         }}
       >
         <Text style={styles.loginText}>Been here already? Login.</Text>
       </Pressable>
-
-      {/* <CTAButton
-        style={{ marginVertical: 20 }}
-        onPress={() => router.push("/onboarding")}
-        text="Get Started"
-        type="primary"
-      /> */}
 
       <Pressable
         style={{ alignSelf: "center" }}
