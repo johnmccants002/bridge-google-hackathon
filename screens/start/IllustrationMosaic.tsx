@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   desktopContainer: {
     flexDirection: 'row',
-    padding: 20,
+    padding: 40,
   },
   itemContent: {
     padding: 16,
@@ -57,10 +57,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     ...Platform.select({
       web: {
-        margin:-5,
+        marginHorizontal:-5,
+        marginVertical: 0,
         paddingVertical: 30,
-        paddingHorizontal: 50,
-        
       }
     })
   },
@@ -68,7 +67,7 @@ const styles = StyleSheet.create({
     width: '50%',
     ...Platform.select({
       web: {
-        width: '25%'
+        width: '25%',
       }
     })
   }

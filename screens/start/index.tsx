@@ -11,6 +11,8 @@ import {
   Text,
   View,
   useWindowDimensions,
+  Dimensions, 
+  Platform,
 } from "react-native";
 import IllustrationMosaic from "./IllustrationMosaic";
 
@@ -19,6 +21,9 @@ function StartScreen() {
   const navigateToLogin = () => {
     router.replace("/login");
   };
+
+  const { width } = Dimensions.get('window');
+  const isDesktop = width >= 768 && Platform.OS === 'web';
 
   return (
     <SafeAreaView
@@ -41,14 +46,34 @@ function StartScreen() {
           alignItems: "center",
           padding: 24,
           borderRadius: 8,
-          margin: 20
+          margin: 20,
+          ...(Platform.OS === 'web' ? { alignItems: 'left', width: '60%' } : {})
         }}
       >
         <IllustrationMosaic />
-        <Text style={styles.title}>Immigration support the right way</Text>
-        <Text style={styles.description}>Bridge is your guide to finding essential resources and support-no matter where you are in your immigration journey.</Text>
+        <View style={{...(Platform.OS === 'web' ? { paddingHorizontal: 30 } : {})}}>
+          <Text style={styles.title}>Immigration support</Text> 
+          <Text style={{fontFamily: "KarlaRegular", fontSize: 24, ...(Platform.OS === 'web' ? { fontSize: 42, lineHeight: 49 } : {}) }}>the right way</Text>
+          <Text style={styles.description}>Bridge is your guide to finding essential resources and support-no matter where you are in your immigration journey.</Text>
+        </View>
+        {isDesktop && (
+          <CTAButton
+            style={{ marginVertical: 20, backgroundColor: Color.accentPrimary, marginHorizontal: 0,}}
+            onPress={() => router.push("/onboarding")}
+            text="Get Started"
+            type="desktopPrimary"
+          />
+        )}
       </View>
-
+      {!isDesktop && (
+        <CTAButton
+          style={{ marginVertical: 20 }}
+          onPress={() => router.push("/onboarding")}
+          text="Get Started"
+          type="primary"
+        />
+      )}
+      
       <Pressable
         style={{ alignSelf: "center" }}
         onPress={() => {
@@ -58,12 +83,12 @@ function StartScreen() {
         <Text style={styles.loginText}>Been here already? Login.</Text>
       </Pressable>
 
-      <CTAButton
+      {/* <CTAButton
         style={{ marginVertical: 20 }}
         onPress={() => router.push("/onboarding")}
         text="Get Started"
         type="primary"
-      />
+      /> */}
 
       <Pressable
         style={{ alignSelf: "center" }}
@@ -109,12 +134,27 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "KarlaMedium",
     fontSize: 24,
+    fontWeight: "700",
     textAlign: "left",
+    ...Platform.select({
+      web: {
+        fontSize: 42,
+        marginTop: -200,
+      }
+    })
   },
   description: {
     fontFamily: "KarlaRegular",
     fontSize: 16,
     textAlign: "left",
+    ...Platform.select({
+      web: {
+        fontSize: 24,
+        flexWrap: "wrap",
+        width: '90%',
+        marginTop: 20,
+      }
+    })
   }
 });
 
