@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, StyleSheet, Image, Text } from "react-native";
+import { View, StyleSheet, Image, Text, Dimensions, Platform } from "react-native";
 import * as Asset from 'expo-asset';
 
 type MosaicItemProps = {
@@ -11,8 +11,8 @@ const MosaicItem: React.FC<MosaicItemProps> = ({imageSource, text}) => {
   return (
     <View style={styles.itemFrame}>
       <View style={styles.itemContent}>
-        <Image source={{ uri: imageSource }} style={{ height: 64, width: 64 }} />
-        <Text style={{ fontSize: 10 }}>{text}</Text>
+        <Image source={{ uri: imageSource }} style={{ height: 64, width: 64, ...(Platform.OS === 'web' ? { height: 112, width: 112 } : {}) }} />
+        <Text style={{ fontSize: 10, ...(Platform.OS === 'web' ? { whiteSpace: 'nowrap', fontSize:16, marginTop: 20, marginBottom: -10, } : {}) }}>{text}</Text>
       </View>
     </View>
   )
@@ -26,9 +26,11 @@ const IllustrationMosaic = () => {
     { imageSource: Asset.Asset.fromModule(require("@/assets/images/img-mosaic-2.png")).uri, text: "Tailored to You" },
     { imageSource: Asset.Asset.fromModule(require("@/assets/images/img-mosaic-3.png")).uri, text: "Guidance & Support" },
   ]
+  const { width } = Dimensions.get('window');
+  const isDesktop = width >= 768 && Platform.OS === 'web';
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, isDesktop && styles.desktopContainer]}>
       {
         itemProps.map ( (value) => <MosaicItem imageSource={value.imageSource} text={value.text} /> )
       }
@@ -42,17 +44,33 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
-    // marginHorizontal: 4
+  },
+  desktopContainer: {
+    flexDirection: 'row',
+    padding: 20,
   },
   itemContent: {
     padding: 16,
     alignItems: "center",
     backgroundColor: "white",
     margin: 10,
-    borderRadius: 8
+    borderRadius: 8,
+    ...Platform.select({
+      web: {
+        margin:-5,
+        paddingVertical: 30,
+        paddingHorizontal: 50,
+        
+      }
+    })
   },
   itemFrame: {
     width: '50%',
+    ...Platform.select({
+      web: {
+        width: '25%'
+      }
+    })
   }
 })
 
