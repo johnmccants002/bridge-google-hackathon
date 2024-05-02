@@ -74,6 +74,7 @@ function StartScreen() {
         />
       )}
       
+      <View style={{ ...Platform.OS === 'web' ? {flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '58%', marginBottom: 50, marginTop: -20} : {} }}>
       <Pressable
         style={{ alignSelf: "center", ...(Platform.OS === 'web' ? {alignSelf: 'left'} : {}) }}
         onPress={() => {
@@ -93,7 +94,7 @@ function StartScreen() {
           style={styles.loginText}
         >{`Don't speak English?\nContinuar en Espanol`}</Text>
       </Pressable>
-      
+      </View>
     </SafeAreaView>
   );
 }
