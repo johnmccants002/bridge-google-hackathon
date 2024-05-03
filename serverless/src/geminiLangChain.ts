@@ -14,7 +14,7 @@ import { PromptTemplate } from "@langchain/core/prompts";
 const organizationSchema = z.array(z.object({
   title: z.string(),
   description: z.string(),
-  tags: z.enum(["legal aid", "education", "visa help", "employment", "housing", "support", "advocacy", "citizenship", "workshops", "family", "reunification", "scholarships", "rights", "cultural", "integration"])
+  tags: z.array(z.enum(["legal aid", "education", "visa help", "employment", "housing", "support", "advocacy", "citizenship", "workshops", "family", "reunification", "scholarships", "rights", "cultural", "integration"]))
 }));
 
 const key = process.env.GOOGLE_API_KEY;
@@ -37,16 +37,16 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
 
   const { location, status, situation, age } = data;
 
+  
+  const chain = RunnableSequence.from([
+    PromptTemplate.fromTemplate(
+      "List resources as best as possible.\n{format_instructions}\n{question}"
+    ),
+    new ChatGoogleGenerativeAI({ temperature: 0 }),
+    parser,
+  ]);
+  
   try {
-    const chain = RunnableSequence.from([
-      PromptTemplate.fromTemplate(
-        "Answer the users question as best as possible.\n{format_instructions}\n{question}"
-      ),
-      new ChatGoogleGenerativeAI({ temperature: 0 }),
-      parser,
-    ]);
-    
-    
     const res = await chain.invoke({
         question: `List resources for a person looking for an American visa. Use this person information: Location: ${location}, status: ${status}, situation: ${situation}, age: ${age}`,
         format_instructions: parser.getFormatInstructions(),
@@ -58,7 +58,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     }
   } catch (error) {
     return {
-      statusCode: 400,
+      statusCode: 500,
       body: JSON.stringify({
         message: error,
       }),
