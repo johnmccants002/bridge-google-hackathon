@@ -31,6 +31,7 @@ provider:
   environment:
     GEMINI_KEY: ${param:GEMINI_KEY}
     GEMINI_URL: ${param:GEMINI_URL}
+    GOOGLE_API_KEY: ${param:GEMINI_KEY}
     USER_SCHEMA: UserTable
 
 functions:
@@ -88,7 +89,7 @@ functions:
           - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.USER_SCHEMA}"
 
   geminiHandler:
-    handler: src/geminiBenefits.handler
+    handler: src/geminiLangChain.handler
     events:
       - http:
           path: /gemini/benefits

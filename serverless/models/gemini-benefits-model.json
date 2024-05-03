@@ -2,30 +2,18 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {
+    "location": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "situation": {
+      "type": "string"
+    },
     "age": {
-      "type": "integer",
-      "minimum": 0
-    },
-    "income": {
-      "type": "string",
-      "enum": ["<15000", "15000-30000", "30000-50000", ">50000"]
-    },
-    "ethnicity": {
-      "type": "string",
-      "enum": ["hispanic_latino", "caucasian", "african_american", "asian", "native_american", "pacific_islander", "other"]
-    },
-    "veteran": {
-      "type": "string",
-      "enum": ["veteran", "active_duty", "reserve", "non_veteran"]
-    },
-    "gender": {
-      "type": "string",
-      "enum": ["female", "male", "non_binary", "prefer_not_to_say", "other"]
-    },
-    "disability": {
-      "type": "string",
-      "enum": ["disabled", "not_disabled"]
+      "type": "integer"
     }
   },
-  "required": ["age", "income", "ethnicity", "veteran", "gender", "disability"]
+  "required": ["age", "status", "location", "situation"]
 }
