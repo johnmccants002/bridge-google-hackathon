@@ -20,6 +20,7 @@ type CTAButtonProps = {
 const ButtonType = {
   primary: "primary",
   secondary: "secondary",
+  desktopPrimary: "desktopPrimary"
 };
 
 const CTAButton: React.FC<CTAButtonProps> = ({
@@ -48,11 +49,23 @@ const CTAButton: React.FC<CTAButtonProps> = ({
       alignItems: "center",
       justifyContent: "center",
       height: 40,
-      width: "auto",
       borderRadius: 16,
       paddingHorizontal: 16,
       flexDirection: "row",
       gap: 8,
+    },
+
+    desktopPrimary: {
+      backgroundColor: Color.accentPrimary,
+      alignItems: "center",
+      justifyContent: "center",
+      height: 48,
+      width: "auto",
+      paddingHorizontal: 30,
+      borderRadius: 24,
+      flexDirection: "row",
+      alignSelf: 'flex-start',
+      gap: 12,
     },
   });
 
@@ -73,6 +86,14 @@ const CTAButton: React.FC<CTAButtonProps> = ({
       lineHeight: 18.7,
       textAlign: "left",
     },
+    desktopPrimary: {
+      color: Color.accentLight,
+      fontFamily: Fonts.medium,
+      fontSize: 16,
+      fontWeight: "500",
+      lineHeight: 18.7,
+      textAlign: "left",
+    }
   });
 
   return (
@@ -80,7 +101,7 @@ const CTAButton: React.FC<CTAButtonProps> = ({
       {/* Assuming you want to display the iconName or some text here */}
       <Text style={textStyle[type]}>{text}</Text>
       <AntDesign style={{ fontSize: 28 }}
-        name={type === "primary" ? "arrowright" : "check"}
+        name={type === "primary" || "desktopPrimary" ? "arrowright" : "check"}
         color={type === "primary" ? Color.accentDark : Color.accentLight}
       />
 

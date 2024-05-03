@@ -13,6 +13,7 @@ import {
   View,
   useWindowDimensions,
   Platform,
+  Dimensions,
 } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
 import Carouseltem from "./Carouseltem";
@@ -37,6 +38,9 @@ const Onboarding = (props: Props) => {
   const insets = useSafeAreaInsets()
   const dotBarHeight = 48
   const carouselHeigth = windowHeight - (insets.top + insets.bottom) - dotBarHeight - 120
+
+  const { width } = Dimensions.get('window');
+  const isDesktop = width >= 768 && Platform.OS === 'web';
 
   const goToPrev = () => {
     if (ref && ref.current) {
@@ -108,6 +112,7 @@ const Onboarding = (props: Props) => {
         backgroundColor: Color.accentPrimary,
       }}
     >
+      <View style={{...(Platform.OS === 'web' ? { } : {}) }}>
       <Carousel
         {...baseOptions}
         loop
@@ -178,6 +183,7 @@ const Onboarding = (props: Props) => {
         ) : (
           <></>
         )}
+      </View>
       </View>
     </SafeAreaView>
   );

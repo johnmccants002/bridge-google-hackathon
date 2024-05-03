@@ -11,6 +11,8 @@ import {
   Text,
   View,
   useWindowDimensions,
+  Dimensions, 
+  Platform,
 } from "react-native";
 import IllustrationMosaic from "./IllustrationMosaic";
 
@@ -19,6 +21,9 @@ function StartScreen() {
   const navigateToLogin = () => {
     router.replace("/login");
   };
+
+  const { width } = Dimensions.get('window');
+  const isDesktop = width >= 768 && Platform.OS === 'web';
 
   return (
     <SafeAreaView
@@ -41,29 +46,43 @@ function StartScreen() {
           alignItems: "center",
           padding: 24,
           borderRadius: 8,
-          margin: 20
+          margin: 20,
+          ...(Platform.OS === 'web' ? { alignItems: 'left', width: '60%', margin: 50, } : {})
         }}
       >
         <IllustrationMosaic />
-        <Text style={styles.title}>Immigration support the right way</Text>
-        <Text style={styles.description}>Bridge is your guide to finding essential resources and support-no matter where you are in your immigration journey.</Text>
+        <View style={{...(Platform.OS === 'web' ? { paddingHorizontal: 30 } : {})}}>
+          <Text style={styles.title}>Immigration support</Text> 
+          <Text style={{fontFamily: "KarlaRegular", fontSize: 24, ...(Platform.OS === 'web' ? { fontSize: 42, lineHeight: 49 } : {}) }}>the right way</Text>
+          <Text style={styles.description}>Bridge is your guide to finding essential resources and support-no matter where you are in your immigration journey.</Text>
+        </View>
+        {isDesktop && (
+          <CTAButton
+            style={{ marginTop: -5, marginBottom: 30, marginLeft: '40%'}}
+            onPress={() => router.push("/onboarding")}
+            text="Get Started"
+            type="desktopPrimary"
+          />
+        )}
       </View>
-
+      {!isDesktop && (
+        <CTAButton
+          style={{ marginVertical: 20 }}
+          onPress={() => router.push("/onboarding")}
+          text="Get Started"
+          type="primary"
+        />
+      )}
+      
+      <View style={{ ...Platform.OS === 'web' ? {flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '58%', marginBottom: 50, marginTop: -20} : {} }}>
       <Pressable
-        style={{ alignSelf: "center" }}
+        style={{ alignSelf: "center", ...(Platform.OS === 'web' ? {alignSelf: 'left'} : {}) }}
         onPress={() => {
           router.push("/login");
         }}
       >
         <Text style={styles.loginText}>Been here already? Login.</Text>
       </Pressable>
-
-      <CTAButton
-        style={{ marginVertical: 20 }}
-        onPress={() => router.push("/onboarding")}
-        text="Get Started"
-        type="primary"
-      />
 
       <Pressable
         style={{ alignSelf: "center" }}
@@ -75,7 +94,7 @@ function StartScreen() {
           style={styles.loginText}
         >{`Don't speak English?\nContinuar en Espanol`}</Text>
       </Pressable>
-      
+      </View>
     </SafeAreaView>
   );
 }
@@ -109,12 +128,27 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "KarlaMedium",
     fontSize: 24,
+    fontWeight: "700",
     textAlign: "left",
+    ...Platform.select({
+      web: {
+        fontSize: 42,
+        marginTop: -200,
+      }
+    })
   },
   description: {
     fontFamily: "KarlaRegular",
     fontSize: 16,
     textAlign: "left",
+    ...Platform.select({
+      web: {
+        fontSize: 24,
+        flexWrap: "wrap",
+        width: '90%',
+        marginTop: 20,
+      }
+    })
   }
 });
 
