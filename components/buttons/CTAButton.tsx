@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, Text, StyleSheet, ViewStyle, TouchableOpacity } from "react-native";
+import { Pressable, Text, StyleSheet, ViewStyle, TouchableOpacity, ActivityIndicator } from "react-native";
 
 import Color from "@/constants/Color";
 import Fonts from "@/constants/Fonts";
@@ -14,6 +14,7 @@ type CTAButtonProps = {
   onPress: () => void;
   text: string;
   type: ButtonTypeKeys;
+  isAnimating?: boolean;
   style?: ViewStyle;
 };
 
@@ -26,7 +27,8 @@ const CTAButton: React.FC<CTAButtonProps> = ({
   onPress,
   text,
   type,
-  style,
+  isAnimating,
+  style
 }) => {
   // Use the colors from the Colors object, providing fallbacks
   const buttonStyle = StyleSheet.create({
@@ -75,16 +77,25 @@ const CTAButton: React.FC<CTAButtonProps> = ({
     },
   });
 
-  return (
-    <TouchableOpacity style={[buttonStyle[type], style]} onPress={onPress}>
-      {/* Assuming you want to display the iconName or some text here */}
-      <Text style={textStyle[type]}>{text}</Text>
-      <AntDesign style={{ fontSize: 28 }}
-        name={type === "primary" ? "arrowright" : "check"}
-        color={type === "primary" ? Color.accentDark : Color.accentLight}
-      />
+  const content = () => {
+    if (isAnimating) {
+      return <ActivityIndicator />
+    }
 
-      {/* If you have an Icon component, it could be used here based on iconName */}
+    return (
+      <>
+        <Text style={textStyle[type]}>{text}</Text>
+        <AntDesign style={{ fontSize: 28 }}
+          name={type === "primary" ? "arrowright" : "check"}
+          color={type === "primary" ? Color.accentDark : Color.accentLight}
+        />
+      </>
+    )
+  }
+
+  return (
+    <TouchableOpacity style={[buttonStyle[type], style]} disabled={isAnimating} onPress={onPress}>
+      { content() }
     </TouchableOpacity>
   );
 };

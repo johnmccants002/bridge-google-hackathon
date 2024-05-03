@@ -36,6 +36,7 @@ const Index = (props: Props) => {
   const [showToolTip, setShowToolTip] = useState(false);
   const [keyboardPadding, setKeyboardPadding] = useState(0);
   const [botStep, setBotStep] = useState(0);
+  const [isFetchingResults, setIsFetchingResults] = useState(false);
 
   const bottomPosition = useRef(new Animated.Value(20)).current; // Initial bottom position
   const [showResults, setShowResults] = useState(false);
@@ -222,15 +223,22 @@ const Index = (props: Props) => {
         <CTAButton
           type="primary"
           text="See my results"
+          isAnimating={isFetchingResults}
           onPress={ () => {
+            if (isFetchingResults) {
+              return
+            }
+            
+            setIsFetchingResults(true)
+
             runPrompt(buildPrompt(userInputs))
             .then(res => {
               console.log("RESULT\n")
               console.log(res)
-              // router.push({ pathname: "/results", prop: res })
+              // router.push({ pathname: "/results", params: res })
             })
             .catch(err => console.log(err))
-            
+
           }}
           style={{
             left: 20,
