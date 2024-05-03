@@ -1,7 +1,7 @@
 import Color from "@/constants/Color";
-import { Datum } from "@/screens/results/benefits-response";
+import { ResourcesData } from "@/screens/results/resources-response";
 import { MaterialCommunityIcons, Octicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect } from "react";
 import {
   Pressable,
@@ -19,15 +19,18 @@ import { resourceData } from "@/data/DummyData";
 import BoldCheck from "@/components/svgs/BoldCheck";
 import CTAButton from "@/components/buttons/CTAButton";
 
-interface Props {
-  data: Datum[];
+type SerializedResourcesData = {
+  data: string;
 }
 
-const Index = (props: Props) => {
+const Index = () => {
+  const serializedData: SerializedResourcesData = useLocalSearchParams();
+  const resourcesData = JSON.parse(serializedData.data) as ResourcesData
+
+  console.log(resourcesData)
+
   const { width } = useWindowDimensions();
   const router = useRouter();
-
-  const { data } = props;
 
   useEffect(() => {}, []);
   return (

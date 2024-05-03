@@ -1,4 +1,4 @@
-import { Benefit, Datum } from "@/screens/results/benefits-response";
+import { Benefit, Datum } from "@/screens/results/resources-response";
 import { AntDesign } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";

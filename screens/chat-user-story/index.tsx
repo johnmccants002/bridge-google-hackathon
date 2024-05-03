@@ -228,14 +228,14 @@ const Index = (props: Props) => {
             if (isFetchingResults) {
               return
             }
-            
-            setIsFetchingResults(true)
 
+            setIsFetchingResults(true)
+            console.log(userInputs)
             runPrompt(buildPrompt(userInputs))
             .then(res => {
-              console.log("RESULT\n")
-              console.log(res)
-              // router.push({ pathname: "/results", params: res })
+              const serializedData = JSON.stringify(res.data);
+              setIsFetchingResults(false)
+              router.push({ pathname: "/results", params: { data: serializedData }})
             })
             .catch(err => console.log(err))
 

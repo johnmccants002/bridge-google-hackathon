@@ -2,7 +2,7 @@ import About from "@/screens/queryEntry/QueryEntryScreen";
 import ResourceScreen from "@/screens/results";
 import React from "react";
 import { View, useWindowDimensions } from "react-native";
-import { response } from "@/screens/results/benefits-response";
+import { response } from "@/screens/results/resources-response";
 import LogoContainer from "@/components/LogoContainer";
 
 type Props = {};

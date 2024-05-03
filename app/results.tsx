@@ -1,12 +1,12 @@
 import ResourceScreen from "@/screens/results";
-import { response } from "@/screens/results/benefits-response";
+import { response } from "@/screens/results/resources-response";
 
 import React from "react";
 
 type Props = {};
 
 const Page = (props: Props) => {
-  return <ResourceScreen data={response.data} />;
+  return <ResourceScreen />;
 };
 
 export default Page;
