@@ -11,7 +11,9 @@ import Fonts from "@/constants/Fonts";
 import CTAButton from "@/components/buttons/CTAButton";
 import { useRouter } from "expo-router";
 
-type Props = {};
+type SituationSelectionProps = {
+  onPressContinue: (selection: string) => void;
+};
 
 type ButtonProps = {
   text: string;
@@ -51,7 +53,7 @@ const Button = ({ text, onPress, isSelected }: ButtonProps) => {
   );
 };
 
-const ButtonDisplay = (props: Props) => {
+const ButtonDisplay = (props: SituationSelectionProps) => {
   const [selectedButton, setSelectedButton] = useState<string | null>(null);
   const router = useRouter();
   const handleButtonPress = (buttonText: string) => {
@@ -122,7 +124,8 @@ const ButtonDisplay = (props: Props) => {
           text="Continue"
           type="primary"
           onPress={() => {
-            router.push("/chat-user-story");
+            props.onPressContinue(selectedButton ?? "")
+            // router.push("/chat-user-story");
           }}
         />
       </View>

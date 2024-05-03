@@ -1,13 +1,12 @@
-import LogoContainer from "@/components/LogoContainer";
 import ToolTip from "@/components/ToolTip";
 import CTAButton from "@/components/buttons/CTAButton";
 import NavigationHeader from "@/components/headers/NavigationHeader";
 import BotMessage from "@/components/messages/BotMessage";
 import UserMessage from "@/components/messages/UserMessage";
-import BackArrow from "@/components/svgs/BackArrow";
+import { buildPrompt, runPrompt } from "./gemini-service";
 import Color from "@/constants/Color";
 import { FontAwesome } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
@@ -27,6 +26,7 @@ import {
 type Props = {};
 
 const Index = (props: Props) => {
+  const userInputs: UserInputs = useLocalSearchParams();
   const { width, height } = useWindowDimensions();
   const scrollViewRef = useRef<ScrollView | null>(null);
   const [keyboardStatus, setKeyboardStatus] = useState("");
@@ -86,10 +86,20 @@ const Index = (props: Props) => {
       ...prev,
       <UserMessage key={prev.length} message={message} />,
     ]);
+    storeUserInput();
     setMessage("");
     analyzeAndSendBotMessage();
     setBotStep(botStep + 1);
   };
+
+  const storeUserInput = () => {
+    switch (botStep) {
+      case 0:
+        userInputs.situation = message
+      case 1:
+        userInputs.age = message
+    }
+  }
 
   const analyzeAndSendBotMessage = () => {
     console.log(components.length);
@@ -212,7 +222,16 @@ const Index = (props: Props) => {
         <CTAButton
           type="primary"
           text="See my results"
-          onPress={() => router.push("/results")}
+          onPress={ () => {
+            runPrompt(buildPrompt(userInputs))
+            .then(res => {
+              console.log("RESULT\n")
+              console.log(res)
+              // router.push({ pathname: "/results", prop: res })
+            })
+            .catch(err => console.log(err))
+            
+          }}
           style={{
             left: 20,
             right: 20,
@@ -268,6 +287,7 @@ const Index = (props: Props) => {
           </View>
         </Animated.View>
       )}
+
       <Modal
         animationType="slide"
         transparent={true}

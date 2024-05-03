@@ -1,5 +1,5 @@
 import Color from "@/constants/Color";
-import { Datum } from "@/screens/results/mockData/benefits_mock";
+import { Datum } from "@/screens/results/benefits-response";
 import { MaterialCommunityIcons, Octicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";

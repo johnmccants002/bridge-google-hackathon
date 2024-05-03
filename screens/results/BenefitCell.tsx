@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Benefit } from "./mockData/benefits_mock";
+import { Benefit } from "./benefits-response";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { isValidUrl } from "@/constants/helpers";
 

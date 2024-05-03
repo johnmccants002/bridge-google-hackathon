@@ -1,5 +1,5 @@
 import ResourceScreen from "@/screens/results";
-import { response } from "@/screens/results/mockData/benefits_mock";
+import { response } from "@/screens/results/benefits-response";
 
 import React from "react";
 

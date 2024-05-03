@@ -1,5 +1,3 @@
-import LogoContainer from "@/components/LogoContainer";
-import LocationButton from "@/components/buttons/LocationButton";
 import BotMessage from "@/components/messages/BotMessage";
 import UserMessage from "@/components/messages/UserMessage";
 import Color from "@/constants/Color";
@@ -19,6 +17,7 @@ import {
 } from "react-native";
 import ButtonDisplay from "./ButtonDisplay";
 import NavigationHeader from "@/components/headers/NavigationHeader";
+import { useRouter } from "expo-router";
 
 type Props = {};
 
@@ -36,6 +35,14 @@ const Index = (props: Props) => {
   });
   const bottomPosition = useRef(new Animated.Value(20)).current; // Initial bottom position
   const [showSituation, setShowSituation] = useState(false);
+  const router = useRouter();
+
+  let userInputs: UserInputs = {
+    location: "",
+    status: "",
+    situation: "",
+    age: ""
+  }
 
   const botMessages = [
     "Let's get started on your journey to finding assistance tailored to your needs!",
@@ -50,8 +57,6 @@ const Index = (props: Props) => {
     }
   };
 
-  const continuedPressed = () => {};
-
   const sendMessage = () => {
     setComponents([
       ...components,
@@ -62,6 +67,7 @@ const Index = (props: Props) => {
 
   const analyzeAndSendMessage = () => {
     if (message.length > 7) {
+      userInputs.location = message
       sendLocation();
     } else {
       setComponents((prev) => [
@@ -99,7 +105,11 @@ const Index = (props: Props) => {
     setTimeout(() => {
       setComponents((prevComponents) => [
         ...prevComponents,
-        <ButtonDisplay key={5} />, // Make sure to assign a unique key
+        <ButtonDisplay key={5} onPressContinue={ (selection) => {
+          userInputs.status = selection
+          // console.log(userInputs)
+          router.push({ pathname: "/chat-user-story", params: userInputs })
+        }}/>, // Make sure to assign a unique key
       ]);
     }, 6000); // Additional 3 seconds, making a total of 9 seconds
   };
@@ -157,11 +167,11 @@ const Index = (props: Props) => {
   useEffect(() => {
     scrollToBottom();
   }, [components]);
+
   return (
     <KeyboardAvoidingView
       style={[
         {
-          //   flex: 1,
           height: height,
           backgroundColor: Color.accentPrimary,
           paddingBottom: keyboardPadding,
@@ -178,6 +188,7 @@ const Index = (props: Props) => {
       >
         {components}
       </ScrollView>
+      
       {showSituation ? (
         <></>
       ) : (
